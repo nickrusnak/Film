@@ -52,16 +52,18 @@
 
 ## 6. Healthchecks
 
-- ⬜ Health-Check Modul (Nest Terminus) hinzufügen
-- ⬜ Datenbankverbindung prüfen
+- ✅ `@nestjs/terminus` installiert
+- ✅ Health-Modul mit Controller erstellt
+- ✅ Prisma-Modul als globaler DB-Service
+- ✅ Datenbank-Ping unter `/health` verfügbar
 
 ---
 
 ## 7. Testing
 
-- ⬜ `vitest` statt Jest konfigurieren
-- ⬜ `vitest.config.ts` erstellen
-- ⬜ Ersten Test schreiben und ausführen
+- ✅ `vitest` statt Jest installiert
+- ✅ `vitest.config.ts` mit SWC erstellt
+- ✅ Ersten Test geschrieben und ausgeführt (2 Tests passed)
 
 ---
 

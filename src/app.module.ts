@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
+import { PrismaModule } from './prisma/prisma.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
     imports: [
@@ -25,8 +27,13 @@ import { LoggerModule } from 'nestjs-pino';
                 genReqId: (req) => req.headers['x-request-id'] || crypto.randomUUID(),
             },
         }),
+        // Datenbank
+        PrismaModule,
+        // Healthchecks
+        HealthModule,
     ],
     controllers: [],
     providers: [],
 })
 export class AppModule { }
+
