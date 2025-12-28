@@ -11,7 +11,7 @@
 
 - ✅ Git-Repository erstellt
 - ✅ PostgreSQL via Docker Compose
-- ⬜ NestJS-Projekt mit pnpm initialisieren
+- ✅ NestJS-Projekt mit pnpm initialisiert
 - ⬜ Keycloak in Docker Compose integrieren
 - ⬜ pgAdmin in Docker Compose integrieren
 
@@ -28,8 +28,9 @@
 
 ## 3. Logging
 
-- ⬜ `nestjs-pino` und `pino-http` installieren
-- ⬜ Logger in `main.ts` und `app.module.ts` konfigurieren
+- ✅ `nestjs-pino` und `pino-http` installiert
+- ✅ Logger in `main.ts` und `app.module.ts` konfiguriert
+- ✅ `pino-pretty` für lesbare Dev-Logs
 
 ---
 
@@ -90,4 +91,4 @@
 
 ---
 
-> **Nächster Schritt:** Schritt 2 - Datenbank-Modellierung mit Prisma
+> **Nächster Schritt:** Schritt 4 - Swagger API-Dokumentation
