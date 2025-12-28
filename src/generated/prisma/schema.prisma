@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["depot"]
+}
+
+model aktie {
+  id           Int           @id @default(autoincrement())
+  version      Int           @default(0)
+  isin         String        @unique
+  symbol       String
+  name         String
+  branche      String?
+  handelsplatz handelsplatz?
+  kaufpreis    Decimal       @db.Decimal(10, 2)
+  anzahl       Int
+  kaufdatum    DateTime?     @db.Date
+  dividende    Decimal?      @db.Decimal(8, 2)
+  letzter_kurs Decimal?      @db.Decimal(10, 2)
+  erzeugt      DateTime      @default(now()) @db.Timestamp(6)
+  aktualisiert DateTime      @default(now()) @db.Timestamp(6)
+  kurs         kurs[]
+  transaktion  transaktion[]
+
+  @@schema("depot")
+}
+
+model kurs {
+  id         Int      @id @default(autoincrement())
+  datum      DateTime @db.Date
+  eroeffnung Decimal? @db.Decimal(10, 2)
+  schluss    Decimal? @db.Decimal(10, 2)
+  hoch       Decimal? @db.Decimal(10, 2)
+  tief       Decimal? @db.Decimal(10, 2)
+  volumen    BigInt?
+  aktie_id   Int
+  aktie      aktie    @relation(fields: [aktie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([aktie_id])
+  @@schema("depot")
+}
+
+model transaktion {
+  id           Int             @id @default(autoincrement())
+  version      Int             @default(0)
+  typ          transaktionstyp
+  aktie_id     Int
+  datum        DateTime        @db.Date
+  uhrzeit      DateTime?       @db.Time(6)
+  anzahl       Int
+  preis        Decimal         @db.Decimal(10, 2)
+  gebuehren    Decimal         @default(0) @db.Decimal(8, 2)
+  gesamtbetrag Decimal         @db.Decimal(12, 2)
+  notiz        String?
+  erzeugt      DateTime        @default(now()) @db.Timestamp(6)
+  aktualisiert DateTime        @default(now()) @db.Timestamp(6)
+  aktie        aktie           @relation(fields: [aktie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([aktie_id])
+  @@index([datum])
+  @@schema("depot")
+}
+
+enum handelsplatz {
+  XETRA
+  NASDAQ
+  NYSE
+  LSE
+  FWB
+
+  @@schema("depot")
+}
+
+enum transaktionstyp {
+  KAUF
+  VERKAUF
+  DIVIDENDE
+
+  @@schema("depot")
+}
