@@ -44,8 +44,9 @@
 
 ## 5. Validierung
 
-- ⬜ `class-validator` und `class-transformer` installieren
-- ⬜ Globale `ValidationPipe` in `main.ts` einrichten
+- ✅ `class-validator` und `class-transformer` installiert
+- ✅ Globale `ValidationPipe` in `main.ts` eingerichtet
+- ✅ Whitelist, Transform und implizite Konvertierung aktiv
 
 ---
 

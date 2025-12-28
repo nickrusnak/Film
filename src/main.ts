@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -11,6 +12,18 @@ async function bootstrap() {
 
     // Pino Logger als globalen Logger setzen
     app.useLogger(app.get(Logger));
+
+    // Globale Validierung für alle Requests
+    app.useGlobalPipes(
+        new ValidationPipe({
+            whitelist: true, // Entfernt unbekannte Properties
+            forbidNonWhitelisted: true, // Wirft Fehler bei unbekannten Properties
+            transform: true, // Transformiert Payloads in DTO-Klassen
+            transformOptions: {
+                enableImplicitConversion: true, // Automatische Typ-Konvertierung
+            },
+        }),
+    );
 
     // Swagger Konfiguration
     const swaggerConfig = new DocumentBuilder()
