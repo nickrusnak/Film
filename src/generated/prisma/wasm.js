@@ -92,48 +92,50 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.AktieScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  version: 'version',
-  isin: 'isin',
-  symbol: 'symbol',
-  name: 'name',
-  branche: 'branche',
-  handelsplatz: 'handelsplatz',
-  kaufpreis: 'kaufpreis',
-  anzahl: 'anzahl',
-  kaufdatum: 'kaufdatum',
-  dividende: 'dividende',
-  letzter_kurs: 'letzter_kurs',
-  erzeugt: 'erzeugt',
-  aktualisiert: 'aktualisiert'
+  email: 'email',
+  password: 'password',
+  username: 'username',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.KursScalarFieldEnum = {
-  id: 'id',
-  datum: 'datum',
-  eroeffnung: 'eroeffnung',
-  schluss: 'schluss',
-  hoch: 'hoch',
-  tief: 'tief',
-  volumen: 'volumen',
-  aktie_id: 'aktie_id'
-};
-
-exports.Prisma.TransaktionScalarFieldEnum = {
+exports.Prisma.FilmScalarFieldEnum = {
   id: 'id',
   version: 'version',
-  typ: 'typ',
-  aktie_id: 'aktie_id',
-  datum: 'datum',
-  uhrzeit: 'uhrzeit',
-  anzahl: 'anzahl',
-  preis: 'preis',
-  gebuehren: 'gebuehren',
-  gesamtbetrag: 'gesamtbetrag',
-  notiz: 'notiz',
-  erzeugt: 'erzeugt',
-  aktualisiert: 'aktualisiert'
+  titel: 'titel',
+  originaltitel: 'originaltitel',
+  genre: 'genre',
+  regisseur: 'regisseur',
+  erscheinungsjahr: 'erscheinungsjahr',
+  dauer: 'dauer',
+  bewertung: 'bewertung',
+  beschreibung: 'beschreibung',
+  sprache: 'sprache',
+  land: 'land',
+  poster: 'poster',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  filmId: 'filmId',
+  userId: 'userId',
+  bewertung: 'bewertung',
+  kommentar: 'kommentar',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FavoriteScalarFieldEnum = {
+  id: 'id',
+  filmId: 'filmId',
+  userId: 'userId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -150,24 +152,29 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.handelsplatz = exports.$Enums.handelsplatz = {
-  XETRA: 'XETRA',
-  NASDAQ: 'NASDAQ',
-  NYSE: 'NYSE',
-  LSE: 'LSE',
-  FWB: 'FWB'
+exports.Role = exports.$Enums.Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
 };
 
-exports.transaktionstyp = exports.$Enums.transaktionstyp = {
-  KAUF: 'KAUF',
-  VERKAUF: 'VERKAUF',
-  DIVIDENDE: 'DIVIDENDE'
+exports.Genre = exports.$Enums.Genre = {
+  ACTION: 'ACTION',
+  COMEDY: 'COMEDY',
+  DRAMA: 'DRAMA',
+  HORROR: 'HORROR',
+  SCIFI: 'SCIFI',
+  THRILLER: 'THRILLER',
+  ROMANCE: 'ROMANCE',
+  DOCUMENTARY: 'DOCUMENTARY',
+  ANIMATION: 'ANIMATION',
+  FANTASY: 'FANTASY'
 };
 
 exports.Prisma.ModelName = {
-  aktie: 'aktie',
-  kurs: 'kurs',
-  transaktion: 'transaktion'
+  User: 'User',
+  Film: 'Film',
+  Review: 'Review',
+  Favorite: 'Favorite'
 };
 /**
  * Create the Client
@@ -180,7 +187,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/swe/project/src/generated/prisma",
+      "value": "/Users/swe/film/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -194,11 +201,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/swe/project/prisma/schema.prisma",
+    "sourceFilePath": "/Users/swe/film/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -208,7 +215,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -217,13 +223,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n  schemas  = [\"depot\"]\n}\n\nmodel aktie {\n  id           Int           @id @default(autoincrement())\n  version      Int           @default(0)\n  isin         String        @unique\n  symbol       String\n  name         String\n  branche      String?\n  handelsplatz handelsplatz?\n  kaufpreis    Decimal       @db.Decimal(10, 2)\n  anzahl       Int\n  kaufdatum    DateTime?     @db.Date\n  dividende    Decimal?      @db.Decimal(8, 2)\n  letzter_kurs Decimal?      @db.Decimal(10, 2)\n  erzeugt      DateTime      @default(now()) @db.Timestamp(6)\n  aktualisiert DateTime      @default(now()) @db.Timestamp(6)\n  kurs         kurs[]\n  transaktion  transaktion[]\n\n  @@schema(\"depot\")\n}\n\nmodel kurs {\n  id         Int      @id @default(autoincrement())\n  datum      DateTime @db.Date\n  eroeffnung Decimal? @db.Decimal(10, 2)\n  schluss    Decimal? @db.Decimal(10, 2)\n  hoch       Decimal? @db.Decimal(10, 2)\n  tief       Decimal? @db.Decimal(10, 2)\n  volumen    BigInt?\n  aktie_id   Int\n  aktie      aktie    @relation(fields: [aktie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)\n\n  @@index([aktie_id])\n  @@schema(\"depot\")\n}\n\nmodel transaktion {\n  id           Int             @id @default(autoincrement())\n  version      Int             @default(0)\n  typ          transaktionstyp\n  aktie_id     Int\n  datum        DateTime        @db.Date\n  uhrzeit      DateTime?       @db.Time(6)\n  anzahl       Int\n  preis        Decimal         @db.Decimal(10, 2)\n  gebuehren    Decimal         @default(0) @db.Decimal(8, 2)\n  gesamtbetrag Decimal         @db.Decimal(12, 2)\n  notiz        String?\n  erzeugt      DateTime        @default(now()) @db.Timestamp(6)\n  aktualisiert DateTime        @default(now()) @db.Timestamp(6)\n  aktie        aktie           @relation(fields: [aktie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)\n\n  @@index([aktie_id])\n  @@index([datum])\n  @@schema(\"depot\")\n}\n\nenum handelsplatz {\n  XETRA\n  NASDAQ\n  NYSE\n  LSE\n  FWB\n\n  @@schema(\"depot\")\n}\n\nenum transaktionstyp {\n  KAUF\n  VERKAUF\n  DIVIDENDE\n\n  @@schema(\"depot\")\n}\n",
-  "inlineSchemaHash": "44a276d720c10bbccb6e8168c8e1ad5a07d10b20d3fe9e95f7c1be698aae9538",
+  "inlineSchema": "// ============================================\n// Antigravity - Film-Datenbank Schema\n// ============================================\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n  schemas  = [\"film\"]\n}\n\n// ============================================\n// User Model - Basis für Authentifizierung\n// ============================================\nmodel User {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  password  String\n  username  String?\n  role      Role     @default(USER)\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  // Relationen\n  reviews   Review[]\n  favorites Favorite[]\n\n  @@map(\"user\")\n  @@schema(\"film\")\n}\n\n// ============================================\n// Film Model - Hauptentität\n// ============================================\nmodel Film {\n  id               Int      @id @default(autoincrement())\n  version          Int      @default(0)\n  titel            String\n  originaltitel    String?  @map(\"originaltitel\")\n  genre            Genre[]\n  regisseur        String?\n  erscheinungsjahr Int?     @map(\"erscheinungsjahr\")\n  dauer            Int? // Laufzeit in Minuten\n  bewertung        Decimal? @db.Decimal(3, 1) // z.B. 8.5\n  beschreibung     String?  @db.Text\n  sprache          String?\n  land             String?\n  poster           String? // URL zum Poster\n  createdAt        DateTime @default(now()) @map(\"created_at\")\n  updatedAt        DateTime @updatedAt @map(\"updated_at\")\n\n  // Relationen\n  reviews   Review[]\n  favorites Favorite[]\n\n  @@map(\"film\")\n  @@schema(\"film\")\n}\n\n// ============================================\n// Review Model - Nutzerbewertungen\n// ============================================\nmodel Review {\n  id        Int      @id @default(autoincrement())\n  version   Int      @default(0)\n  filmId    Int      @map(\"film_id\")\n  userId    Int      @map(\"user_id\")\n  bewertung Int // 1-10\n  kommentar String?  @db.Text\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  // Relationen\n  film Film @relation(fields: [filmId], references: [id], onDelete: Cascade)\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([filmId, userId]) // Ein User kann pro Film nur ein Review schreiben\n  @@index([filmId])\n  @@index([userId])\n  @@map(\"review\")\n  @@schema(\"film\")\n}\n\n// ============================================\n// Favorite Model - Favoritenliste\n// ============================================\nmodel Favorite {\n  id        Int      @id @default(autoincrement())\n  filmId    Int      @map(\"film_id\")\n  userId    Int      @map(\"user_id\")\n  createdAt DateTime @default(now()) @map(\"created_at\")\n\n  // Relationen\n  film Film @relation(fields: [filmId], references: [id], onDelete: Cascade)\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([filmId, userId])\n  @@index([filmId])\n  @@index([userId])\n  @@map(\"favorite\")\n  @@schema(\"film\")\n}\n\n// ============================================\n// Enums\n// ============================================\nenum Role {\n  USER\n  ADMIN\n\n  @@schema(\"film\")\n}\n\nenum Genre {\n  ACTION\n  COMEDY\n  DRAMA\n  HORROR\n  SCIFI\n  THRILLER\n  ROMANCE\n  DOCUMENTARY\n  ANIMATION\n  FANTASY\n\n  @@schema(\"film\")\n}\n",
+  "inlineSchemaHash": "298eaeffd729eb049c7dcf91e989179b2857908d3a405af4a073a08c82ce0ebd",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"aktie\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"isin\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"symbol\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"branche\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"handelsplatz\",\"kind\":\"enum\",\"type\":\"handelsplatz\"},{\"name\":\"kaufpreis\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"anzahl\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"kaufdatum\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"dividende\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"letzter_kurs\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"erzeugt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"aktualisiert\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"kurs\",\"kind\":\"object\",\"type\":\"kurs\",\"relationName\":\"aktieTokurs\"},{\"name\":\"transaktion\",\"kind\":\"object\",\"type\":\"transaktion\",\"relationName\":\"aktieTotransaktion\"}],\"dbName\":null},\"kurs\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"datum\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"eroeffnung\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"schluss\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"hoch\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"tief\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"volumen\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"aktie_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"aktie\",\"kind\":\"object\",\"type\":\"aktie\",\"relationName\":\"aktieTokurs\"}],\"dbName\":null},\"transaktion\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"typ\",\"kind\":\"enum\",\"type\":\"transaktionstyp\"},{\"name\":\"aktie_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"datum\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"uhrzeit\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"anzahl\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"preis\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"gebuehren\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"gesamtbetrag\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"notiz\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"erzeugt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"aktualisiert\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"aktie\",\"kind\":\"object\",\"type\":\"aktie\",\"relationName\":\"aktieTotransaktion\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"reviews\",\"kind\":\"object\",\"type\":\"Review\",\"relationName\":\"ReviewToUser\"},{\"name\":\"favorites\",\"kind\":\"object\",\"type\":\"Favorite\",\"relationName\":\"FavoriteToUser\"}],\"dbName\":\"user\"},\"Film\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"titel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"originaltitel\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"originaltitel\"},{\"name\":\"genre\",\"kind\":\"enum\",\"type\":\"Genre\"},{\"name\":\"regisseur\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"erscheinungsjahr\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"erscheinungsjahr\"},{\"name\":\"dauer\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bewertung\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"beschreibung\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sprache\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"land\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"poster\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"reviews\",\"kind\":\"object\",\"type\":\"Review\",\"relationName\":\"FilmToReview\"},{\"name\":\"favorites\",\"kind\":\"object\",\"type\":\"Favorite\",\"relationName\":\"FavoriteToFilm\"}],\"dbName\":\"film\"},\"Review\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"filmId\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"film_id\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"user_id\"},{\"name\":\"bewertung\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"kommentar\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"film\",\"kind\":\"object\",\"type\":\"Film\",\"relationName\":\"FilmToReview\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReviewToUser\"}],\"dbName\":\"review\"},\"Favorite\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"filmId\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"film_id\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"user_id\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"film\",\"kind\":\"object\",\"type\":\"Film\",\"relationName\":\"FavoriteToFilm\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"FavoriteToUser\"}],\"dbName\":\"favorite\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

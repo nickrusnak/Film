@@ -120,48 +120,50 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.AktieScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  version: 'version',
-  isin: 'isin',
-  symbol: 'symbol',
-  name: 'name',
-  branche: 'branche',
-  handelsplatz: 'handelsplatz',
-  kaufpreis: 'kaufpreis',
-  anzahl: 'anzahl',
-  kaufdatum: 'kaufdatum',
-  dividende: 'dividende',
-  letzter_kurs: 'letzter_kurs',
-  erzeugt: 'erzeugt',
-  aktualisiert: 'aktualisiert'
+  email: 'email',
+  password: 'password',
+  username: 'username',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.KursScalarFieldEnum = {
-  id: 'id',
-  datum: 'datum',
-  eroeffnung: 'eroeffnung',
-  schluss: 'schluss',
-  hoch: 'hoch',
-  tief: 'tief',
-  volumen: 'volumen',
-  aktie_id: 'aktie_id'
-};
-
-exports.Prisma.TransaktionScalarFieldEnum = {
+exports.Prisma.FilmScalarFieldEnum = {
   id: 'id',
   version: 'version',
-  typ: 'typ',
-  aktie_id: 'aktie_id',
-  datum: 'datum',
-  uhrzeit: 'uhrzeit',
-  anzahl: 'anzahl',
-  preis: 'preis',
-  gebuehren: 'gebuehren',
-  gesamtbetrag: 'gesamtbetrag',
-  notiz: 'notiz',
-  erzeugt: 'erzeugt',
-  aktualisiert: 'aktualisiert'
+  titel: 'titel',
+  originaltitel: 'originaltitel',
+  genre: 'genre',
+  regisseur: 'regisseur',
+  erscheinungsjahr: 'erscheinungsjahr',
+  dauer: 'dauer',
+  bewertung: 'bewertung',
+  beschreibung: 'beschreibung',
+  sprache: 'sprache',
+  land: 'land',
+  poster: 'poster',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  filmId: 'filmId',
+  userId: 'userId',
+  bewertung: 'bewertung',
+  kommentar: 'kommentar',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FavoriteScalarFieldEnum = {
+  id: 'id',
+  filmId: 'filmId',
+  userId: 'userId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -178,24 +180,29 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.handelsplatz = exports.$Enums.handelsplatz = {
-  XETRA: 'XETRA',
-  NASDAQ: 'NASDAQ',
-  NYSE: 'NYSE',
-  LSE: 'LSE',
-  FWB: 'FWB'
+exports.Role = exports.$Enums.Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
 };
 
-exports.transaktionstyp = exports.$Enums.transaktionstyp = {
-  KAUF: 'KAUF',
-  VERKAUF: 'VERKAUF',
-  DIVIDENDE: 'DIVIDENDE'
+exports.Genre = exports.$Enums.Genre = {
+  ACTION: 'ACTION',
+  COMEDY: 'COMEDY',
+  DRAMA: 'DRAMA',
+  HORROR: 'HORROR',
+  SCIFI: 'SCIFI',
+  THRILLER: 'THRILLER',
+  ROMANCE: 'ROMANCE',
+  DOCUMENTARY: 'DOCUMENTARY',
+  ANIMATION: 'ANIMATION',
+  FANTASY: 'FANTASY'
 };
 
 exports.Prisma.ModelName = {
-  aktie: 'aktie',
-  kurs: 'kurs',
-  transaktion: 'transaktion'
+  User: 'User',
+  Film: 'Film',
+  Review: 'Review',
+  Favorite: 'Favorite'
 };
 
 /**

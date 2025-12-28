@@ -14,53 +14,62 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model aktie
+ * Model User
  * 
  */
-export type aktie = $Result.DefaultSelection<Prisma.$aktiePayload>
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
- * Model kurs
+ * Model Film
  * 
  */
-export type kurs = $Result.DefaultSelection<Prisma.$kursPayload>
+export type Film = $Result.DefaultSelection<Prisma.$FilmPayload>
 /**
- * Model transaktion
+ * Model Review
  * 
  */
-export type transaktion = $Result.DefaultSelection<Prisma.$transaktionPayload>
+export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
+/**
+ * Model Favorite
+ * 
+ */
+export type Favorite = $Result.DefaultSelection<Prisma.$FavoritePayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const handelsplatz: {
-  XETRA: 'XETRA',
-  NASDAQ: 'NASDAQ',
-  NYSE: 'NYSE',
-  LSE: 'LSE',
-  FWB: 'FWB'
+  export const Role: {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
 };
 
-export type handelsplatz = (typeof handelsplatz)[keyof typeof handelsplatz]
+export type Role = (typeof Role)[keyof typeof Role]
 
 
-export const transaktionstyp: {
-  KAUF: 'KAUF',
-  VERKAUF: 'VERKAUF',
-  DIVIDENDE: 'DIVIDENDE'
+export const Genre: {
+  ACTION: 'ACTION',
+  COMEDY: 'COMEDY',
+  DRAMA: 'DRAMA',
+  HORROR: 'HORROR',
+  SCIFI: 'SCIFI',
+  THRILLER: 'THRILLER',
+  ROMANCE: 'ROMANCE',
+  DOCUMENTARY: 'DOCUMENTARY',
+  ANIMATION: 'ANIMATION',
+  FANTASY: 'FANTASY'
 };
 
-export type transaktionstyp = (typeof transaktionstyp)[keyof typeof transaktionstyp]
+export type Genre = (typeof Genre)[keyof typeof Genre]
 
 }
 
-export type handelsplatz = $Enums.handelsplatz
+export type Role = $Enums.Role
 
-export const handelsplatz: typeof $Enums.handelsplatz
+export const Role: typeof $Enums.Role
 
-export type transaktionstyp = $Enums.transaktionstyp
+export type Genre = $Enums.Genre
 
-export const transaktionstyp: typeof $Enums.transaktionstyp
+export const Genre: typeof $Enums.Genre
 
 /**
  * ##  Prisma Client ʲˢ
@@ -69,8 +78,8 @@ export const transaktionstyp: typeof $Enums.transaktionstyp
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Akties
- * const akties = await prisma.aktie.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  *
@@ -90,8 +99,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Akties
-   * const akties = await prisma.aktie.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    *
@@ -181,34 +190,44 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.aktie`: Exposes CRUD operations for the **aktie** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Akties
-    * const akties = await prisma.aktie.findMany()
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
     * ```
     */
-  get aktie(): Prisma.aktieDelegate<ExtArgs, ClientOptions>;
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.kurs`: Exposes CRUD operations for the **kurs** model.
+   * `prisma.film`: Exposes CRUD operations for the **Film** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Kurs
-    * const kurs = await prisma.kurs.findMany()
+    * // Fetch zero or more Films
+    * const films = await prisma.film.findMany()
     * ```
     */
-  get kurs(): Prisma.kursDelegate<ExtArgs, ClientOptions>;
+  get film(): Prisma.FilmDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.transaktion`: Exposes CRUD operations for the **transaktion** model.
+   * `prisma.review`: Exposes CRUD operations for the **Review** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Transaktions
-    * const transaktions = await prisma.transaktion.findMany()
+    * // Fetch zero or more Reviews
+    * const reviews = await prisma.review.findMany()
     * ```
     */
-  get transaktion(): Prisma.transaktionDelegate<ExtArgs, ClientOptions>;
+  get review(): Prisma.ReviewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.favorite`: Exposes CRUD operations for the **Favorite** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Favorites
+    * const favorites = await prisma.favorite.findMany()
+    * ```
+    */
+  get favorite(): Prisma.FavoriteDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -649,9 +668,10 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    aktie: 'aktie',
-    kurs: 'kurs',
-    transaktion: 'transaktion'
+    User: 'User',
+    Film: 'Film',
+    Review: 'Review',
+    Favorite: 'Favorite'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -670,229 +690,303 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "aktie" | "kurs" | "transaktion"
+      modelProps: "user" | "film" | "review" | "favorite"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      aktie: {
-        payload: Prisma.$aktiePayload<ExtArgs>
-        fields: Prisma.aktieFieldRefs
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.aktieFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload> | null
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.aktieFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findFirst: {
-            args: Prisma.aktieFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload> | null
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.aktieFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findMany: {
-            args: Prisma.aktieFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>[]
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           create: {
-            args: Prisma.aktieCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           createMany: {
-            args: Prisma.aktieCreateManyArgs<ExtArgs>
+            args: Prisma.UserCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.aktieCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>[]
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           delete: {
-            args: Prisma.aktieDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           update: {
-            args: Prisma.aktieUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           deleteMany: {
-            args: Prisma.aktieDeleteManyArgs<ExtArgs>
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.aktieUpdateManyArgs<ExtArgs>
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.aktieUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>[]
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           upsert: {
-            args: Prisma.aktieUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$aktiePayload>
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           aggregate: {
-            args: Prisma.AktieAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAktie>
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
           }
           groupBy: {
-            args: Prisma.aktieGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AktieGroupByOutputType>[]
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
           }
           count: {
-            args: Prisma.aktieCountArgs<ExtArgs>
-            result: $Utils.Optional<AktieCountAggregateOutputType> | number
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
           }
         }
       }
-      kurs: {
-        payload: Prisma.$kursPayload<ExtArgs>
-        fields: Prisma.kursFieldRefs
+      Film: {
+        payload: Prisma.$FilmPayload<ExtArgs>
+        fields: Prisma.FilmFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.kursFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload> | null
+            args: Prisma.FilmFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.kursFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>
+            args: Prisma.FilmFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>
           }
           findFirst: {
-            args: Prisma.kursFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload> | null
+            args: Prisma.FilmFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.kursFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>
+            args: Prisma.FilmFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>
           }
           findMany: {
-            args: Prisma.kursFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>[]
+            args: Prisma.FilmFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>[]
           }
           create: {
-            args: Prisma.kursCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>
+            args: Prisma.FilmCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>
           }
           createMany: {
-            args: Prisma.kursCreateManyArgs<ExtArgs>
+            args: Prisma.FilmCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.kursCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>[]
+            args: Prisma.FilmCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>[]
           }
           delete: {
-            args: Prisma.kursDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>
+            args: Prisma.FilmDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>
           }
           update: {
-            args: Prisma.kursUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>
+            args: Prisma.FilmUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>
           }
           deleteMany: {
-            args: Prisma.kursDeleteManyArgs<ExtArgs>
+            args: Prisma.FilmDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.kursUpdateManyArgs<ExtArgs>
+            args: Prisma.FilmUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.kursUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>[]
+            args: Prisma.FilmUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>[]
           }
           upsert: {
-            args: Prisma.kursUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$kursPayload>
+            args: Prisma.FilmUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilmPayload>
           }
           aggregate: {
-            args: Prisma.KursAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateKurs>
+            args: Prisma.FilmAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFilm>
           }
           groupBy: {
-            args: Prisma.kursGroupByArgs<ExtArgs>
-            result: $Utils.Optional<KursGroupByOutputType>[]
+            args: Prisma.FilmGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FilmGroupByOutputType>[]
           }
           count: {
-            args: Prisma.kursCountArgs<ExtArgs>
-            result: $Utils.Optional<KursCountAggregateOutputType> | number
+            args: Prisma.FilmCountArgs<ExtArgs>
+            result: $Utils.Optional<FilmCountAggregateOutputType> | number
           }
         }
       }
-      transaktion: {
-        payload: Prisma.$transaktionPayload<ExtArgs>
-        fields: Prisma.transaktionFieldRefs
+      Review: {
+        payload: Prisma.$ReviewPayload<ExtArgs>
+        fields: Prisma.ReviewFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.transaktionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload> | null
+            args: Prisma.ReviewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.transaktionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>
+            args: Prisma.ReviewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
           }
           findFirst: {
-            args: Prisma.transaktionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload> | null
+            args: Prisma.ReviewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.transaktionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>
+            args: Prisma.ReviewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
           }
           findMany: {
-            args: Prisma.transaktionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>[]
+            args: Prisma.ReviewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
           }
           create: {
-            args: Prisma.transaktionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>
+            args: Prisma.ReviewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
           }
           createMany: {
-            args: Prisma.transaktionCreateManyArgs<ExtArgs>
+            args: Prisma.ReviewCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.transaktionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>[]
+            args: Prisma.ReviewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
           }
           delete: {
-            args: Prisma.transaktionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>
+            args: Prisma.ReviewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
           }
           update: {
-            args: Prisma.transaktionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>
+            args: Prisma.ReviewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
           }
           deleteMany: {
-            args: Prisma.transaktionDeleteManyArgs<ExtArgs>
+            args: Prisma.ReviewDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.transaktionUpdateManyArgs<ExtArgs>
+            args: Prisma.ReviewUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.transaktionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>[]
+            args: Prisma.ReviewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
           }
           upsert: {
-            args: Prisma.transaktionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$transaktionPayload>
+            args: Prisma.ReviewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
           }
           aggregate: {
-            args: Prisma.TransaktionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTransaktion>
+            args: Prisma.ReviewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReview>
           }
           groupBy: {
-            args: Prisma.transaktionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TransaktionGroupByOutputType>[]
+            args: Prisma.ReviewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReviewGroupByOutputType>[]
           }
           count: {
-            args: Prisma.transaktionCountArgs<ExtArgs>
-            result: $Utils.Optional<TransaktionCountAggregateOutputType> | number
+            args: Prisma.ReviewCountArgs<ExtArgs>
+            result: $Utils.Optional<ReviewCountAggregateOutputType> | number
+          }
+        }
+      }
+      Favorite: {
+        payload: Prisma.$FavoritePayload<ExtArgs>
+        fields: Prisma.FavoriteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FavoriteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FavoriteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          findFirst: {
+            args: Prisma.FavoriteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FavoriteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          findMany: {
+            args: Prisma.FavoriteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+          }
+          create: {
+            args: Prisma.FavoriteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          createMany: {
+            args: Prisma.FavoriteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FavoriteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+          }
+          delete: {
+            args: Prisma.FavoriteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          update: {
+            args: Prisma.FavoriteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          deleteMany: {
+            args: Prisma.FavoriteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FavoriteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FavoriteUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+          }
+          upsert: {
+            args: Prisma.FavoriteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          aggregate: {
+            args: Prisma.FavoriteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFavorite>
+          }
+          groupBy: {
+            args: Prisma.FavoriteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FavoriteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FavoriteCountArgs<ExtArgs>
+            result: $Utils.Optional<FavoriteCountAggregateOutputType> | number
           }
         }
       }
@@ -992,9 +1086,10 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    aktie?: aktieOmit
-    kurs?: kursOmit
-    transaktion?: transaktionOmit
+    user?: UserOmit
+    film?: FilmOmit
+    review?: ReviewOmit
+    favorite?: FavoriteOmit
   }
 
   /* Types for Logging */
@@ -1071,42 +1166,82 @@ export namespace Prisma {
 
 
   /**
-   * Count Type AktieCountOutputType
+   * Count Type UserCountOutputType
    */
 
-  export type AktieCountOutputType = {
-    kurs: number
-    transaktion: number
+  export type UserCountOutputType = {
+    reviews: number
+    favorites: number
   }
 
-  export type AktieCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    kurs?: boolean | AktieCountOutputTypeCountKursArgs
-    transaktion?: boolean | AktieCountOutputTypeCountTransaktionArgs
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reviews?: boolean | UserCountOutputTypeCountReviewsArgs
+    favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
   }
 
   // Custom InputTypes
   /**
-   * AktieCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type AktieCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AktieCountOutputType
+     * Select specific fields to fetch from the UserCountOutputType
      */
-    select?: AktieCountOutputTypeSelect<ExtArgs> | null
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * AktieCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type AktieCountOutputTypeCountKursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: kursWhereInput
+  export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
   }
 
   /**
-   * AktieCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type AktieCountOutputTypeCountTransaktionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: transaktionWhereInput
+  export type UserCountOutputTypeCountFavoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
+  }
+
+
+  /**
+   * Count Type FilmCountOutputType
+   */
+
+  export type FilmCountOutputType = {
+    reviews: number
+    favorites: number
+  }
+
+  export type FilmCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reviews?: boolean | FilmCountOutputTypeCountReviewsArgs
+    favorites?: boolean | FilmCountOutputTypeCountFavoritesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FilmCountOutputType without action
+   */
+  export type FilmCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilmCountOutputType
+     */
+    select?: FilmCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FilmCountOutputType without action
+   */
+  export type FilmCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * FilmCountOutputType without action
+   */
+  export type FilmCountOutputTypeCountFavoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
   }
 
 
@@ -1115,511 +1250,1673 @@ export namespace Prisma {
    */
 
   /**
-   * Model aktie
+   * Model User
    */
 
-  export type AggregateAktie = {
-    _count: AktieCountAggregateOutputType | null
-    _avg: AktieAvgAggregateOutputType | null
-    _sum: AktieSumAggregateOutputType | null
-    _min: AktieMinAggregateOutputType | null
-    _max: AktieMaxAggregateOutputType | null
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  export type AktieAvgAggregateOutputType = {
+  export type UserAvgAggregateOutputType = {
     id: number | null
-    version: number | null
-    kaufpreis: Decimal | null
-    anzahl: number | null
-    dividende: Decimal | null
-    letzter_kurs: Decimal | null
   }
 
-  export type AktieSumAggregateOutputType = {
+  export type UserSumAggregateOutputType = {
     id: number | null
-    version: number | null
-    kaufpreis: Decimal | null
-    anzahl: number | null
-    dividende: Decimal | null
-    letzter_kurs: Decimal | null
   }
 
-  export type AktieMinAggregateOutputType = {
+  export type UserMinAggregateOutputType = {
     id: number | null
-    version: number | null
-    isin: string | null
-    symbol: string | null
-    name: string | null
-    branche: string | null
-    handelsplatz: $Enums.handelsplatz | null
-    kaufpreis: Decimal | null
-    anzahl: number | null
-    kaufdatum: Date | null
-    dividende: Decimal | null
-    letzter_kurs: Decimal | null
-    erzeugt: Date | null
-    aktualisiert: Date | null
+    email: string | null
+    password: string | null
+    username: string | null
+    role: $Enums.Role | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type AktieMaxAggregateOutputType = {
+  export type UserMaxAggregateOutputType = {
     id: number | null
-    version: number | null
-    isin: string | null
-    symbol: string | null
-    name: string | null
-    branche: string | null
-    handelsplatz: $Enums.handelsplatz | null
-    kaufpreis: Decimal | null
-    anzahl: number | null
-    kaufdatum: Date | null
-    dividende: Decimal | null
-    letzter_kurs: Decimal | null
-    erzeugt: Date | null
-    aktualisiert: Date | null
+    email: string | null
+    password: string | null
+    username: string | null
+    role: $Enums.Role | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type AktieCountAggregateOutputType = {
+  export type UserCountAggregateOutputType = {
     id: number
-    version: number
-    isin: number
-    symbol: number
-    name: number
-    branche: number
-    handelsplatz: number
-    kaufpreis: number
-    anzahl: number
-    kaufdatum: number
-    dividende: number
-    letzter_kurs: number
-    erzeugt: number
-    aktualisiert: number
+    email: number
+    password: number
+    username: number
+    role: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
-  export type AktieAvgAggregateInputType = {
+  export type UserAvgAggregateInputType = {
     id?: true
-    version?: true
-    kaufpreis?: true
-    anzahl?: true
-    dividende?: true
-    letzter_kurs?: true
   }
 
-  export type AktieSumAggregateInputType = {
+  export type UserSumAggregateInputType = {
     id?: true
-    version?: true
-    kaufpreis?: true
-    anzahl?: true
-    dividende?: true
-    letzter_kurs?: true
   }
 
-  export type AktieMinAggregateInputType = {
+  export type UserMinAggregateInputType = {
     id?: true
-    version?: true
-    isin?: true
-    symbol?: true
-    name?: true
-    branche?: true
-    handelsplatz?: true
-    kaufpreis?: true
-    anzahl?: true
-    kaufdatum?: true
-    dividende?: true
-    letzter_kurs?: true
-    erzeugt?: true
-    aktualisiert?: true
+    email?: true
+    password?: true
+    username?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
-  export type AktieMaxAggregateInputType = {
+  export type UserMaxAggregateInputType = {
     id?: true
-    version?: true
-    isin?: true
-    symbol?: true
-    name?: true
-    branche?: true
-    handelsplatz?: true
-    kaufpreis?: true
-    anzahl?: true
-    kaufdatum?: true
-    dividende?: true
-    letzter_kurs?: true
-    erzeugt?: true
-    aktualisiert?: true
+    email?: true
+    password?: true
+    username?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
-  export type AktieCountAggregateInputType = {
+  export type UserCountAggregateInputType = {
     id?: true
-    version?: true
-    isin?: true
-    symbol?: true
-    name?: true
-    branche?: true
-    handelsplatz?: true
-    kaufpreis?: true
-    anzahl?: true
-    kaufdatum?: true
-    dividende?: true
-    letzter_kurs?: true
-    erzeugt?: true
-    aktualisiert?: true
+    email?: true
+    password?: true
+    username?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
-  export type AktieAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which aktie to aggregate.
+     * Filter which User to aggregate.
      */
-    where?: aktieWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of akties to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: aktieOrderByWithRelationInput | aktieOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: aktieWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` akties from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` akties.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned akties
+     * Count returned Users
     **/
-    _count?: true | AktieCountAggregateInputType
+    _count?: true | UserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: AktieAvgAggregateInputType
+    _avg?: UserAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: AktieSumAggregateInputType
+    _sum?: UserSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AktieMinAggregateInputType
+    _min?: UserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AktieMaxAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type GetAktieAggregateType<T extends AktieAggregateArgs> = {
-        [P in keyof T & keyof AggregateAktie]: P extends '_count' | 'count'
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAktie[P]>
-      : GetScalarType<T[P], AggregateAktie[P]>
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
   }
 
 
 
 
-  export type aktieGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: aktieWhereInput
-    orderBy?: aktieOrderByWithAggregationInput | aktieOrderByWithAggregationInput[]
-    by: AktieScalarFieldEnum[] | AktieScalarFieldEnum
-    having?: aktieScalarWhereWithAggregatesInput
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AktieCountAggregateInputType | true
-    _avg?: AktieAvgAggregateInputType
-    _sum?: AktieSumAggregateInputType
-    _min?: AktieMinAggregateInputType
-    _max?: AktieMaxAggregateInputType
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type AktieGroupByOutputType = {
+  export type UserGroupByOutputType = {
     id: number
-    version: number
-    isin: string
-    symbol: string
-    name: string
-    branche: string | null
-    handelsplatz: $Enums.handelsplatz | null
-    kaufpreis: Decimal
-    anzahl: number
-    kaufdatum: Date | null
-    dividende: Decimal | null
-    letzter_kurs: Decimal | null
-    erzeugt: Date
-    aktualisiert: Date
-    _count: AktieCountAggregateOutputType | null
-    _avg: AktieAvgAggregateOutputType | null
-    _sum: AktieSumAggregateOutputType | null
-    _min: AktieMinAggregateOutputType | null
-    _max: AktieMaxAggregateOutputType | null
+    email: string
+    password: string
+    username: string | null
+    role: $Enums.Role
+    createdAt: Date
+    updatedAt: Date
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  type GetAktieGroupByPayload<T extends aktieGroupByArgs> = Prisma.PrismaPromise<
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AktieGroupByOutputType, T['by']> &
+      PickEnumerable<UserGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AktieGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AktieGroupByOutputType[P]>
-            : GetScalarType<T[P], AktieGroupByOutputType[P]>
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type aktieSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    version?: boolean
-    isin?: boolean
-    symbol?: boolean
-    name?: boolean
-    branche?: boolean
-    handelsplatz?: boolean
-    kaufpreis?: boolean
-    anzahl?: boolean
-    kaufdatum?: boolean
-    dividende?: boolean
-    letzter_kurs?: boolean
-    erzeugt?: boolean
-    aktualisiert?: boolean
-    kurs?: boolean | aktie$kursArgs<ExtArgs>
-    transaktion?: boolean | aktie$transaktionArgs<ExtArgs>
-    _count?: boolean | AktieCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["aktie"]>
+    email?: boolean
+    password?: boolean
+    username?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    reviews?: boolean | User$reviewsArgs<ExtArgs>
+    favorites?: boolean | User$favoritesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
 
-  export type aktieSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    version?: boolean
-    isin?: boolean
-    symbol?: boolean
-    name?: boolean
-    branche?: boolean
-    handelsplatz?: boolean
-    kaufpreis?: boolean
-    anzahl?: boolean
-    kaufdatum?: boolean
-    dividende?: boolean
-    letzter_kurs?: boolean
-    erzeugt?: boolean
-    aktualisiert?: boolean
-  }, ExtArgs["result"]["aktie"]>
+    email?: boolean
+    password?: boolean
+    username?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["user"]>
 
-  export type aktieSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    version?: boolean
-    isin?: boolean
-    symbol?: boolean
-    name?: boolean
-    branche?: boolean
-    handelsplatz?: boolean
-    kaufpreis?: boolean
-    anzahl?: boolean
-    kaufdatum?: boolean
-    dividende?: boolean
-    letzter_kurs?: boolean
-    erzeugt?: boolean
-    aktualisiert?: boolean
-  }, ExtArgs["result"]["aktie"]>
+    email?: boolean
+    password?: boolean
+    username?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["user"]>
 
-  export type aktieSelectScalar = {
+  export type UserSelectScalar = {
     id?: boolean
-    version?: boolean
-    isin?: boolean
-    symbol?: boolean
-    name?: boolean
-    branche?: boolean
-    handelsplatz?: boolean
-    kaufpreis?: boolean
-    anzahl?: boolean
-    kaufdatum?: boolean
-    dividende?: boolean
-    letzter_kurs?: boolean
-    erzeugt?: boolean
-    aktualisiert?: boolean
+    email?: boolean
+    password?: boolean
+    username?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type aktieOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "version" | "isin" | "symbol" | "name" | "branche" | "handelsplatz" | "kaufpreis" | "anzahl" | "kaufdatum" | "dividende" | "letzter_kurs" | "erzeugt" | "aktualisiert", ExtArgs["result"]["aktie"]>
-  export type aktieInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    kurs?: boolean | aktie$kursArgs<ExtArgs>
-    transaktion?: boolean | aktie$transaktionArgs<ExtArgs>
-    _count?: boolean | AktieCountOutputTypeDefaultArgs<ExtArgs>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "username" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reviews?: boolean | User$reviewsArgs<ExtArgs>
+    favorites?: boolean | User$favoritesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type aktieIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type aktieIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $aktiePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "aktie"
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
     objects: {
-      kurs: Prisma.$kursPayload<ExtArgs>[]
-      transaktion: Prisma.$transaktionPayload<ExtArgs>[]
+      reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      favorites: Prisma.$FavoritePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      email: string
+      password: string
+      username: string | null
+      role: $Enums.Role
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favorites<T extends User$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'Int'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly username: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
+    readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User updateManyAndReturn
+   */
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * User.reviews
+   */
+  export type User$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.favorites
+   */
+  export type User$favoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    cursor?: FavoriteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Film
+   */
+
+  export type AggregateFilm = {
+    _count: FilmCountAggregateOutputType | null
+    _avg: FilmAvgAggregateOutputType | null
+    _sum: FilmSumAggregateOutputType | null
+    _min: FilmMinAggregateOutputType | null
+    _max: FilmMaxAggregateOutputType | null
+  }
+
+  export type FilmAvgAggregateOutputType = {
+    id: number | null
+    version: number | null
+    erscheinungsjahr: number | null
+    dauer: number | null
+    bewertung: Decimal | null
+  }
+
+  export type FilmSumAggregateOutputType = {
+    id: number | null
+    version: number | null
+    erscheinungsjahr: number | null
+    dauer: number | null
+    bewertung: Decimal | null
+  }
+
+  export type FilmMinAggregateOutputType = {
+    id: number | null
+    version: number | null
+    titel: string | null
+    originaltitel: string | null
+    regisseur: string | null
+    erscheinungsjahr: number | null
+    dauer: number | null
+    bewertung: Decimal | null
+    beschreibung: string | null
+    sprache: string | null
+    land: string | null
+    poster: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FilmMaxAggregateOutputType = {
+    id: number | null
+    version: number | null
+    titel: string | null
+    originaltitel: string | null
+    regisseur: string | null
+    erscheinungsjahr: number | null
+    dauer: number | null
+    bewertung: Decimal | null
+    beschreibung: string | null
+    sprache: string | null
+    land: string | null
+    poster: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FilmCountAggregateOutputType = {
+    id: number
+    version: number
+    titel: number
+    originaltitel: number
+    genre: number
+    regisseur: number
+    erscheinungsjahr: number
+    dauer: number
+    bewertung: number
+    beschreibung: number
+    sprache: number
+    land: number
+    poster: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FilmAvgAggregateInputType = {
+    id?: true
+    version?: true
+    erscheinungsjahr?: true
+    dauer?: true
+    bewertung?: true
+  }
+
+  export type FilmSumAggregateInputType = {
+    id?: true
+    version?: true
+    erscheinungsjahr?: true
+    dauer?: true
+    bewertung?: true
+  }
+
+  export type FilmMinAggregateInputType = {
+    id?: true
+    version?: true
+    titel?: true
+    originaltitel?: true
+    regisseur?: true
+    erscheinungsjahr?: true
+    dauer?: true
+    bewertung?: true
+    beschreibung?: true
+    sprache?: true
+    land?: true
+    poster?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FilmMaxAggregateInputType = {
+    id?: true
+    version?: true
+    titel?: true
+    originaltitel?: true
+    regisseur?: true
+    erscheinungsjahr?: true
+    dauer?: true
+    bewertung?: true
+    beschreibung?: true
+    sprache?: true
+    land?: true
+    poster?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FilmCountAggregateInputType = {
+    id?: true
+    version?: true
+    titel?: true
+    originaltitel?: true
+    genre?: true
+    regisseur?: true
+    erscheinungsjahr?: true
+    dauer?: true
+    bewertung?: true
+    beschreibung?: true
+    sprache?: true
+    land?: true
+    poster?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FilmAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Film to aggregate.
+     */
+    where?: FilmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Films to fetch.
+     */
+    orderBy?: FilmOrderByWithRelationInput | FilmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FilmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Films from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Films.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Films
+    **/
+    _count?: true | FilmCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FilmAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FilmSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FilmMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FilmMaxAggregateInputType
+  }
+
+  export type GetFilmAggregateType<T extends FilmAggregateArgs> = {
+        [P in keyof T & keyof AggregateFilm]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFilm[P]>
+      : GetScalarType<T[P], AggregateFilm[P]>
+  }
+
+
+
+
+  export type FilmGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FilmWhereInput
+    orderBy?: FilmOrderByWithAggregationInput | FilmOrderByWithAggregationInput[]
+    by: FilmScalarFieldEnum[] | FilmScalarFieldEnum
+    having?: FilmScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FilmCountAggregateInputType | true
+    _avg?: FilmAvgAggregateInputType
+    _sum?: FilmSumAggregateInputType
+    _min?: FilmMinAggregateInputType
+    _max?: FilmMaxAggregateInputType
+  }
+
+  export type FilmGroupByOutputType = {
+    id: number
+    version: number
+    titel: string
+    originaltitel: string | null
+    genre: $Enums.Genre[]
+    regisseur: string | null
+    erscheinungsjahr: number | null
+    dauer: number | null
+    bewertung: Decimal | null
+    beschreibung: string | null
+    sprache: string | null
+    land: string | null
+    poster: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: FilmCountAggregateOutputType | null
+    _avg: FilmAvgAggregateOutputType | null
+    _sum: FilmSumAggregateOutputType | null
+    _min: FilmMinAggregateOutputType | null
+    _max: FilmMaxAggregateOutputType | null
+  }
+
+  type GetFilmGroupByPayload<T extends FilmGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FilmGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FilmGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FilmGroupByOutputType[P]>
+            : GetScalarType<T[P], FilmGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FilmSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    version?: boolean
+    titel?: boolean
+    originaltitel?: boolean
+    genre?: boolean
+    regisseur?: boolean
+    erscheinungsjahr?: boolean
+    dauer?: boolean
+    bewertung?: boolean
+    beschreibung?: boolean
+    sprache?: boolean
+    land?: boolean
+    poster?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    reviews?: boolean | Film$reviewsArgs<ExtArgs>
+    favorites?: boolean | Film$favoritesArgs<ExtArgs>
+    _count?: boolean | FilmCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["film"]>
+
+  export type FilmSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    version?: boolean
+    titel?: boolean
+    originaltitel?: boolean
+    genre?: boolean
+    regisseur?: boolean
+    erscheinungsjahr?: boolean
+    dauer?: boolean
+    bewertung?: boolean
+    beschreibung?: boolean
+    sprache?: boolean
+    land?: boolean
+    poster?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["film"]>
+
+  export type FilmSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    version?: boolean
+    titel?: boolean
+    originaltitel?: boolean
+    genre?: boolean
+    regisseur?: boolean
+    erscheinungsjahr?: boolean
+    dauer?: boolean
+    bewertung?: boolean
+    beschreibung?: boolean
+    sprache?: boolean
+    land?: boolean
+    poster?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["film"]>
+
+  export type FilmSelectScalar = {
+    id?: boolean
+    version?: boolean
+    titel?: boolean
+    originaltitel?: boolean
+    genre?: boolean
+    regisseur?: boolean
+    erscheinungsjahr?: boolean
+    dauer?: boolean
+    bewertung?: boolean
+    beschreibung?: boolean
+    sprache?: boolean
+    land?: boolean
+    poster?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FilmOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "version" | "titel" | "originaltitel" | "genre" | "regisseur" | "erscheinungsjahr" | "dauer" | "bewertung" | "beschreibung" | "sprache" | "land" | "poster" | "createdAt" | "updatedAt", ExtArgs["result"]["film"]>
+  export type FilmInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reviews?: boolean | Film$reviewsArgs<ExtArgs>
+    favorites?: boolean | Film$favoritesArgs<ExtArgs>
+    _count?: boolean | FilmCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FilmIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type FilmIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $FilmPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Film"
+    objects: {
+      reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      favorites: Prisma.$FavoritePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       version: number
-      isin: string
-      symbol: string
-      name: string
-      branche: string | null
-      handelsplatz: $Enums.handelsplatz | null
-      kaufpreis: Prisma.Decimal
-      anzahl: number
-      kaufdatum: Date | null
-      dividende: Prisma.Decimal | null
-      letzter_kurs: Prisma.Decimal | null
-      erzeugt: Date
-      aktualisiert: Date
-    }, ExtArgs["result"]["aktie"]>
+      titel: string
+      originaltitel: string | null
+      genre: $Enums.Genre[]
+      regisseur: string | null
+      erscheinungsjahr: number | null
+      dauer: number | null
+      bewertung: Prisma.Decimal | null
+      beschreibung: string | null
+      sprache: string | null
+      land: string | null
+      poster: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["film"]>
     composites: {}
   }
 
-  type aktieGetPayload<S extends boolean | null | undefined | aktieDefaultArgs> = $Result.GetResult<Prisma.$aktiePayload, S>
+  type FilmGetPayload<S extends boolean | null | undefined | FilmDefaultArgs> = $Result.GetResult<Prisma.$FilmPayload, S>
 
-  type aktieCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<aktieFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AktieCountAggregateInputType | true
+  type FilmCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FilmFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FilmCountAggregateInputType | true
     }
 
-  export interface aktieDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['aktie'], meta: { name: 'aktie' } }
+  export interface FilmDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Film'], meta: { name: 'Film' } }
     /**
-     * Find zero or one Aktie that matches the filter.
-     * @param {aktieFindUniqueArgs} args - Arguments to find a Aktie
+     * Find zero or one Film that matches the filter.
+     * @param {FilmFindUniqueArgs} args - Arguments to find a Film
      * @example
-     * // Get one Aktie
-     * const aktie = await prisma.aktie.findUnique({
+     * // Get one Film
+     * const film = await prisma.film.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends aktieFindUniqueArgs>(args: SelectSubset<T, aktieFindUniqueArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends FilmFindUniqueArgs>(args: SelectSubset<T, FilmFindUniqueArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Aktie that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Film that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {aktieFindUniqueOrThrowArgs} args - Arguments to find a Aktie
+     * @param {FilmFindUniqueOrThrowArgs} args - Arguments to find a Film
      * @example
-     * // Get one Aktie
-     * const aktie = await prisma.aktie.findUniqueOrThrow({
+     * // Get one Film
+     * const film = await prisma.film.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends aktieFindUniqueOrThrowArgs>(args: SelectSubset<T, aktieFindUniqueOrThrowArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends FilmFindUniqueOrThrowArgs>(args: SelectSubset<T, FilmFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Aktie that matches the filter.
+     * Find the first Film that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {aktieFindFirstArgs} args - Arguments to find a Aktie
+     * @param {FilmFindFirstArgs} args - Arguments to find a Film
      * @example
-     * // Get one Aktie
-     * const aktie = await prisma.aktie.findFirst({
+     * // Get one Film
+     * const film = await prisma.film.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends aktieFindFirstArgs>(args?: SelectSubset<T, aktieFindFirstArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends FilmFindFirstArgs>(args?: SelectSubset<T, FilmFindFirstArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Aktie that matches the filter or
+     * Find the first Film that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {aktieFindFirstOrThrowArgs} args - Arguments to find a Aktie
+     * @param {FilmFindFirstOrThrowArgs} args - Arguments to find a Film
      * @example
-     * // Get one Aktie
-     * const aktie = await prisma.aktie.findFirstOrThrow({
+     * // Get one Film
+     * const film = await prisma.film.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends aktieFindFirstOrThrowArgs>(args?: SelectSubset<T, aktieFindFirstOrThrowArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends FilmFindFirstOrThrowArgs>(args?: SelectSubset<T, FilmFindFirstOrThrowArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Akties that matches the filter.
+     * Find zero or more Films that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {aktieFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {FilmFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Akties
-     * const akties = await prisma.aktie.findMany()
+     * // Get all Films
+     * const films = await prisma.film.findMany()
      * 
-     * // Get first 10 Akties
-     * const akties = await prisma.aktie.findMany({ take: 10 })
+     * // Get first 10 Films
+     * const films = await prisma.film.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const aktieWithIdOnly = await prisma.aktie.findMany({ select: { id: true } })
+     * const filmWithIdOnly = await prisma.film.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends aktieFindManyArgs>(args?: SelectSubset<T, aktieFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends FilmFindManyArgs>(args?: SelectSubset<T, FilmFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Aktie.
-     * @param {aktieCreateArgs} args - Arguments to create a Aktie.
+     * Create a Film.
+     * @param {FilmCreateArgs} args - Arguments to create a Film.
      * @example
-     * // Create one Aktie
-     * const Aktie = await prisma.aktie.create({
+     * // Create one Film
+     * const Film = await prisma.film.create({
      *   data: {
-     *     // ... data to create a Aktie
+     *     // ... data to create a Film
      *   }
      * })
      * 
      */
-    create<T extends aktieCreateArgs>(args: SelectSubset<T, aktieCreateArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends FilmCreateArgs>(args: SelectSubset<T, FilmCreateArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Akties.
-     * @param {aktieCreateManyArgs} args - Arguments to create many Akties.
+     * Create many Films.
+     * @param {FilmCreateManyArgs} args - Arguments to create many Films.
      * @example
-     * // Create many Akties
-     * const aktie = await prisma.aktie.createMany({
+     * // Create many Films
+     * const film = await prisma.film.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends aktieCreateManyArgs>(args?: SelectSubset<T, aktieCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends FilmCreateManyArgs>(args?: SelectSubset<T, FilmCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Akties and returns the data saved in the database.
-     * @param {aktieCreateManyAndReturnArgs} args - Arguments to create many Akties.
+     * Create many Films and returns the data saved in the database.
+     * @param {FilmCreateManyAndReturnArgs} args - Arguments to create many Films.
      * @example
-     * // Create many Akties
-     * const aktie = await prisma.aktie.createManyAndReturn({
+     * // Create many Films
+     * const film = await prisma.film.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Akties and only return the `id`
-     * const aktieWithIdOnly = await prisma.aktie.createManyAndReturn({
+     * // Create many Films and only return the `id`
+     * const filmWithIdOnly = await prisma.film.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -1629,28 +2926,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends aktieCreateManyAndReturnArgs>(args?: SelectSubset<T, aktieCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends FilmCreateManyAndReturnArgs>(args?: SelectSubset<T, FilmCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Aktie.
-     * @param {aktieDeleteArgs} args - Arguments to delete one Aktie.
+     * Delete a Film.
+     * @param {FilmDeleteArgs} args - Arguments to delete one Film.
      * @example
-     * // Delete one Aktie
-     * const Aktie = await prisma.aktie.delete({
+     * // Delete one Film
+     * const Film = await prisma.film.delete({
      *   where: {
-     *     // ... filter to delete one Aktie
+     *     // ... filter to delete one Film
      *   }
      * })
      * 
      */
-    delete<T extends aktieDeleteArgs>(args: SelectSubset<T, aktieDeleteArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends FilmDeleteArgs>(args: SelectSubset<T, FilmDeleteArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Aktie.
-     * @param {aktieUpdateArgs} args - Arguments to update one Aktie.
+     * Update one Film.
+     * @param {FilmUpdateArgs} args - Arguments to update one Film.
      * @example
-     * // Update one Aktie
-     * const aktie = await prisma.aktie.update({
+     * // Update one Film
+     * const film = await prisma.film.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1660,30 +2957,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends aktieUpdateArgs>(args: SelectSubset<T, aktieUpdateArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends FilmUpdateArgs>(args: SelectSubset<T, FilmUpdateArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Akties.
-     * @param {aktieDeleteManyArgs} args - Arguments to filter Akties to delete.
+     * Delete zero or more Films.
+     * @param {FilmDeleteManyArgs} args - Arguments to filter Films to delete.
      * @example
-     * // Delete a few Akties
-     * const { count } = await prisma.aktie.deleteMany({
+     * // Delete a few Films
+     * const { count } = await prisma.film.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends aktieDeleteManyArgs>(args?: SelectSubset<T, aktieDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends FilmDeleteManyArgs>(args?: SelectSubset<T, FilmDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Akties.
+     * Update zero or more Films.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {aktieUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {FilmUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Akties
-     * const aktie = await prisma.aktie.updateMany({
+     * // Update many Films
+     * const film = await prisma.film.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1693,14 +2990,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends aktieUpdateManyArgs>(args: SelectSubset<T, aktieUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends FilmUpdateManyArgs>(args: SelectSubset<T, FilmUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Akties and returns the data updated in the database.
-     * @param {aktieUpdateManyAndReturnArgs} args - Arguments to update many Akties.
+     * Update zero or more Films and returns the data updated in the database.
+     * @param {FilmUpdateManyAndReturnArgs} args - Arguments to update many Films.
      * @example
-     * // Update many Akties
-     * const aktie = await prisma.aktie.updateManyAndReturn({
+     * // Update many Films
+     * const film = await prisma.film.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1709,8 +3006,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Akties and only return the `id`
-     * const aktieWithIdOnly = await prisma.aktie.updateManyAndReturn({
+     * // Update zero or more Films and only return the `id`
+     * const filmWithIdOnly = await prisma.film.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -1723,56 +3020,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends aktieUpdateManyAndReturnArgs>(args: SelectSubset<T, aktieUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends FilmUpdateManyAndReturnArgs>(args: SelectSubset<T, FilmUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Aktie.
-     * @param {aktieUpsertArgs} args - Arguments to update or create a Aktie.
+     * Create or update one Film.
+     * @param {FilmUpsertArgs} args - Arguments to update or create a Film.
      * @example
-     * // Update or create a Aktie
-     * const aktie = await prisma.aktie.upsert({
+     * // Update or create a Film
+     * const film = await prisma.film.upsert({
      *   create: {
-     *     // ... data to create a Aktie
+     *     // ... data to create a Film
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Aktie we want to update
+     *     // ... the filter for the Film we want to update
      *   }
      * })
      */
-    upsert<T extends aktieUpsertArgs>(args: SelectSubset<T, aktieUpsertArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends FilmUpsertArgs>(args: SelectSubset<T, FilmUpsertArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Akties.
+     * Count the number of Films.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {aktieCountArgs} args - Arguments to filter Akties to count.
+     * @param {FilmCountArgs} args - Arguments to filter Films to count.
      * @example
-     * // Count the number of Akties
-     * const count = await prisma.aktie.count({
+     * // Count the number of Films
+     * const count = await prisma.film.count({
      *   where: {
-     *     // ... the filter for the Akties we want to count
+     *     // ... the filter for the Films we want to count
      *   }
      * })
     **/
-    count<T extends aktieCountArgs>(
-      args?: Subset<T, aktieCountArgs>,
+    count<T extends FilmCountArgs>(
+      args?: Subset<T, FilmCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AktieCountAggregateOutputType>
+          : GetScalarType<T['select'], FilmCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Aktie.
+     * Allows you to perform aggregations operations on a Film.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AktieAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {FilmAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1792,13 +3089,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AktieAggregateArgs>(args: Subset<T, AktieAggregateArgs>): Prisma.PrismaPromise<GetAktieAggregateType<T>>
+    aggregate<T extends FilmAggregateArgs>(args: Subset<T, FilmAggregateArgs>): Prisma.PrismaPromise<GetFilmAggregateType<T>>
 
     /**
-     * Group by Aktie.
+     * Group by Film.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {aktieGroupByArgs} args - Group by arguments.
+     * @param {FilmGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1813,14 +3110,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends aktieGroupByArgs,
+      T extends FilmGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: aktieGroupByArgs['orderBy'] }
-        : { orderBy?: aktieGroupByArgs['orderBy'] },
+        ? { orderBy: FilmGroupByArgs['orderBy'] }
+        : { orderBy?: FilmGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1869,23 +3166,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, aktieGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAktieGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, FilmGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFilmGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the aktie model
+   * Fields of the Film model
    */
-  readonly fields: aktieFieldRefs;
+  readonly fields: FilmFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for aktie.
+   * The delegate class that acts as a "Promise-like" for Film.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__aktieClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__FilmClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    kurs<T extends aktie$kursArgs<ExtArgs> = {}>(args?: Subset<T, aktie$kursArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    transaktion<T extends aktie$transaktionArgs<ExtArgs> = {}>(args?: Subset<T, aktie$transaktionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviews<T extends Film$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Film$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favorites<T extends Film$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, Film$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1912,2131 +3209,916 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the aktie model
+   * Fields of the Film model
    */
-  interface aktieFieldRefs {
-    readonly id: FieldRef<"aktie", 'Int'>
-    readonly version: FieldRef<"aktie", 'Int'>
-    readonly isin: FieldRef<"aktie", 'String'>
-    readonly symbol: FieldRef<"aktie", 'String'>
-    readonly name: FieldRef<"aktie", 'String'>
-    readonly branche: FieldRef<"aktie", 'String'>
-    readonly handelsplatz: FieldRef<"aktie", 'handelsplatz'>
-    readonly kaufpreis: FieldRef<"aktie", 'Decimal'>
-    readonly anzahl: FieldRef<"aktie", 'Int'>
-    readonly kaufdatum: FieldRef<"aktie", 'DateTime'>
-    readonly dividende: FieldRef<"aktie", 'Decimal'>
-    readonly letzter_kurs: FieldRef<"aktie", 'Decimal'>
-    readonly erzeugt: FieldRef<"aktie", 'DateTime'>
-    readonly aktualisiert: FieldRef<"aktie", 'DateTime'>
+  interface FilmFieldRefs {
+    readonly id: FieldRef<"Film", 'Int'>
+    readonly version: FieldRef<"Film", 'Int'>
+    readonly titel: FieldRef<"Film", 'String'>
+    readonly originaltitel: FieldRef<"Film", 'String'>
+    readonly genre: FieldRef<"Film", 'Genre[]'>
+    readonly regisseur: FieldRef<"Film", 'String'>
+    readonly erscheinungsjahr: FieldRef<"Film", 'Int'>
+    readonly dauer: FieldRef<"Film", 'Int'>
+    readonly bewertung: FieldRef<"Film", 'Decimal'>
+    readonly beschreibung: FieldRef<"Film", 'String'>
+    readonly sprache: FieldRef<"Film", 'String'>
+    readonly land: FieldRef<"Film", 'String'>
+    readonly poster: FieldRef<"Film", 'String'>
+    readonly createdAt: FieldRef<"Film", 'DateTime'>
+    readonly updatedAt: FieldRef<"Film", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * aktie findUnique
+   * Film findUnique
    */
-  export type aktieFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * Filter, which aktie to fetch.
+     * Filter, which Film to fetch.
      */
-    where: aktieWhereUniqueInput
+    where: FilmWhereUniqueInput
   }
 
   /**
-   * aktie findUniqueOrThrow
+   * Film findUniqueOrThrow
    */
-  export type aktieFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * Filter, which aktie to fetch.
+     * Filter, which Film to fetch.
      */
-    where: aktieWhereUniqueInput
+    where: FilmWhereUniqueInput
   }
 
   /**
-   * aktie findFirst
+   * Film findFirst
    */
-  export type aktieFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * Filter, which aktie to fetch.
+     * Filter, which Film to fetch.
      */
-    where?: aktieWhereInput
+    where?: FilmWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of akties to fetch.
+     * Determine the order of Films to fetch.
      */
-    orderBy?: aktieOrderByWithRelationInput | aktieOrderByWithRelationInput[]
+    orderBy?: FilmOrderByWithRelationInput | FilmOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for akties.
+     * Sets the position for searching for Films.
      */
-    cursor?: aktieWhereUniqueInput
+    cursor?: FilmWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` akties from the position of the cursor.
+     * Take `±n` Films from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` akties.
+     * Skip the first `n` Films.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of akties.
+     * Filter by unique combinations of Films.
      */
-    distinct?: AktieScalarFieldEnum | AktieScalarFieldEnum[]
+    distinct?: FilmScalarFieldEnum | FilmScalarFieldEnum[]
   }
 
   /**
-   * aktie findFirstOrThrow
+   * Film findFirstOrThrow
    */
-  export type aktieFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * Filter, which aktie to fetch.
+     * Filter, which Film to fetch.
      */
-    where?: aktieWhereInput
+    where?: FilmWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of akties to fetch.
+     * Determine the order of Films to fetch.
      */
-    orderBy?: aktieOrderByWithRelationInput | aktieOrderByWithRelationInput[]
+    orderBy?: FilmOrderByWithRelationInput | FilmOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for akties.
+     * Sets the position for searching for Films.
      */
-    cursor?: aktieWhereUniqueInput
+    cursor?: FilmWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` akties from the position of the cursor.
+     * Take `±n` Films from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` akties.
+     * Skip the first `n` Films.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of akties.
+     * Filter by unique combinations of Films.
      */
-    distinct?: AktieScalarFieldEnum | AktieScalarFieldEnum[]
+    distinct?: FilmScalarFieldEnum | FilmScalarFieldEnum[]
   }
 
   /**
-   * aktie findMany
+   * Film findMany
    */
-  export type aktieFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * Filter, which akties to fetch.
+     * Filter, which Films to fetch.
      */
-    where?: aktieWhereInput
+    where?: FilmWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of akties to fetch.
+     * Determine the order of Films to fetch.
      */
-    orderBy?: aktieOrderByWithRelationInput | aktieOrderByWithRelationInput[]
+    orderBy?: FilmOrderByWithRelationInput | FilmOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing akties.
+     * Sets the position for listing Films.
      */
-    cursor?: aktieWhereUniqueInput
+    cursor?: FilmWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` akties from the position of the cursor.
+     * Take `±n` Films from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` akties.
+     * Skip the first `n` Films.
      */
     skip?: number
-    distinct?: AktieScalarFieldEnum | AktieScalarFieldEnum[]
+    distinct?: FilmScalarFieldEnum | FilmScalarFieldEnum[]
   }
 
   /**
-   * aktie create
+   * Film create
    */
-  export type aktieCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * The data needed to create a aktie.
+     * The data needed to create a Film.
      */
-    data: XOR<aktieCreateInput, aktieUncheckedCreateInput>
+    data: XOR<FilmCreateInput, FilmUncheckedCreateInput>
   }
 
   /**
-   * aktie createMany
+   * Film createMany
    */
-  export type aktieCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many akties.
+     * The data used to create many Films.
      */
-    data: aktieCreateManyInput | aktieCreateManyInput[]
+    data: FilmCreateManyInput | FilmCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * aktie createManyAndReturn
+   * Film createManyAndReturn
    */
-  export type aktieCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelectCreateManyAndReturn<ExtArgs> | null
+    select?: FilmSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
-     * The data used to create many akties.
+     * The data used to create many Films.
      */
-    data: aktieCreateManyInput | aktieCreateManyInput[]
+    data: FilmCreateManyInput | FilmCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * aktie update
+   * Film update
    */
-  export type aktieUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * The data needed to update a aktie.
+     * The data needed to update a Film.
      */
-    data: XOR<aktieUpdateInput, aktieUncheckedUpdateInput>
+    data: XOR<FilmUpdateInput, FilmUncheckedUpdateInput>
     /**
-     * Choose, which aktie to update.
+     * Choose, which Film to update.
      */
-    where: aktieWhereUniqueInput
+    where: FilmWhereUniqueInput
   }
 
   /**
-   * aktie updateMany
+   * Film updateMany
    */
-  export type aktieUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update akties.
+     * The data used to update Films.
      */
-    data: XOR<aktieUpdateManyMutationInput, aktieUncheckedUpdateManyInput>
+    data: XOR<FilmUpdateManyMutationInput, FilmUncheckedUpdateManyInput>
     /**
-     * Filter which akties to update
+     * Filter which Films to update
      */
-    where?: aktieWhereInput
+    where?: FilmWhereInput
     /**
-     * Limit how many akties to update.
+     * Limit how many Films to update.
      */
     limit?: number
   }
 
   /**
-   * aktie updateManyAndReturn
+   * Film updateManyAndReturn
    */
-  export type aktieUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: FilmSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
-     * The data used to update akties.
+     * The data used to update Films.
      */
-    data: XOR<aktieUpdateManyMutationInput, aktieUncheckedUpdateManyInput>
+    data: XOR<FilmUpdateManyMutationInput, FilmUncheckedUpdateManyInput>
     /**
-     * Filter which akties to update
+     * Filter which Films to update
      */
-    where?: aktieWhereInput
+    where?: FilmWhereInput
     /**
-     * Limit how many akties to update.
+     * Limit how many Films to update.
      */
     limit?: number
   }
 
   /**
-   * aktie upsert
+   * Film upsert
    */
-  export type aktieUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * The filter to search for the aktie to update in case it exists.
+     * The filter to search for the Film to update in case it exists.
      */
-    where: aktieWhereUniqueInput
+    where: FilmWhereUniqueInput
     /**
-     * In case the aktie found by the `where` argument doesn't exist, create a new aktie with this data.
+     * In case the Film found by the `where` argument doesn't exist, create a new Film with this data.
      */
-    create: XOR<aktieCreateInput, aktieUncheckedCreateInput>
+    create: XOR<FilmCreateInput, FilmUncheckedCreateInput>
     /**
-     * In case the aktie was found with the provided `where` argument, update it with this data.
+     * In case the Film was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<aktieUpdateInput, aktieUncheckedUpdateInput>
+    update: XOR<FilmUpdateInput, FilmUncheckedUpdateInput>
   }
 
   /**
-   * aktie delete
+   * Film delete
    */
-  export type aktieDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
     /**
-     * Filter which aktie to delete.
+     * Filter which Film to delete.
      */
-    where: aktieWhereUniqueInput
+    where: FilmWhereUniqueInput
   }
 
   /**
-   * aktie deleteMany
+   * Film deleteMany
    */
-  export type aktieDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which akties to delete
+     * Filter which Films to delete
      */
-    where?: aktieWhereInput
+    where?: FilmWhereInput
     /**
-     * Limit how many akties to delete.
+     * Limit how many Films to delete.
      */
     limit?: number
   }
 
   /**
-   * aktie.kurs
+   * Film.reviews
    */
-  export type aktie$kursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Film$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the kurs
+     * Select specific fields to fetch from the Review
      */
-    select?: kursSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the kurs
+     * Omit specific fields from the Review
      */
-    omit?: kursOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: kursInclude<ExtArgs> | null
-    where?: kursWhereInput
-    orderBy?: kursOrderByWithRelationInput | kursOrderByWithRelationInput[]
-    cursor?: kursWhereUniqueInput
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: KursScalarFieldEnum | KursScalarFieldEnum[]
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
-   * aktie.transaktion
+   * Film.favorites
    */
-  export type aktie$transaktionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Film$favoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Favorite
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: FavoriteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Favorite
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: FavoriteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
-    where?: transaktionWhereInput
-    orderBy?: transaktionOrderByWithRelationInput | transaktionOrderByWithRelationInput[]
-    cursor?: transaktionWhereUniqueInput
+    include?: FavoriteInclude<ExtArgs> | null
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    cursor?: FavoriteWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: TransaktionScalarFieldEnum | TransaktionScalarFieldEnum[]
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
   }
 
   /**
-   * aktie without action
+   * Film without action
    */
-  export type aktieDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FilmDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the aktie
+     * Select specific fields to fetch from the Film
      */
-    select?: aktieSelect<ExtArgs> | null
+    select?: FilmSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the aktie
+     * Omit specific fields from the Film
      */
-    omit?: aktieOmit<ExtArgs> | null
+    omit?: FilmOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: aktieInclude<ExtArgs> | null
+    include?: FilmInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model kurs
+   * Model Review
    */
 
-  export type AggregateKurs = {
-    _count: KursCountAggregateOutputType | null
-    _avg: KursAvgAggregateOutputType | null
-    _sum: KursSumAggregateOutputType | null
-    _min: KursMinAggregateOutputType | null
-    _max: KursMaxAggregateOutputType | null
+  export type AggregateReview = {
+    _count: ReviewCountAggregateOutputType | null
+    _avg: ReviewAvgAggregateOutputType | null
+    _sum: ReviewSumAggregateOutputType | null
+    _min: ReviewMinAggregateOutputType | null
+    _max: ReviewMaxAggregateOutputType | null
   }
 
-  export type KursAvgAggregateOutputType = {
+  export type ReviewAvgAggregateOutputType = {
     id: number | null
-    eroeffnung: Decimal | null
-    schluss: Decimal | null
-    hoch: Decimal | null
-    tief: Decimal | null
-    volumen: number | null
-    aktie_id: number | null
+    version: number | null
+    filmId: number | null
+    userId: number | null
+    bewertung: number | null
   }
 
-  export type KursSumAggregateOutputType = {
+  export type ReviewSumAggregateOutputType = {
     id: number | null
-    eroeffnung: Decimal | null
-    schluss: Decimal | null
-    hoch: Decimal | null
-    tief: Decimal | null
-    volumen: bigint | null
-    aktie_id: number | null
+    version: number | null
+    filmId: number | null
+    userId: number | null
+    bewertung: number | null
   }
 
-  export type KursMinAggregateOutputType = {
+  export type ReviewMinAggregateOutputType = {
     id: number | null
-    datum: Date | null
-    eroeffnung: Decimal | null
-    schluss: Decimal | null
-    hoch: Decimal | null
-    tief: Decimal | null
-    volumen: bigint | null
-    aktie_id: number | null
+    version: number | null
+    filmId: number | null
+    userId: number | null
+    bewertung: number | null
+    kommentar: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type KursMaxAggregateOutputType = {
+  export type ReviewMaxAggregateOutputType = {
     id: number | null
-    datum: Date | null
-    eroeffnung: Decimal | null
-    schluss: Decimal | null
-    hoch: Decimal | null
-    tief: Decimal | null
-    volumen: bigint | null
-    aktie_id: number | null
+    version: number | null
+    filmId: number | null
+    userId: number | null
+    bewertung: number | null
+    kommentar: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type KursCountAggregateOutputType = {
+  export type ReviewCountAggregateOutputType = {
     id: number
-    datum: number
-    eroeffnung: number
-    schluss: number
-    hoch: number
-    tief: number
-    volumen: number
-    aktie_id: number
+    version: number
+    filmId: number
+    userId: number
+    bewertung: number
+    kommentar: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
-  export type KursAvgAggregateInputType = {
+  export type ReviewAvgAggregateInputType = {
     id?: true
-    eroeffnung?: true
-    schluss?: true
-    hoch?: true
-    tief?: true
-    volumen?: true
-    aktie_id?: true
+    version?: true
+    filmId?: true
+    userId?: true
+    bewertung?: true
   }
 
-  export type KursSumAggregateInputType = {
+  export type ReviewSumAggregateInputType = {
     id?: true
-    eroeffnung?: true
-    schluss?: true
-    hoch?: true
-    tief?: true
-    volumen?: true
-    aktie_id?: true
+    version?: true
+    filmId?: true
+    userId?: true
+    bewertung?: true
   }
 
-  export type KursMinAggregateInputType = {
+  export type ReviewMinAggregateInputType = {
     id?: true
-    datum?: true
-    eroeffnung?: true
-    schluss?: true
-    hoch?: true
-    tief?: true
-    volumen?: true
-    aktie_id?: true
+    version?: true
+    filmId?: true
+    userId?: true
+    bewertung?: true
+    kommentar?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
-  export type KursMaxAggregateInputType = {
+  export type ReviewMaxAggregateInputType = {
     id?: true
-    datum?: true
-    eroeffnung?: true
-    schluss?: true
-    hoch?: true
-    tief?: true
-    volumen?: true
-    aktie_id?: true
+    version?: true
+    filmId?: true
+    userId?: true
+    bewertung?: true
+    kommentar?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
-  export type KursCountAggregateInputType = {
+  export type ReviewCountAggregateInputType = {
     id?: true
-    datum?: true
-    eroeffnung?: true
-    schluss?: true
-    hoch?: true
-    tief?: true
-    volumen?: true
-    aktie_id?: true
+    version?: true
+    filmId?: true
+    userId?: true
+    bewertung?: true
+    kommentar?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
-  export type KursAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which kurs to aggregate.
+     * Filter which Review to aggregate.
      */
-    where?: kursWhereInput
+    where?: ReviewWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of kurs to fetch.
+     * Determine the order of Reviews to fetch.
      */
-    orderBy?: kursOrderByWithRelationInput | kursOrderByWithRelationInput[]
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: kursWhereUniqueInput
+    cursor?: ReviewWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` kurs from the position of the cursor.
+     * Take `±n` Reviews from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` kurs.
+     * Skip the first `n` Reviews.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned kurs
+     * Count returned Reviews
     **/
-    _count?: true | KursCountAggregateInputType
+    _count?: true | ReviewCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: KursAvgAggregateInputType
+    _avg?: ReviewAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: KursSumAggregateInputType
+    _sum?: ReviewSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: KursMinAggregateInputType
+    _min?: ReviewMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: KursMaxAggregateInputType
+    _max?: ReviewMaxAggregateInputType
   }
 
-  export type GetKursAggregateType<T extends KursAggregateArgs> = {
-        [P in keyof T & keyof AggregateKurs]: P extends '_count' | 'count'
+  export type GetReviewAggregateType<T extends ReviewAggregateArgs> = {
+        [P in keyof T & keyof AggregateReview]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateKurs[P]>
-      : GetScalarType<T[P], AggregateKurs[P]>
+        : GetScalarType<T[P], AggregateReview[P]>
+      : GetScalarType<T[P], AggregateReview[P]>
   }
 
 
 
 
-  export type kursGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: kursWhereInput
-    orderBy?: kursOrderByWithAggregationInput | kursOrderByWithAggregationInput[]
-    by: KursScalarFieldEnum[] | KursScalarFieldEnum
-    having?: kursScalarWhereWithAggregatesInput
+  export type ReviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithAggregationInput | ReviewOrderByWithAggregationInput[]
+    by: ReviewScalarFieldEnum[] | ReviewScalarFieldEnum
+    having?: ReviewScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: KursCountAggregateInputType | true
-    _avg?: KursAvgAggregateInputType
-    _sum?: KursSumAggregateInputType
-    _min?: KursMinAggregateInputType
-    _max?: KursMaxAggregateInputType
+    _count?: ReviewCountAggregateInputType | true
+    _avg?: ReviewAvgAggregateInputType
+    _sum?: ReviewSumAggregateInputType
+    _min?: ReviewMinAggregateInputType
+    _max?: ReviewMaxAggregateInputType
   }
 
-  export type KursGroupByOutputType = {
+  export type ReviewGroupByOutputType = {
     id: number
-    datum: Date
-    eroeffnung: Decimal | null
-    schluss: Decimal | null
-    hoch: Decimal | null
-    tief: Decimal | null
-    volumen: bigint | null
-    aktie_id: number
-    _count: KursCountAggregateOutputType | null
-    _avg: KursAvgAggregateOutputType | null
-    _sum: KursSumAggregateOutputType | null
-    _min: KursMinAggregateOutputType | null
-    _max: KursMaxAggregateOutputType | null
+    version: number
+    filmId: number
+    userId: number
+    bewertung: number
+    kommentar: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ReviewCountAggregateOutputType | null
+    _avg: ReviewAvgAggregateOutputType | null
+    _sum: ReviewSumAggregateOutputType | null
+    _min: ReviewMinAggregateOutputType | null
+    _max: ReviewMaxAggregateOutputType | null
   }
 
-  type GetKursGroupByPayload<T extends kursGroupByArgs> = Prisma.PrismaPromise<
+  type GetReviewGroupByPayload<T extends ReviewGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<KursGroupByOutputType, T['by']> &
+      PickEnumerable<ReviewGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof KursGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ReviewGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], KursGroupByOutputType[P]>
-            : GetScalarType<T[P], KursGroupByOutputType[P]>
+              : GetScalarType<T[P], ReviewGroupByOutputType[P]>
+            : GetScalarType<T[P], ReviewGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type kursSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    datum?: boolean
-    eroeffnung?: boolean
-    schluss?: boolean
-    hoch?: boolean
-    tief?: boolean
-    volumen?: boolean
-    aktie_id?: boolean
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["kurs"]>
+    version?: boolean
+    filmId?: boolean
+    userId?: boolean
+    bewertung?: boolean
+    kommentar?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["review"]>
 
-  export type kursSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    datum?: boolean
-    eroeffnung?: boolean
-    schluss?: boolean
-    hoch?: boolean
-    tief?: boolean
-    volumen?: boolean
-    aktie_id?: boolean
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["kurs"]>
+    version?: boolean
+    filmId?: boolean
+    userId?: boolean
+    bewertung?: boolean
+    kommentar?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["review"]>
 
-  export type kursSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    datum?: boolean
-    eroeffnung?: boolean
-    schluss?: boolean
-    hoch?: boolean
-    tief?: boolean
-    volumen?: boolean
-    aktie_id?: boolean
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["kurs"]>
+    version?: boolean
+    filmId?: boolean
+    userId?: boolean
+    bewertung?: boolean
+    kommentar?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["review"]>
 
-  export type kursSelectScalar = {
+  export type ReviewSelectScalar = {
     id?: boolean
-    datum?: boolean
-    eroeffnung?: boolean
-    schluss?: boolean
-    hoch?: boolean
-    tief?: boolean
-    volumen?: boolean
-    aktie_id?: boolean
+    version?: boolean
+    filmId?: boolean
+    userId?: boolean
+    bewertung?: boolean
+    kommentar?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type kursOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "datum" | "eroeffnung" | "schluss" | "hoch" | "tief" | "volumen" | "aktie_id", ExtArgs["result"]["kurs"]>
-  export type kursInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
+  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "version" | "filmId" | "userId" | "bewertung" | "kommentar" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
+  export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type kursIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
+  export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type kursIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
+  export type ReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $kursPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "kurs"
+  export type $ReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Review"
     objects: {
-      aktie: Prisma.$aktiePayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      datum: Date
-      eroeffnung: Prisma.Decimal | null
-      schluss: Prisma.Decimal | null
-      hoch: Prisma.Decimal | null
-      tief: Prisma.Decimal | null
-      volumen: bigint | null
-      aktie_id: number
-    }, ExtArgs["result"]["kurs"]>
-    composites: {}
-  }
-
-  type kursGetPayload<S extends boolean | null | undefined | kursDefaultArgs> = $Result.GetResult<Prisma.$kursPayload, S>
-
-  type kursCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<kursFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: KursCountAggregateInputType | true
-    }
-
-  export interface kursDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['kurs'], meta: { name: 'kurs' } }
-    /**
-     * Find zero or one Kurs that matches the filter.
-     * @param {kursFindUniqueArgs} args - Arguments to find a Kurs
-     * @example
-     * // Get one Kurs
-     * const kurs = await prisma.kurs.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends kursFindUniqueArgs>(args: SelectSubset<T, kursFindUniqueArgs<ExtArgs>>): Prisma__kursClient<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Kurs that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {kursFindUniqueOrThrowArgs} args - Arguments to find a Kurs
-     * @example
-     * // Get one Kurs
-     * const kurs = await prisma.kurs.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends kursFindUniqueOrThrowArgs>(args: SelectSubset<T, kursFindUniqueOrThrowArgs<ExtArgs>>): Prisma__kursClient<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Kurs that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {kursFindFirstArgs} args - Arguments to find a Kurs
-     * @example
-     * // Get one Kurs
-     * const kurs = await prisma.kurs.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends kursFindFirstArgs>(args?: SelectSubset<T, kursFindFirstArgs<ExtArgs>>): Prisma__kursClient<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Kurs that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {kursFindFirstOrThrowArgs} args - Arguments to find a Kurs
-     * @example
-     * // Get one Kurs
-     * const kurs = await prisma.kurs.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends kursFindFirstOrThrowArgs>(args?: SelectSubset<T, kursFindFirstOrThrowArgs<ExtArgs>>): Prisma__kursClient<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Kurs that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {kursFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Kurs
-     * const kurs = await prisma.kurs.findMany()
-     * 
-     * // Get first 10 Kurs
-     * const kurs = await prisma.kurs.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const kursWithIdOnly = await prisma.kurs.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends kursFindManyArgs>(args?: SelectSubset<T, kursFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Kurs.
-     * @param {kursCreateArgs} args - Arguments to create a Kurs.
-     * @example
-     * // Create one Kurs
-     * const Kurs = await prisma.kurs.create({
-     *   data: {
-     *     // ... data to create a Kurs
-     *   }
-     * })
-     * 
-     */
-    create<T extends kursCreateArgs>(args: SelectSubset<T, kursCreateArgs<ExtArgs>>): Prisma__kursClient<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Kurs.
-     * @param {kursCreateManyArgs} args - Arguments to create many Kurs.
-     * @example
-     * // Create many Kurs
-     * const kurs = await prisma.kurs.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends kursCreateManyArgs>(args?: SelectSubset<T, kursCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Kurs and returns the data saved in the database.
-     * @param {kursCreateManyAndReturnArgs} args - Arguments to create many Kurs.
-     * @example
-     * // Create many Kurs
-     * const kurs = await prisma.kurs.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Kurs and only return the `id`
-     * const kursWithIdOnly = await prisma.kurs.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends kursCreateManyAndReturnArgs>(args?: SelectSubset<T, kursCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Kurs.
-     * @param {kursDeleteArgs} args - Arguments to delete one Kurs.
-     * @example
-     * // Delete one Kurs
-     * const Kurs = await prisma.kurs.delete({
-     *   where: {
-     *     // ... filter to delete one Kurs
-     *   }
-     * })
-     * 
-     */
-    delete<T extends kursDeleteArgs>(args: SelectSubset<T, kursDeleteArgs<ExtArgs>>): Prisma__kursClient<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Kurs.
-     * @param {kursUpdateArgs} args - Arguments to update one Kurs.
-     * @example
-     * // Update one Kurs
-     * const kurs = await prisma.kurs.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends kursUpdateArgs>(args: SelectSubset<T, kursUpdateArgs<ExtArgs>>): Prisma__kursClient<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Kurs.
-     * @param {kursDeleteManyArgs} args - Arguments to filter Kurs to delete.
-     * @example
-     * // Delete a few Kurs
-     * const { count } = await prisma.kurs.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends kursDeleteManyArgs>(args?: SelectSubset<T, kursDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Kurs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {kursUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Kurs
-     * const kurs = await prisma.kurs.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends kursUpdateManyArgs>(args: SelectSubset<T, kursUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Kurs and returns the data updated in the database.
-     * @param {kursUpdateManyAndReturnArgs} args - Arguments to update many Kurs.
-     * @example
-     * // Update many Kurs
-     * const kurs = await prisma.kurs.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Kurs and only return the `id`
-     * const kursWithIdOnly = await prisma.kurs.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends kursUpdateManyAndReturnArgs>(args: SelectSubset<T, kursUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Kurs.
-     * @param {kursUpsertArgs} args - Arguments to update or create a Kurs.
-     * @example
-     * // Update or create a Kurs
-     * const kurs = await prisma.kurs.upsert({
-     *   create: {
-     *     // ... data to create a Kurs
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Kurs we want to update
-     *   }
-     * })
-     */
-    upsert<T extends kursUpsertArgs>(args: SelectSubset<T, kursUpsertArgs<ExtArgs>>): Prisma__kursClient<$Result.GetResult<Prisma.$kursPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Kurs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {kursCountArgs} args - Arguments to filter Kurs to count.
-     * @example
-     * // Count the number of Kurs
-     * const count = await prisma.kurs.count({
-     *   where: {
-     *     // ... the filter for the Kurs we want to count
-     *   }
-     * })
-    **/
-    count<T extends kursCountArgs>(
-      args?: Subset<T, kursCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], KursCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Kurs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {KursAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends KursAggregateArgs>(args: Subset<T, KursAggregateArgs>): Prisma.PrismaPromise<GetKursAggregateType<T>>
-
-    /**
-     * Group by Kurs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {kursGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends kursGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: kursGroupByArgs['orderBy'] }
-        : { orderBy?: kursGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, kursGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKursGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the kurs model
-   */
-  readonly fields: kursFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for kurs.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__kursClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    aktie<T extends aktieDefaultArgs<ExtArgs> = {}>(args?: Subset<T, aktieDefaultArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the kurs model
-   */
-  interface kursFieldRefs {
-    readonly id: FieldRef<"kurs", 'Int'>
-    readonly datum: FieldRef<"kurs", 'DateTime'>
-    readonly eroeffnung: FieldRef<"kurs", 'Decimal'>
-    readonly schluss: FieldRef<"kurs", 'Decimal'>
-    readonly hoch: FieldRef<"kurs", 'Decimal'>
-    readonly tief: FieldRef<"kurs", 'Decimal'>
-    readonly volumen: FieldRef<"kurs", 'BigInt'>
-    readonly aktie_id: FieldRef<"kurs", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * kurs findUnique
-   */
-  export type kursFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * Filter, which kurs to fetch.
-     */
-    where: kursWhereUniqueInput
-  }
-
-  /**
-   * kurs findUniqueOrThrow
-   */
-  export type kursFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * Filter, which kurs to fetch.
-     */
-    where: kursWhereUniqueInput
-  }
-
-  /**
-   * kurs findFirst
-   */
-  export type kursFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * Filter, which kurs to fetch.
-     */
-    where?: kursWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of kurs to fetch.
-     */
-    orderBy?: kursOrderByWithRelationInput | kursOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for kurs.
-     */
-    cursor?: kursWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` kurs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` kurs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of kurs.
-     */
-    distinct?: KursScalarFieldEnum | KursScalarFieldEnum[]
-  }
-
-  /**
-   * kurs findFirstOrThrow
-   */
-  export type kursFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * Filter, which kurs to fetch.
-     */
-    where?: kursWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of kurs to fetch.
-     */
-    orderBy?: kursOrderByWithRelationInput | kursOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for kurs.
-     */
-    cursor?: kursWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` kurs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` kurs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of kurs.
-     */
-    distinct?: KursScalarFieldEnum | KursScalarFieldEnum[]
-  }
-
-  /**
-   * kurs findMany
-   */
-  export type kursFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * Filter, which kurs to fetch.
-     */
-    where?: kursWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of kurs to fetch.
-     */
-    orderBy?: kursOrderByWithRelationInput | kursOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing kurs.
-     */
-    cursor?: kursWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` kurs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` kurs.
-     */
-    skip?: number
-    distinct?: KursScalarFieldEnum | KursScalarFieldEnum[]
-  }
-
-  /**
-   * kurs create
-   */
-  export type kursCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * The data needed to create a kurs.
-     */
-    data: XOR<kursCreateInput, kursUncheckedCreateInput>
-  }
-
-  /**
-   * kurs createMany
-   */
-  export type kursCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many kurs.
-     */
-    data: kursCreateManyInput | kursCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * kurs createManyAndReturn
-   */
-  export type kursCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * The data used to create many kurs.
-     */
-    data: kursCreateManyInput | kursCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * kurs update
-   */
-  export type kursUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * The data needed to update a kurs.
-     */
-    data: XOR<kursUpdateInput, kursUncheckedUpdateInput>
-    /**
-     * Choose, which kurs to update.
-     */
-    where: kursWhereUniqueInput
-  }
-
-  /**
-   * kurs updateMany
-   */
-  export type kursUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update kurs.
-     */
-    data: XOR<kursUpdateManyMutationInput, kursUncheckedUpdateManyInput>
-    /**
-     * Filter which kurs to update
-     */
-    where?: kursWhereInput
-    /**
-     * Limit how many kurs to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * kurs updateManyAndReturn
-   */
-  export type kursUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * The data used to update kurs.
-     */
-    data: XOR<kursUpdateManyMutationInput, kursUncheckedUpdateManyInput>
-    /**
-     * Filter which kurs to update
-     */
-    where?: kursWhereInput
-    /**
-     * Limit how many kurs to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * kurs upsert
-   */
-  export type kursUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * The filter to search for the kurs to update in case it exists.
-     */
-    where: kursWhereUniqueInput
-    /**
-     * In case the kurs found by the `where` argument doesn't exist, create a new kurs with this data.
-     */
-    create: XOR<kursCreateInput, kursUncheckedCreateInput>
-    /**
-     * In case the kurs was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<kursUpdateInput, kursUncheckedUpdateInput>
-  }
-
-  /**
-   * kurs delete
-   */
-  export type kursDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-    /**
-     * Filter which kurs to delete.
-     */
-    where: kursWhereUniqueInput
-  }
-
-  /**
-   * kurs deleteMany
-   */
-  export type kursDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which kurs to delete
-     */
-    where?: kursWhereInput
-    /**
-     * Limit how many kurs to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * kurs without action
-   */
-  export type kursDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the kurs
-     */
-    select?: kursSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the kurs
-     */
-    omit?: kursOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: kursInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model transaktion
-   */
-
-  export type AggregateTransaktion = {
-    _count: TransaktionCountAggregateOutputType | null
-    _avg: TransaktionAvgAggregateOutputType | null
-    _sum: TransaktionSumAggregateOutputType | null
-    _min: TransaktionMinAggregateOutputType | null
-    _max: TransaktionMaxAggregateOutputType | null
-  }
-
-  export type TransaktionAvgAggregateOutputType = {
-    id: number | null
-    version: number | null
-    aktie_id: number | null
-    anzahl: number | null
-    preis: Decimal | null
-    gebuehren: Decimal | null
-    gesamtbetrag: Decimal | null
-  }
-
-  export type TransaktionSumAggregateOutputType = {
-    id: number | null
-    version: number | null
-    aktie_id: number | null
-    anzahl: number | null
-    preis: Decimal | null
-    gebuehren: Decimal | null
-    gesamtbetrag: Decimal | null
-  }
-
-  export type TransaktionMinAggregateOutputType = {
-    id: number | null
-    version: number | null
-    typ: $Enums.transaktionstyp | null
-    aktie_id: number | null
-    datum: Date | null
-    uhrzeit: Date | null
-    anzahl: number | null
-    preis: Decimal | null
-    gebuehren: Decimal | null
-    gesamtbetrag: Decimal | null
-    notiz: string | null
-    erzeugt: Date | null
-    aktualisiert: Date | null
-  }
-
-  export type TransaktionMaxAggregateOutputType = {
-    id: number | null
-    version: number | null
-    typ: $Enums.transaktionstyp | null
-    aktie_id: number | null
-    datum: Date | null
-    uhrzeit: Date | null
-    anzahl: number | null
-    preis: Decimal | null
-    gebuehren: Decimal | null
-    gesamtbetrag: Decimal | null
-    notiz: string | null
-    erzeugt: Date | null
-    aktualisiert: Date | null
-  }
-
-  export type TransaktionCountAggregateOutputType = {
-    id: number
-    version: number
-    typ: number
-    aktie_id: number
-    datum: number
-    uhrzeit: number
-    anzahl: number
-    preis: number
-    gebuehren: number
-    gesamtbetrag: number
-    notiz: number
-    erzeugt: number
-    aktualisiert: number
-    _all: number
-  }
-
-
-  export type TransaktionAvgAggregateInputType = {
-    id?: true
-    version?: true
-    aktie_id?: true
-    anzahl?: true
-    preis?: true
-    gebuehren?: true
-    gesamtbetrag?: true
-  }
-
-  export type TransaktionSumAggregateInputType = {
-    id?: true
-    version?: true
-    aktie_id?: true
-    anzahl?: true
-    preis?: true
-    gebuehren?: true
-    gesamtbetrag?: true
-  }
-
-  export type TransaktionMinAggregateInputType = {
-    id?: true
-    version?: true
-    typ?: true
-    aktie_id?: true
-    datum?: true
-    uhrzeit?: true
-    anzahl?: true
-    preis?: true
-    gebuehren?: true
-    gesamtbetrag?: true
-    notiz?: true
-    erzeugt?: true
-    aktualisiert?: true
-  }
-
-  export type TransaktionMaxAggregateInputType = {
-    id?: true
-    version?: true
-    typ?: true
-    aktie_id?: true
-    datum?: true
-    uhrzeit?: true
-    anzahl?: true
-    preis?: true
-    gebuehren?: true
-    gesamtbetrag?: true
-    notiz?: true
-    erzeugt?: true
-    aktualisiert?: true
-  }
-
-  export type TransaktionCountAggregateInputType = {
-    id?: true
-    version?: true
-    typ?: true
-    aktie_id?: true
-    datum?: true
-    uhrzeit?: true
-    anzahl?: true
-    preis?: true
-    gebuehren?: true
-    gesamtbetrag?: true
-    notiz?: true
-    erzeugt?: true
-    aktualisiert?: true
-    _all?: true
-  }
-
-  export type TransaktionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which transaktion to aggregate.
-     */
-    where?: transaktionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of transaktions to fetch.
-     */
-    orderBy?: transaktionOrderByWithRelationInput | transaktionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: transaktionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` transaktions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` transaktions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned transaktions
-    **/
-    _count?: true | TransaktionCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TransaktionAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TransaktionSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TransaktionMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TransaktionMaxAggregateInputType
-  }
-
-  export type GetTransaktionAggregateType<T extends TransaktionAggregateArgs> = {
-        [P in keyof T & keyof AggregateTransaktion]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTransaktion[P]>
-      : GetScalarType<T[P], AggregateTransaktion[P]>
-  }
-
-
-
-
-  export type transaktionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: transaktionWhereInput
-    orderBy?: transaktionOrderByWithAggregationInput | transaktionOrderByWithAggregationInput[]
-    by: TransaktionScalarFieldEnum[] | TransaktionScalarFieldEnum
-    having?: transaktionScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TransaktionCountAggregateInputType | true
-    _avg?: TransaktionAvgAggregateInputType
-    _sum?: TransaktionSumAggregateInputType
-    _min?: TransaktionMinAggregateInputType
-    _max?: TransaktionMaxAggregateInputType
-  }
-
-  export type TransaktionGroupByOutputType = {
-    id: number
-    version: number
-    typ: $Enums.transaktionstyp
-    aktie_id: number
-    datum: Date
-    uhrzeit: Date | null
-    anzahl: number
-    preis: Decimal
-    gebuehren: Decimal
-    gesamtbetrag: Decimal
-    notiz: string | null
-    erzeugt: Date
-    aktualisiert: Date
-    _count: TransaktionCountAggregateOutputType | null
-    _avg: TransaktionAvgAggregateOutputType | null
-    _sum: TransaktionSumAggregateOutputType | null
-    _min: TransaktionMinAggregateOutputType | null
-    _max: TransaktionMaxAggregateOutputType | null
-  }
-
-  type GetTransaktionGroupByPayload<T extends transaktionGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<TransaktionGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TransaktionGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TransaktionGroupByOutputType[P]>
-            : GetScalarType<T[P], TransaktionGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type transaktionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    version?: boolean
-    typ?: boolean
-    aktie_id?: boolean
-    datum?: boolean
-    uhrzeit?: boolean
-    anzahl?: boolean
-    preis?: boolean
-    gebuehren?: boolean
-    gesamtbetrag?: boolean
-    notiz?: boolean
-    erzeugt?: boolean
-    aktualisiert?: boolean
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["transaktion"]>
-
-  export type transaktionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    version?: boolean
-    typ?: boolean
-    aktie_id?: boolean
-    datum?: boolean
-    uhrzeit?: boolean
-    anzahl?: boolean
-    preis?: boolean
-    gebuehren?: boolean
-    gesamtbetrag?: boolean
-    notiz?: boolean
-    erzeugt?: boolean
-    aktualisiert?: boolean
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["transaktion"]>
-
-  export type transaktionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    version?: boolean
-    typ?: boolean
-    aktie_id?: boolean
-    datum?: boolean
-    uhrzeit?: boolean
-    anzahl?: boolean
-    preis?: boolean
-    gebuehren?: boolean
-    gesamtbetrag?: boolean
-    notiz?: boolean
-    erzeugt?: boolean
-    aktualisiert?: boolean
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["transaktion"]>
-
-  export type transaktionSelectScalar = {
-    id?: boolean
-    version?: boolean
-    typ?: boolean
-    aktie_id?: boolean
-    datum?: boolean
-    uhrzeit?: boolean
-    anzahl?: boolean
-    preis?: boolean
-    gebuehren?: boolean
-    gesamtbetrag?: boolean
-    notiz?: boolean
-    erzeugt?: boolean
-    aktualisiert?: boolean
-  }
-
-  export type transaktionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "version" | "typ" | "aktie_id" | "datum" | "uhrzeit" | "anzahl" | "preis" | "gebuehren" | "gesamtbetrag" | "notiz" | "erzeugt" | "aktualisiert", ExtArgs["result"]["transaktion"]>
-  export type transaktionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }
-  export type transaktionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }
-  export type transaktionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    aktie?: boolean | aktieDefaultArgs<ExtArgs>
-  }
-
-  export type $transaktionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "transaktion"
-    objects: {
-      aktie: Prisma.$aktiePayload<ExtArgs>
+      film: Prisma.$FilmPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       version: number
-      typ: $Enums.transaktionstyp
-      aktie_id: number
-      datum: Date
-      uhrzeit: Date | null
-      anzahl: number
-      preis: Prisma.Decimal
-      gebuehren: Prisma.Decimal
-      gesamtbetrag: Prisma.Decimal
-      notiz: string | null
-      erzeugt: Date
-      aktualisiert: Date
-    }, ExtArgs["result"]["transaktion"]>
+      filmId: number
+      userId: number
+      bewertung: number
+      kommentar: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["review"]>
     composites: {}
   }
 
-  type transaktionGetPayload<S extends boolean | null | undefined | transaktionDefaultArgs> = $Result.GetResult<Prisma.$transaktionPayload, S>
+  type ReviewGetPayload<S extends boolean | null | undefined | ReviewDefaultArgs> = $Result.GetResult<Prisma.$ReviewPayload, S>
 
-  type transaktionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<transaktionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TransaktionCountAggregateInputType | true
+  type ReviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReviewCountAggregateInputType | true
     }
 
-  export interface transaktionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['transaktion'], meta: { name: 'transaktion' } }
+  export interface ReviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Review'], meta: { name: 'Review' } }
     /**
-     * Find zero or one Transaktion that matches the filter.
-     * @param {transaktionFindUniqueArgs} args - Arguments to find a Transaktion
+     * Find zero or one Review that matches the filter.
+     * @param {ReviewFindUniqueArgs} args - Arguments to find a Review
      * @example
-     * // Get one Transaktion
-     * const transaktion = await prisma.transaktion.findUnique({
+     * // Get one Review
+     * const review = await prisma.review.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends transaktionFindUniqueArgs>(args: SelectSubset<T, transaktionFindUniqueArgs<ExtArgs>>): Prisma__transaktionClient<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ReviewFindUniqueArgs>(args: SelectSubset<T, ReviewFindUniqueArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Transaktion that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Review that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {transaktionFindUniqueOrThrowArgs} args - Arguments to find a Transaktion
+     * @param {ReviewFindUniqueOrThrowArgs} args - Arguments to find a Review
      * @example
-     * // Get one Transaktion
-     * const transaktion = await prisma.transaktion.findUniqueOrThrow({
+     * // Get one Review
+     * const review = await prisma.review.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends transaktionFindUniqueOrThrowArgs>(args: SelectSubset<T, transaktionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__transaktionClient<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ReviewFindUniqueOrThrowArgs>(args: SelectSubset<T, ReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Transaktion that matches the filter.
+     * Find the first Review that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {transaktionFindFirstArgs} args - Arguments to find a Transaktion
+     * @param {ReviewFindFirstArgs} args - Arguments to find a Review
      * @example
-     * // Get one Transaktion
-     * const transaktion = await prisma.transaktion.findFirst({
+     * // Get one Review
+     * const review = await prisma.review.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends transaktionFindFirstArgs>(args?: SelectSubset<T, transaktionFindFirstArgs<ExtArgs>>): Prisma__transaktionClient<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ReviewFindFirstArgs>(args?: SelectSubset<T, ReviewFindFirstArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Transaktion that matches the filter or
+     * Find the first Review that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {transaktionFindFirstOrThrowArgs} args - Arguments to find a Transaktion
+     * @param {ReviewFindFirstOrThrowArgs} args - Arguments to find a Review
      * @example
-     * // Get one Transaktion
-     * const transaktion = await prisma.transaktion.findFirstOrThrow({
+     * // Get one Review
+     * const review = await prisma.review.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends transaktionFindFirstOrThrowArgs>(args?: SelectSubset<T, transaktionFindFirstOrThrowArgs<ExtArgs>>): Prisma__transaktionClient<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ReviewFindFirstOrThrowArgs>(args?: SelectSubset<T, ReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Transaktions that matches the filter.
+     * Find zero or more Reviews that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {transaktionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ReviewFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Transaktions
-     * const transaktions = await prisma.transaktion.findMany()
+     * // Get all Reviews
+     * const reviews = await prisma.review.findMany()
      * 
-     * // Get first 10 Transaktions
-     * const transaktions = await prisma.transaktion.findMany({ take: 10 })
+     * // Get first 10 Reviews
+     * const reviews = await prisma.review.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const transaktionWithIdOnly = await prisma.transaktion.findMany({ select: { id: true } })
+     * const reviewWithIdOnly = await prisma.review.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends transaktionFindManyArgs>(args?: SelectSubset<T, transaktionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ReviewFindManyArgs>(args?: SelectSubset<T, ReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Transaktion.
-     * @param {transaktionCreateArgs} args - Arguments to create a Transaktion.
+     * Create a Review.
+     * @param {ReviewCreateArgs} args - Arguments to create a Review.
      * @example
-     * // Create one Transaktion
-     * const Transaktion = await prisma.transaktion.create({
+     * // Create one Review
+     * const Review = await prisma.review.create({
      *   data: {
-     *     // ... data to create a Transaktion
+     *     // ... data to create a Review
      *   }
      * })
      * 
      */
-    create<T extends transaktionCreateArgs>(args: SelectSubset<T, transaktionCreateArgs<ExtArgs>>): Prisma__transaktionClient<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ReviewCreateArgs>(args: SelectSubset<T, ReviewCreateArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Transaktions.
-     * @param {transaktionCreateManyArgs} args - Arguments to create many Transaktions.
+     * Create many Reviews.
+     * @param {ReviewCreateManyArgs} args - Arguments to create many Reviews.
      * @example
-     * // Create many Transaktions
-     * const transaktion = await prisma.transaktion.createMany({
+     * // Create many Reviews
+     * const review = await prisma.review.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends transaktionCreateManyArgs>(args?: SelectSubset<T, transaktionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ReviewCreateManyArgs>(args?: SelectSubset<T, ReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Transaktions and returns the data saved in the database.
-     * @param {transaktionCreateManyAndReturnArgs} args - Arguments to create many Transaktions.
+     * Create many Reviews and returns the data saved in the database.
+     * @param {ReviewCreateManyAndReturnArgs} args - Arguments to create many Reviews.
      * @example
-     * // Create many Transaktions
-     * const transaktion = await prisma.transaktion.createManyAndReturn({
+     * // Create many Reviews
+     * const review = await prisma.review.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Transaktions and only return the `id`
-     * const transaktionWithIdOnly = await prisma.transaktion.createManyAndReturn({
+     * // Create many Reviews and only return the `id`
+     * const reviewWithIdOnly = await prisma.review.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -4046,28 +4128,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends transaktionCreateManyAndReturnArgs>(args?: SelectSubset<T, transaktionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ReviewCreateManyAndReturnArgs>(args?: SelectSubset<T, ReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Transaktion.
-     * @param {transaktionDeleteArgs} args - Arguments to delete one Transaktion.
+     * Delete a Review.
+     * @param {ReviewDeleteArgs} args - Arguments to delete one Review.
      * @example
-     * // Delete one Transaktion
-     * const Transaktion = await prisma.transaktion.delete({
+     * // Delete one Review
+     * const Review = await prisma.review.delete({
      *   where: {
-     *     // ... filter to delete one Transaktion
+     *     // ... filter to delete one Review
      *   }
      * })
      * 
      */
-    delete<T extends transaktionDeleteArgs>(args: SelectSubset<T, transaktionDeleteArgs<ExtArgs>>): Prisma__transaktionClient<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ReviewDeleteArgs>(args: SelectSubset<T, ReviewDeleteArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Transaktion.
-     * @param {transaktionUpdateArgs} args - Arguments to update one Transaktion.
+     * Update one Review.
+     * @param {ReviewUpdateArgs} args - Arguments to update one Review.
      * @example
-     * // Update one Transaktion
-     * const transaktion = await prisma.transaktion.update({
+     * // Update one Review
+     * const review = await prisma.review.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4077,30 +4159,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends transaktionUpdateArgs>(args: SelectSubset<T, transaktionUpdateArgs<ExtArgs>>): Prisma__transaktionClient<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ReviewUpdateArgs>(args: SelectSubset<T, ReviewUpdateArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Transaktions.
-     * @param {transaktionDeleteManyArgs} args - Arguments to filter Transaktions to delete.
+     * Delete zero or more Reviews.
+     * @param {ReviewDeleteManyArgs} args - Arguments to filter Reviews to delete.
      * @example
-     * // Delete a few Transaktions
-     * const { count } = await prisma.transaktion.deleteMany({
+     * // Delete a few Reviews
+     * const { count } = await prisma.review.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends transaktionDeleteManyArgs>(args?: SelectSubset<T, transaktionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ReviewDeleteManyArgs>(args?: SelectSubset<T, ReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Transaktions.
+     * Update zero or more Reviews.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {transaktionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ReviewUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Transaktions
-     * const transaktion = await prisma.transaktion.updateMany({
+     * // Update many Reviews
+     * const review = await prisma.review.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4110,14 +4192,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends transaktionUpdateManyArgs>(args: SelectSubset<T, transaktionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ReviewUpdateManyArgs>(args: SelectSubset<T, ReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Transaktions and returns the data updated in the database.
-     * @param {transaktionUpdateManyAndReturnArgs} args - Arguments to update many Transaktions.
+     * Update zero or more Reviews and returns the data updated in the database.
+     * @param {ReviewUpdateManyAndReturnArgs} args - Arguments to update many Reviews.
      * @example
-     * // Update many Transaktions
-     * const transaktion = await prisma.transaktion.updateManyAndReturn({
+     * // Update many Reviews
+     * const review = await prisma.review.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4126,8 +4208,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Transaktions and only return the `id`
-     * const transaktionWithIdOnly = await prisma.transaktion.updateManyAndReturn({
+     * // Update zero or more Reviews and only return the `id`
+     * const reviewWithIdOnly = await prisma.review.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -4140,56 +4222,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends transaktionUpdateManyAndReturnArgs>(args: SelectSubset<T, transaktionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ReviewUpdateManyAndReturnArgs>(args: SelectSubset<T, ReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Transaktion.
-     * @param {transaktionUpsertArgs} args - Arguments to update or create a Transaktion.
+     * Create or update one Review.
+     * @param {ReviewUpsertArgs} args - Arguments to update or create a Review.
      * @example
-     * // Update or create a Transaktion
-     * const transaktion = await prisma.transaktion.upsert({
+     * // Update or create a Review
+     * const review = await prisma.review.upsert({
      *   create: {
-     *     // ... data to create a Transaktion
+     *     // ... data to create a Review
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Transaktion we want to update
+     *     // ... the filter for the Review we want to update
      *   }
      * })
      */
-    upsert<T extends transaktionUpsertArgs>(args: SelectSubset<T, transaktionUpsertArgs<ExtArgs>>): Prisma__transaktionClient<$Result.GetResult<Prisma.$transaktionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ReviewUpsertArgs>(args: SelectSubset<T, ReviewUpsertArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Transaktions.
+     * Count the number of Reviews.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {transaktionCountArgs} args - Arguments to filter Transaktions to count.
+     * @param {ReviewCountArgs} args - Arguments to filter Reviews to count.
      * @example
-     * // Count the number of Transaktions
-     * const count = await prisma.transaktion.count({
+     * // Count the number of Reviews
+     * const count = await prisma.review.count({
      *   where: {
-     *     // ... the filter for the Transaktions we want to count
+     *     // ... the filter for the Reviews we want to count
      *   }
      * })
     **/
-    count<T extends transaktionCountArgs>(
-      args?: Subset<T, transaktionCountArgs>,
+    count<T extends ReviewCountArgs>(
+      args?: Subset<T, ReviewCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TransaktionCountAggregateOutputType>
+          : GetScalarType<T['select'], ReviewCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Transaktion.
+     * Allows you to perform aggregations operations on a Review.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TransaktionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -4209,13 +4291,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TransaktionAggregateArgs>(args: Subset<T, TransaktionAggregateArgs>): Prisma.PrismaPromise<GetTransaktionAggregateType<T>>
+    aggregate<T extends ReviewAggregateArgs>(args: Subset<T, ReviewAggregateArgs>): Prisma.PrismaPromise<GetReviewAggregateType<T>>
 
     /**
-     * Group by Transaktion.
+     * Group by Review.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {transaktionGroupByArgs} args - Group by arguments.
+     * @param {ReviewGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -4230,14 +4312,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends transaktionGroupByArgs,
+      T extends ReviewGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: transaktionGroupByArgs['orderBy'] }
-        : { orderBy?: transaktionGroupByArgs['orderBy'] },
+        ? { orderBy: ReviewGroupByArgs['orderBy'] }
+        : { orderBy?: ReviewGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -4286,22 +4368,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, transaktionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTransaktionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the transaktion model
+   * Fields of the Review model
    */
-  readonly fields: transaktionFieldRefs;
+  readonly fields: ReviewFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for transaktion.
+   * The delegate class that acts as a "Promise-like" for Review.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__transaktionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    aktie<T extends aktieDefaultArgs<ExtArgs> = {}>(args?: Subset<T, aktieDefaultArgs<ExtArgs>>): Prisma__aktieClient<$Result.GetResult<Prisma.$aktiePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    film<T extends FilmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FilmDefaultArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4328,433 +4411,1523 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the transaktion model
+   * Fields of the Review model
    */
-  interface transaktionFieldRefs {
-    readonly id: FieldRef<"transaktion", 'Int'>
-    readonly version: FieldRef<"transaktion", 'Int'>
-    readonly typ: FieldRef<"transaktion", 'transaktionstyp'>
-    readonly aktie_id: FieldRef<"transaktion", 'Int'>
-    readonly datum: FieldRef<"transaktion", 'DateTime'>
-    readonly uhrzeit: FieldRef<"transaktion", 'DateTime'>
-    readonly anzahl: FieldRef<"transaktion", 'Int'>
-    readonly preis: FieldRef<"transaktion", 'Decimal'>
-    readonly gebuehren: FieldRef<"transaktion", 'Decimal'>
-    readonly gesamtbetrag: FieldRef<"transaktion", 'Decimal'>
-    readonly notiz: FieldRef<"transaktion", 'String'>
-    readonly erzeugt: FieldRef<"transaktion", 'DateTime'>
-    readonly aktualisiert: FieldRef<"transaktion", 'DateTime'>
+  interface ReviewFieldRefs {
+    readonly id: FieldRef<"Review", 'Int'>
+    readonly version: FieldRef<"Review", 'Int'>
+    readonly filmId: FieldRef<"Review", 'Int'>
+    readonly userId: FieldRef<"Review", 'Int'>
+    readonly bewertung: FieldRef<"Review", 'Int'>
+    readonly kommentar: FieldRef<"Review", 'String'>
+    readonly createdAt: FieldRef<"Review", 'DateTime'>
+    readonly updatedAt: FieldRef<"Review", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * transaktion findUnique
+   * Review findUnique
    */
-  export type transaktionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * Filter, which transaktion to fetch.
+     * Filter, which Review to fetch.
      */
-    where: transaktionWhereUniqueInput
+    where: ReviewWhereUniqueInput
   }
 
   /**
-   * transaktion findUniqueOrThrow
+   * Review findUniqueOrThrow
    */
-  export type transaktionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * Filter, which transaktion to fetch.
+     * Filter, which Review to fetch.
      */
-    where: transaktionWhereUniqueInput
+    where: ReviewWhereUniqueInput
   }
 
   /**
-   * transaktion findFirst
+   * Review findFirst
    */
-  export type transaktionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * Filter, which transaktion to fetch.
+     * Filter, which Review to fetch.
      */
-    where?: transaktionWhereInput
+    where?: ReviewWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of transaktions to fetch.
+     * Determine the order of Reviews to fetch.
      */
-    orderBy?: transaktionOrderByWithRelationInput | transaktionOrderByWithRelationInput[]
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for transaktions.
+     * Sets the position for searching for Reviews.
      */
-    cursor?: transaktionWhereUniqueInput
+    cursor?: ReviewWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` transaktions from the position of the cursor.
+     * Take `±n` Reviews from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` transaktions.
+     * Skip the first `n` Reviews.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of transaktions.
+     * Filter by unique combinations of Reviews.
      */
-    distinct?: TransaktionScalarFieldEnum | TransaktionScalarFieldEnum[]
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
-   * transaktion findFirstOrThrow
+   * Review findFirstOrThrow
    */
-  export type transaktionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * Filter, which transaktion to fetch.
+     * Filter, which Review to fetch.
      */
-    where?: transaktionWhereInput
+    where?: ReviewWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of transaktions to fetch.
+     * Determine the order of Reviews to fetch.
      */
-    orderBy?: transaktionOrderByWithRelationInput | transaktionOrderByWithRelationInput[]
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for transaktions.
+     * Sets the position for searching for Reviews.
      */
-    cursor?: transaktionWhereUniqueInput
+    cursor?: ReviewWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` transaktions from the position of the cursor.
+     * Take `±n` Reviews from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` transaktions.
+     * Skip the first `n` Reviews.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of transaktions.
+     * Filter by unique combinations of Reviews.
      */
-    distinct?: TransaktionScalarFieldEnum | TransaktionScalarFieldEnum[]
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
-   * transaktion findMany
+   * Review findMany
    */
-  export type transaktionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * Filter, which transaktions to fetch.
+     * Filter, which Reviews to fetch.
      */
-    where?: transaktionWhereInput
+    where?: ReviewWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of transaktions to fetch.
+     * Determine the order of Reviews to fetch.
      */
-    orderBy?: transaktionOrderByWithRelationInput | transaktionOrderByWithRelationInput[]
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing transaktions.
+     * Sets the position for listing Reviews.
      */
-    cursor?: transaktionWhereUniqueInput
+    cursor?: ReviewWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` transaktions from the position of the cursor.
+     * Take `±n` Reviews from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` transaktions.
+     * Skip the first `n` Reviews.
      */
     skip?: number
-    distinct?: TransaktionScalarFieldEnum | TransaktionScalarFieldEnum[]
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
-   * transaktion create
+   * Review create
    */
-  export type transaktionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * The data needed to create a transaktion.
+     * The data needed to create a Review.
      */
-    data: XOR<transaktionCreateInput, transaktionUncheckedCreateInput>
+    data: XOR<ReviewCreateInput, ReviewUncheckedCreateInput>
   }
 
   /**
-   * transaktion createMany
+   * Review createMany
    */
-  export type transaktionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many transaktions.
+     * The data used to create many Reviews.
      */
-    data: transaktionCreateManyInput | transaktionCreateManyInput[]
+    data: ReviewCreateManyInput | ReviewCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * transaktion createManyAndReturn
+   * Review createManyAndReturn
    */
-  export type transaktionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ReviewSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
-     * The data used to create many transaktions.
+     * The data used to create many Reviews.
      */
-    data: transaktionCreateManyInput | transaktionCreateManyInput[]
+    data: ReviewCreateManyInput | ReviewCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: ReviewIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * transaktion update
+   * Review update
    */
-  export type transaktionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * The data needed to update a transaktion.
+     * The data needed to update a Review.
      */
-    data: XOR<transaktionUpdateInput, transaktionUncheckedUpdateInput>
+    data: XOR<ReviewUpdateInput, ReviewUncheckedUpdateInput>
     /**
-     * Choose, which transaktion to update.
+     * Choose, which Review to update.
      */
-    where: transaktionWhereUniqueInput
+    where: ReviewWhereUniqueInput
   }
 
   /**
-   * transaktion updateMany
+   * Review updateMany
    */
-  export type transaktionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update transaktions.
+     * The data used to update Reviews.
      */
-    data: XOR<transaktionUpdateManyMutationInput, transaktionUncheckedUpdateManyInput>
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyInput>
     /**
-     * Filter which transaktions to update
+     * Filter which Reviews to update
      */
-    where?: transaktionWhereInput
+    where?: ReviewWhereInput
     /**
-     * Limit how many transaktions to update.
+     * Limit how many Reviews to update.
      */
     limit?: number
   }
 
   /**
-   * transaktion updateManyAndReturn
+   * Review updateManyAndReturn
    */
-  export type transaktionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ReviewSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
-     * The data used to update transaktions.
+     * The data used to update Reviews.
      */
-    data: XOR<transaktionUpdateManyMutationInput, transaktionUncheckedUpdateManyInput>
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyInput>
     /**
-     * Filter which transaktions to update
+     * Filter which Reviews to update
      */
-    where?: transaktionWhereInput
+    where?: ReviewWhereInput
     /**
-     * Limit how many transaktions to update.
+     * Limit how many Reviews to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: ReviewIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * transaktion upsert
+   * Review upsert
    */
-  export type transaktionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * The filter to search for the transaktion to update in case it exists.
+     * The filter to search for the Review to update in case it exists.
      */
-    where: transaktionWhereUniqueInput
+    where: ReviewWhereUniqueInput
     /**
-     * In case the transaktion found by the `where` argument doesn't exist, create a new transaktion with this data.
+     * In case the Review found by the `where` argument doesn't exist, create a new Review with this data.
      */
-    create: XOR<transaktionCreateInput, transaktionUncheckedCreateInput>
+    create: XOR<ReviewCreateInput, ReviewUncheckedCreateInput>
     /**
-     * In case the transaktion was found with the provided `where` argument, update it with this data.
+     * In case the Review was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<transaktionUpdateInput, transaktionUncheckedUpdateInput>
+    update: XOR<ReviewUpdateInput, ReviewUncheckedUpdateInput>
   }
 
   /**
-   * transaktion delete
+   * Review delete
    */
-  export type transaktionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
     /**
-     * Filter which transaktion to delete.
+     * Filter which Review to delete.
      */
-    where: transaktionWhereUniqueInput
+    where: ReviewWhereUniqueInput
   }
 
   /**
-   * transaktion deleteMany
+   * Review deleteMany
    */
-  export type transaktionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which transaktions to delete
+     * Filter which Reviews to delete
      */
-    where?: transaktionWhereInput
+    where?: ReviewWhereInput
     /**
-     * Limit how many transaktions to delete.
+     * Limit how many Reviews to delete.
      */
     limit?: number
   }
 
   /**
-   * transaktion without action
+   * Review without action
    */
-  export type transaktionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the transaktion
+     * Select specific fields to fetch from the Review
      */
-    select?: transaktionSelect<ExtArgs> | null
+    select?: ReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the transaktion
+     * Omit specific fields from the Review
      */
-    omit?: transaktionOmit<ExtArgs> | null
+    omit?: ReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: transaktionInclude<ExtArgs> | null
+    include?: ReviewInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Favorite
+   */
+
+  export type AggregateFavorite = {
+    _count: FavoriteCountAggregateOutputType | null
+    _avg: FavoriteAvgAggregateOutputType | null
+    _sum: FavoriteSumAggregateOutputType | null
+    _min: FavoriteMinAggregateOutputType | null
+    _max: FavoriteMaxAggregateOutputType | null
+  }
+
+  export type FavoriteAvgAggregateOutputType = {
+    id: number | null
+    filmId: number | null
+    userId: number | null
+  }
+
+  export type FavoriteSumAggregateOutputType = {
+    id: number | null
+    filmId: number | null
+    userId: number | null
+  }
+
+  export type FavoriteMinAggregateOutputType = {
+    id: number | null
+    filmId: number | null
+    userId: number | null
+    createdAt: Date | null
+  }
+
+  export type FavoriteMaxAggregateOutputType = {
+    id: number | null
+    filmId: number | null
+    userId: number | null
+    createdAt: Date | null
+  }
+
+  export type FavoriteCountAggregateOutputType = {
+    id: number
+    filmId: number
+    userId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FavoriteAvgAggregateInputType = {
+    id?: true
+    filmId?: true
+    userId?: true
+  }
+
+  export type FavoriteSumAggregateInputType = {
+    id?: true
+    filmId?: true
+    userId?: true
+  }
+
+  export type FavoriteMinAggregateInputType = {
+    id?: true
+    filmId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type FavoriteMaxAggregateInputType = {
+    id?: true
+    filmId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type FavoriteCountAggregateInputType = {
+    id?: true
+    filmId?: true
+    userId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FavoriteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Favorite to aggregate.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Favorites
+    **/
+    _count?: true | FavoriteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FavoriteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FavoriteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FavoriteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FavoriteMaxAggregateInputType
+  }
+
+  export type GetFavoriteAggregateType<T extends FavoriteAggregateArgs> = {
+        [P in keyof T & keyof AggregateFavorite]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFavorite[P]>
+      : GetScalarType<T[P], AggregateFavorite[P]>
+  }
+
+
+
+
+  export type FavoriteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithAggregationInput | FavoriteOrderByWithAggregationInput[]
+    by: FavoriteScalarFieldEnum[] | FavoriteScalarFieldEnum
+    having?: FavoriteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FavoriteCountAggregateInputType | true
+    _avg?: FavoriteAvgAggregateInputType
+    _sum?: FavoriteSumAggregateInputType
+    _min?: FavoriteMinAggregateInputType
+    _max?: FavoriteMaxAggregateInputType
+  }
+
+  export type FavoriteGroupByOutputType = {
+    id: number
+    filmId: number
+    userId: number
+    createdAt: Date
+    _count: FavoriteCountAggregateOutputType | null
+    _avg: FavoriteAvgAggregateOutputType | null
+    _sum: FavoriteSumAggregateOutputType | null
+    _min: FavoriteMinAggregateOutputType | null
+    _max: FavoriteMaxAggregateOutputType | null
+  }
+
+  type GetFavoriteGroupByPayload<T extends FavoriteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FavoriteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FavoriteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FavoriteGroupByOutputType[P]>
+            : GetScalarType<T[P], FavoriteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FavoriteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    filmId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["favorite"]>
+
+  export type FavoriteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    filmId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["favorite"]>
+
+  export type FavoriteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    filmId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["favorite"]>
+
+  export type FavoriteSelectScalar = {
+    id?: boolean
+    filmId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }
+
+  export type FavoriteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "filmId" | "userId" | "createdAt", ExtArgs["result"]["favorite"]>
+  export type FavoriteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FavoriteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FavoriteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    film?: boolean | FilmDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $FavoritePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Favorite"
+    objects: {
+      film: Prisma.$FilmPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      filmId: number
+      userId: number
+      createdAt: Date
+    }, ExtArgs["result"]["favorite"]>
+    composites: {}
+  }
+
+  type FavoriteGetPayload<S extends boolean | null | undefined | FavoriteDefaultArgs> = $Result.GetResult<Prisma.$FavoritePayload, S>
+
+  type FavoriteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FavoriteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FavoriteCountAggregateInputType | true
+    }
+
+  export interface FavoriteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Favorite'], meta: { name: 'Favorite' } }
+    /**
+     * Find zero or one Favorite that matches the filter.
+     * @param {FavoriteFindUniqueArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FavoriteFindUniqueArgs>(args: SelectSubset<T, FavoriteFindUniqueArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Favorite that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FavoriteFindUniqueOrThrowArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FavoriteFindUniqueOrThrowArgs>(args: SelectSubset<T, FavoriteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Favorite that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindFirstArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FavoriteFindFirstArgs>(args?: SelectSubset<T, FavoriteFindFirstArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Favorite that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindFirstOrThrowArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FavoriteFindFirstOrThrowArgs>(args?: SelectSubset<T, FavoriteFindFirstOrThrowArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Favorites that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Favorites
+     * const favorites = await prisma.favorite.findMany()
+     * 
+     * // Get first 10 Favorites
+     * const favorites = await prisma.favorite.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const favoriteWithIdOnly = await prisma.favorite.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FavoriteFindManyArgs>(args?: SelectSubset<T, FavoriteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Favorite.
+     * @param {FavoriteCreateArgs} args - Arguments to create a Favorite.
+     * @example
+     * // Create one Favorite
+     * const Favorite = await prisma.favorite.create({
+     *   data: {
+     *     // ... data to create a Favorite
+     *   }
+     * })
+     * 
+     */
+    create<T extends FavoriteCreateArgs>(args: SelectSubset<T, FavoriteCreateArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Favorites.
+     * @param {FavoriteCreateManyArgs} args - Arguments to create many Favorites.
+     * @example
+     * // Create many Favorites
+     * const favorite = await prisma.favorite.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FavoriteCreateManyArgs>(args?: SelectSubset<T, FavoriteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Favorites and returns the data saved in the database.
+     * @param {FavoriteCreateManyAndReturnArgs} args - Arguments to create many Favorites.
+     * @example
+     * // Create many Favorites
+     * const favorite = await prisma.favorite.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Favorites and only return the `id`
+     * const favoriteWithIdOnly = await prisma.favorite.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FavoriteCreateManyAndReturnArgs>(args?: SelectSubset<T, FavoriteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Favorite.
+     * @param {FavoriteDeleteArgs} args - Arguments to delete one Favorite.
+     * @example
+     * // Delete one Favorite
+     * const Favorite = await prisma.favorite.delete({
+     *   where: {
+     *     // ... filter to delete one Favorite
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FavoriteDeleteArgs>(args: SelectSubset<T, FavoriteDeleteArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Favorite.
+     * @param {FavoriteUpdateArgs} args - Arguments to update one Favorite.
+     * @example
+     * // Update one Favorite
+     * const favorite = await prisma.favorite.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FavoriteUpdateArgs>(args: SelectSubset<T, FavoriteUpdateArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Favorites.
+     * @param {FavoriteDeleteManyArgs} args - Arguments to filter Favorites to delete.
+     * @example
+     * // Delete a few Favorites
+     * const { count } = await prisma.favorite.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FavoriteDeleteManyArgs>(args?: SelectSubset<T, FavoriteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Favorites.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Favorites
+     * const favorite = await prisma.favorite.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FavoriteUpdateManyArgs>(args: SelectSubset<T, FavoriteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Favorites and returns the data updated in the database.
+     * @param {FavoriteUpdateManyAndReturnArgs} args - Arguments to update many Favorites.
+     * @example
+     * // Update many Favorites
+     * const favorite = await prisma.favorite.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Favorites and only return the `id`
+     * const favoriteWithIdOnly = await prisma.favorite.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FavoriteUpdateManyAndReturnArgs>(args: SelectSubset<T, FavoriteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Favorite.
+     * @param {FavoriteUpsertArgs} args - Arguments to update or create a Favorite.
+     * @example
+     * // Update or create a Favorite
+     * const favorite = await prisma.favorite.upsert({
+     *   create: {
+     *     // ... data to create a Favorite
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Favorite we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FavoriteUpsertArgs>(args: SelectSubset<T, FavoriteUpsertArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Favorites.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteCountArgs} args - Arguments to filter Favorites to count.
+     * @example
+     * // Count the number of Favorites
+     * const count = await prisma.favorite.count({
+     *   where: {
+     *     // ... the filter for the Favorites we want to count
+     *   }
+     * })
+    **/
+    count<T extends FavoriteCountArgs>(
+      args?: Subset<T, FavoriteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FavoriteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Favorite.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FavoriteAggregateArgs>(args: Subset<T, FavoriteAggregateArgs>): Prisma.PrismaPromise<GetFavoriteAggregateType<T>>
+
+    /**
+     * Group by Favorite.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FavoriteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FavoriteGroupByArgs['orderBy'] }
+        : { orderBy?: FavoriteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FavoriteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFavoriteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Favorite model
+   */
+  readonly fields: FavoriteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Favorite.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FavoriteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    film<T extends FilmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FilmDefaultArgs<ExtArgs>>): Prisma__FilmClient<$Result.GetResult<Prisma.$FilmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Favorite model
+   */
+  interface FavoriteFieldRefs {
+    readonly id: FieldRef<"Favorite", 'Int'>
+    readonly filmId: FieldRef<"Favorite", 'Int'>
+    readonly userId: FieldRef<"Favorite", 'Int'>
+    readonly createdAt: FieldRef<"Favorite", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Favorite findUnique
+   */
+  export type FavoriteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+  /**
+   * Favorite findUniqueOrThrow
+   */
+  export type FavoriteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+  /**
+   * Favorite findFirst
+   */
+  export type FavoriteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favorites.
+     */
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * Favorite findFirstOrThrow
+   */
+  export type FavoriteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favorites.
+     */
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * Favorite findMany
+   */
+  export type FavoriteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorites to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * Favorite create
+   */
+  export type FavoriteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Favorite.
+     */
+    data: XOR<FavoriteCreateInput, FavoriteUncheckedCreateInput>
+  }
+
+  /**
+   * Favorite createMany
+   */
+  export type FavoriteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Favorites.
+     */
+    data: FavoriteCreateManyInput | FavoriteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Favorite createManyAndReturn
+   */
+  export type FavoriteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * The data used to create many Favorites.
+     */
+    data: FavoriteCreateManyInput | FavoriteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Favorite update
+   */
+  export type FavoriteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Favorite.
+     */
+    data: XOR<FavoriteUpdateInput, FavoriteUncheckedUpdateInput>
+    /**
+     * Choose, which Favorite to update.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+  /**
+   * Favorite updateMany
+   */
+  export type FavoriteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Favorites.
+     */
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyInput>
+    /**
+     * Filter which Favorites to update
+     */
+    where?: FavoriteWhereInput
+    /**
+     * Limit how many Favorites to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Favorite updateManyAndReturn
+   */
+  export type FavoriteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * The data used to update Favorites.
+     */
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyInput>
+    /**
+     * Filter which Favorites to update
+     */
+    where?: FavoriteWhereInput
+    /**
+     * Limit how many Favorites to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Favorite upsert
+   */
+  export type FavoriteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Favorite to update in case it exists.
+     */
+    where: FavoriteWhereUniqueInput
+    /**
+     * In case the Favorite found by the `where` argument doesn't exist, create a new Favorite with this data.
+     */
+    create: XOR<FavoriteCreateInput, FavoriteUncheckedCreateInput>
+    /**
+     * In case the Favorite was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FavoriteUpdateInput, FavoriteUncheckedUpdateInput>
+  }
+
+  /**
+   * Favorite delete
+   */
+  export type FavoriteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter which Favorite to delete.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+  /**
+   * Favorite deleteMany
+   */
+  export type FavoriteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Favorites to delete
+     */
+    where?: FavoriteWhereInput
+    /**
+     * Limit how many Favorites to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Favorite without action
+   */
+  export type FavoriteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
   }
 
 
@@ -4772,57 +5945,62 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const AktieScalarFieldEnum: {
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    password: 'password',
+    username: 'username',
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const FilmScalarFieldEnum: {
     id: 'id',
     version: 'version',
-    isin: 'isin',
-    symbol: 'symbol',
-    name: 'name',
-    branche: 'branche',
-    handelsplatz: 'handelsplatz',
-    kaufpreis: 'kaufpreis',
-    anzahl: 'anzahl',
-    kaufdatum: 'kaufdatum',
-    dividende: 'dividende',
-    letzter_kurs: 'letzter_kurs',
-    erzeugt: 'erzeugt',
-    aktualisiert: 'aktualisiert'
+    titel: 'titel',
+    originaltitel: 'originaltitel',
+    genre: 'genre',
+    regisseur: 'regisseur',
+    erscheinungsjahr: 'erscheinungsjahr',
+    dauer: 'dauer',
+    bewertung: 'bewertung',
+    beschreibung: 'beschreibung',
+    sprache: 'sprache',
+    land: 'land',
+    poster: 'poster',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
-  export type AktieScalarFieldEnum = (typeof AktieScalarFieldEnum)[keyof typeof AktieScalarFieldEnum]
+  export type FilmScalarFieldEnum = (typeof FilmScalarFieldEnum)[keyof typeof FilmScalarFieldEnum]
 
 
-  export const KursScalarFieldEnum: {
-    id: 'id',
-    datum: 'datum',
-    eroeffnung: 'eroeffnung',
-    schluss: 'schluss',
-    hoch: 'hoch',
-    tief: 'tief',
-    volumen: 'volumen',
-    aktie_id: 'aktie_id'
-  };
-
-  export type KursScalarFieldEnum = (typeof KursScalarFieldEnum)[keyof typeof KursScalarFieldEnum]
-
-
-  export const TransaktionScalarFieldEnum: {
+  export const ReviewScalarFieldEnum: {
     id: 'id',
     version: 'version',
-    typ: 'typ',
-    aktie_id: 'aktie_id',
-    datum: 'datum',
-    uhrzeit: 'uhrzeit',
-    anzahl: 'anzahl',
-    preis: 'preis',
-    gebuehren: 'gebuehren',
-    gesamtbetrag: 'gesamtbetrag',
-    notiz: 'notiz',
-    erzeugt: 'erzeugt',
-    aktualisiert: 'aktualisiert'
+    filmId: 'filmId',
+    userId: 'userId',
+    bewertung: 'bewertung',
+    kommentar: 'kommentar',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
-  export type TransaktionScalarFieldEnum = (typeof TransaktionScalarFieldEnum)[keyof typeof TransaktionScalarFieldEnum]
+  export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+  export const FavoriteScalarFieldEnum: {
+    id: 'id',
+    filmId: 'filmId',
+    userId: 'userId',
+    createdAt: 'createdAt'
+  };
+
+  export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4883,30 +6061,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'handelsplatz'
+   * Reference to a field of type 'Role'
    */
-  export type EnumhandelsplatzFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'handelsplatz'>
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
     
 
 
   /**
-   * Reference to a field of type 'handelsplatz[]'
+   * Reference to a field of type 'Role[]'
    */
-  export type ListEnumhandelsplatzFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'handelsplatz[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Decimal'
-   */
-  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-  /**
-   * Reference to a field of type 'Decimal[]'
-   */
-  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
     
 
 
@@ -4925,30 +6089,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'BigInt'
+   * Reference to a field of type 'Genre[]'
    */
-  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+  export type ListEnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre[]'>
     
 
 
   /**
-   * Reference to a field of type 'BigInt[]'
+   * Reference to a field of type 'Genre'
    */
-  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+  export type EnumGenreFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Genre'>
     
 
 
   /**
-   * Reference to a field of type 'transaktionstyp'
+   * Reference to a field of type 'Decimal'
    */
-  export type EnumtransaktionstypFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'transaktionstyp'>
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
     
 
 
   /**
-   * Reference to a field of type 'transaktionstyp[]'
+   * Reference to a field of type 'Decimal[]'
    */
-  export type ListEnumtransaktionstypFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'transaktionstyp[]'>
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -4969,583 +6133,638 @@ export namespace Prisma {
    */
 
 
-  export type aktieWhereInput = {
-    AND?: aktieWhereInput | aktieWhereInput[]
-    OR?: aktieWhereInput[]
-    NOT?: aktieWhereInput | aktieWhereInput[]
-    id?: IntFilter<"aktie"> | number
-    version?: IntFilter<"aktie"> | number
-    isin?: StringFilter<"aktie"> | string
-    symbol?: StringFilter<"aktie"> | string
-    name?: StringFilter<"aktie"> | string
-    branche?: StringNullableFilter<"aktie"> | string | null
-    handelsplatz?: EnumhandelsplatzNullableFilter<"aktie"> | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFilter<"aktie"> | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFilter<"aktie"> | number
-    kaufdatum?: DateTimeNullableFilter<"aktie"> | Date | string | null
-    dividende?: DecimalNullableFilter<"aktie"> | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: DecimalNullableFilter<"aktie"> | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFilter<"aktie"> | Date | string
-    aktualisiert?: DateTimeFilter<"aktie"> | Date | string
-    kurs?: KursListRelationFilter
-    transaktion?: TransaktionListRelationFilter
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: IntFilter<"User"> | number
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    reviews?: ReviewListRelationFilter
+    favorites?: FavoriteListRelationFilter
   }
 
-  export type aktieOrderByWithRelationInput = {
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    username?: SortOrderInput | SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    reviews?: ReviewOrderByRelationAggregateInput
+    favorites?: FavoriteOrderByRelationAggregateInput
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    password?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    reviews?: ReviewListRelationFilter
+    favorites?: FavoriteListRelationFilter
+  }, "id" | "email">
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    username?: SortOrderInput | SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"User"> | number
+    email?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type FilmWhereInput = {
+    AND?: FilmWhereInput | FilmWhereInput[]
+    OR?: FilmWhereInput[]
+    NOT?: FilmWhereInput | FilmWhereInput[]
+    id?: IntFilter<"Film"> | number
+    version?: IntFilter<"Film"> | number
+    titel?: StringFilter<"Film"> | string
+    originaltitel?: StringNullableFilter<"Film"> | string | null
+    genre?: EnumGenreNullableListFilter<"Film">
+    regisseur?: StringNullableFilter<"Film"> | string | null
+    erscheinungsjahr?: IntNullableFilter<"Film"> | number | null
+    dauer?: IntNullableFilter<"Film"> | number | null
+    bewertung?: DecimalNullableFilter<"Film"> | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: StringNullableFilter<"Film"> | string | null
+    sprache?: StringNullableFilter<"Film"> | string | null
+    land?: StringNullableFilter<"Film"> | string | null
+    poster?: StringNullableFilter<"Film"> | string | null
+    createdAt?: DateTimeFilter<"Film"> | Date | string
+    updatedAt?: DateTimeFilter<"Film"> | Date | string
+    reviews?: ReviewListRelationFilter
+    favorites?: FavoriteListRelationFilter
+  }
+
+  export type FilmOrderByWithRelationInput = {
     id?: SortOrder
     version?: SortOrder
-    isin?: SortOrder
-    symbol?: SortOrder
-    name?: SortOrder
-    branche?: SortOrderInput | SortOrder
-    handelsplatz?: SortOrderInput | SortOrder
-    kaufpreis?: SortOrder
-    anzahl?: SortOrder
-    kaufdatum?: SortOrderInput | SortOrder
-    dividende?: SortOrderInput | SortOrder
-    letzter_kurs?: SortOrderInput | SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
-    kurs?: kursOrderByRelationAggregateInput
-    transaktion?: transaktionOrderByRelationAggregateInput
+    titel?: SortOrder
+    originaltitel?: SortOrderInput | SortOrder
+    genre?: SortOrder
+    regisseur?: SortOrderInput | SortOrder
+    erscheinungsjahr?: SortOrderInput | SortOrder
+    dauer?: SortOrderInput | SortOrder
+    bewertung?: SortOrderInput | SortOrder
+    beschreibung?: SortOrderInput | SortOrder
+    sprache?: SortOrderInput | SortOrder
+    land?: SortOrderInput | SortOrder
+    poster?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    reviews?: ReviewOrderByRelationAggregateInput
+    favorites?: FavoriteOrderByRelationAggregateInput
   }
 
-  export type aktieWhereUniqueInput = Prisma.AtLeast<{
+  export type FilmWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    isin?: string
-    AND?: aktieWhereInput | aktieWhereInput[]
-    OR?: aktieWhereInput[]
-    NOT?: aktieWhereInput | aktieWhereInput[]
-    version?: IntFilter<"aktie"> | number
-    symbol?: StringFilter<"aktie"> | string
-    name?: StringFilter<"aktie"> | string
-    branche?: StringNullableFilter<"aktie"> | string | null
-    handelsplatz?: EnumhandelsplatzNullableFilter<"aktie"> | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFilter<"aktie"> | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFilter<"aktie"> | number
-    kaufdatum?: DateTimeNullableFilter<"aktie"> | Date | string | null
-    dividende?: DecimalNullableFilter<"aktie"> | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: DecimalNullableFilter<"aktie"> | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFilter<"aktie"> | Date | string
-    aktualisiert?: DateTimeFilter<"aktie"> | Date | string
-    kurs?: KursListRelationFilter
-    transaktion?: TransaktionListRelationFilter
-  }, "id" | "isin">
-
-  export type aktieOrderByWithAggregationInput = {
-    id?: SortOrder
-    version?: SortOrder
-    isin?: SortOrder
-    symbol?: SortOrder
-    name?: SortOrder
-    branche?: SortOrderInput | SortOrder
-    handelsplatz?: SortOrderInput | SortOrder
-    kaufpreis?: SortOrder
-    anzahl?: SortOrder
-    kaufdatum?: SortOrderInput | SortOrder
-    dividende?: SortOrderInput | SortOrder
-    letzter_kurs?: SortOrderInput | SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
-    _count?: aktieCountOrderByAggregateInput
-    _avg?: aktieAvgOrderByAggregateInput
-    _max?: aktieMaxOrderByAggregateInput
-    _min?: aktieMinOrderByAggregateInput
-    _sum?: aktieSumOrderByAggregateInput
-  }
-
-  export type aktieScalarWhereWithAggregatesInput = {
-    AND?: aktieScalarWhereWithAggregatesInput | aktieScalarWhereWithAggregatesInput[]
-    OR?: aktieScalarWhereWithAggregatesInput[]
-    NOT?: aktieScalarWhereWithAggregatesInput | aktieScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"aktie"> | number
-    version?: IntWithAggregatesFilter<"aktie"> | number
-    isin?: StringWithAggregatesFilter<"aktie"> | string
-    symbol?: StringWithAggregatesFilter<"aktie"> | string
-    name?: StringWithAggregatesFilter<"aktie"> | string
-    branche?: StringNullableWithAggregatesFilter<"aktie"> | string | null
-    handelsplatz?: EnumhandelsplatzNullableWithAggregatesFilter<"aktie"> | $Enums.handelsplatz | null
-    kaufpreis?: DecimalWithAggregatesFilter<"aktie"> | Decimal | DecimalJsLike | number | string
-    anzahl?: IntWithAggregatesFilter<"aktie"> | number
-    kaufdatum?: DateTimeNullableWithAggregatesFilter<"aktie"> | Date | string | null
-    dividende?: DecimalNullableWithAggregatesFilter<"aktie"> | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: DecimalNullableWithAggregatesFilter<"aktie"> | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeWithAggregatesFilter<"aktie"> | Date | string
-    aktualisiert?: DateTimeWithAggregatesFilter<"aktie"> | Date | string
-  }
-
-  export type kursWhereInput = {
-    AND?: kursWhereInput | kursWhereInput[]
-    OR?: kursWhereInput[]
-    NOT?: kursWhereInput | kursWhereInput[]
-    id?: IntFilter<"kurs"> | number
-    datum?: DateTimeFilter<"kurs"> | Date | string
-    eroeffnung?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    schluss?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    hoch?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    tief?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    volumen?: BigIntNullableFilter<"kurs"> | bigint | number | null
-    aktie_id?: IntFilter<"kurs"> | number
-    aktie?: XOR<AktieScalarRelationFilter, aktieWhereInput>
-  }
-
-  export type kursOrderByWithRelationInput = {
-    id?: SortOrder
-    datum?: SortOrder
-    eroeffnung?: SortOrderInput | SortOrder
-    schluss?: SortOrderInput | SortOrder
-    hoch?: SortOrderInput | SortOrder
-    tief?: SortOrderInput | SortOrder
-    volumen?: SortOrderInput | SortOrder
-    aktie_id?: SortOrder
-    aktie?: aktieOrderByWithRelationInput
-  }
-
-  export type kursWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: kursWhereInput | kursWhereInput[]
-    OR?: kursWhereInput[]
-    NOT?: kursWhereInput | kursWhereInput[]
-    datum?: DateTimeFilter<"kurs"> | Date | string
-    eroeffnung?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    schluss?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    hoch?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    tief?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    volumen?: BigIntNullableFilter<"kurs"> | bigint | number | null
-    aktie_id?: IntFilter<"kurs"> | number
-    aktie?: XOR<AktieScalarRelationFilter, aktieWhereInput>
+    AND?: FilmWhereInput | FilmWhereInput[]
+    OR?: FilmWhereInput[]
+    NOT?: FilmWhereInput | FilmWhereInput[]
+    version?: IntFilter<"Film"> | number
+    titel?: StringFilter<"Film"> | string
+    originaltitel?: StringNullableFilter<"Film"> | string | null
+    genre?: EnumGenreNullableListFilter<"Film">
+    regisseur?: StringNullableFilter<"Film"> | string | null
+    erscheinungsjahr?: IntNullableFilter<"Film"> | number | null
+    dauer?: IntNullableFilter<"Film"> | number | null
+    bewertung?: DecimalNullableFilter<"Film"> | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: StringNullableFilter<"Film"> | string | null
+    sprache?: StringNullableFilter<"Film"> | string | null
+    land?: StringNullableFilter<"Film"> | string | null
+    poster?: StringNullableFilter<"Film"> | string | null
+    createdAt?: DateTimeFilter<"Film"> | Date | string
+    updatedAt?: DateTimeFilter<"Film"> | Date | string
+    reviews?: ReviewListRelationFilter
+    favorites?: FavoriteListRelationFilter
   }, "id">
 
-  export type kursOrderByWithAggregationInput = {
-    id?: SortOrder
-    datum?: SortOrder
-    eroeffnung?: SortOrderInput | SortOrder
-    schluss?: SortOrderInput | SortOrder
-    hoch?: SortOrderInput | SortOrder
-    tief?: SortOrderInput | SortOrder
-    volumen?: SortOrderInput | SortOrder
-    aktie_id?: SortOrder
-    _count?: kursCountOrderByAggregateInput
-    _avg?: kursAvgOrderByAggregateInput
-    _max?: kursMaxOrderByAggregateInput
-    _min?: kursMinOrderByAggregateInput
-    _sum?: kursSumOrderByAggregateInput
-  }
-
-  export type kursScalarWhereWithAggregatesInput = {
-    AND?: kursScalarWhereWithAggregatesInput | kursScalarWhereWithAggregatesInput[]
-    OR?: kursScalarWhereWithAggregatesInput[]
-    NOT?: kursScalarWhereWithAggregatesInput | kursScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"kurs"> | number
-    datum?: DateTimeWithAggregatesFilter<"kurs"> | Date | string
-    eroeffnung?: DecimalNullableWithAggregatesFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    schluss?: DecimalNullableWithAggregatesFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    hoch?: DecimalNullableWithAggregatesFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    tief?: DecimalNullableWithAggregatesFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    volumen?: BigIntNullableWithAggregatesFilter<"kurs"> | bigint | number | null
-    aktie_id?: IntWithAggregatesFilter<"kurs"> | number
-  }
-
-  export type transaktionWhereInput = {
-    AND?: transaktionWhereInput | transaktionWhereInput[]
-    OR?: transaktionWhereInput[]
-    NOT?: transaktionWhereInput | transaktionWhereInput[]
-    id?: IntFilter<"transaktion"> | number
-    version?: IntFilter<"transaktion"> | number
-    typ?: EnumtransaktionstypFilter<"transaktion"> | $Enums.transaktionstyp
-    aktie_id?: IntFilter<"transaktion"> | number
-    datum?: DateTimeFilter<"transaktion"> | Date | string
-    uhrzeit?: DateTimeNullableFilter<"transaktion"> | Date | string | null
-    anzahl?: IntFilter<"transaktion"> | number
-    preis?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    notiz?: StringNullableFilter<"transaktion"> | string | null
-    erzeugt?: DateTimeFilter<"transaktion"> | Date | string
-    aktualisiert?: DateTimeFilter<"transaktion"> | Date | string
-    aktie?: XOR<AktieScalarRelationFilter, aktieWhereInput>
-  }
-
-  export type transaktionOrderByWithRelationInput = {
+  export type FilmOrderByWithAggregationInput = {
     id?: SortOrder
     version?: SortOrder
-    typ?: SortOrder
-    aktie_id?: SortOrder
-    datum?: SortOrder
-    uhrzeit?: SortOrderInput | SortOrder
-    anzahl?: SortOrder
-    preis?: SortOrder
-    gebuehren?: SortOrder
-    gesamtbetrag?: SortOrder
-    notiz?: SortOrderInput | SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
-    aktie?: aktieOrderByWithRelationInput
+    titel?: SortOrder
+    originaltitel?: SortOrderInput | SortOrder
+    genre?: SortOrder
+    regisseur?: SortOrderInput | SortOrder
+    erscheinungsjahr?: SortOrderInput | SortOrder
+    dauer?: SortOrderInput | SortOrder
+    bewertung?: SortOrderInput | SortOrder
+    beschreibung?: SortOrderInput | SortOrder
+    sprache?: SortOrderInput | SortOrder
+    land?: SortOrderInput | SortOrder
+    poster?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FilmCountOrderByAggregateInput
+    _avg?: FilmAvgOrderByAggregateInput
+    _max?: FilmMaxOrderByAggregateInput
+    _min?: FilmMinOrderByAggregateInput
+    _sum?: FilmSumOrderByAggregateInput
   }
 
-  export type transaktionWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: transaktionWhereInput | transaktionWhereInput[]
-    OR?: transaktionWhereInput[]
-    NOT?: transaktionWhereInput | transaktionWhereInput[]
-    version?: IntFilter<"transaktion"> | number
-    typ?: EnumtransaktionstypFilter<"transaktion"> | $Enums.transaktionstyp
-    aktie_id?: IntFilter<"transaktion"> | number
-    datum?: DateTimeFilter<"transaktion"> | Date | string
-    uhrzeit?: DateTimeNullableFilter<"transaktion"> | Date | string | null
-    anzahl?: IntFilter<"transaktion"> | number
-    preis?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    notiz?: StringNullableFilter<"transaktion"> | string | null
-    erzeugt?: DateTimeFilter<"transaktion"> | Date | string
-    aktualisiert?: DateTimeFilter<"transaktion"> | Date | string
-    aktie?: XOR<AktieScalarRelationFilter, aktieWhereInput>
-  }, "id">
+  export type FilmScalarWhereWithAggregatesInput = {
+    AND?: FilmScalarWhereWithAggregatesInput | FilmScalarWhereWithAggregatesInput[]
+    OR?: FilmScalarWhereWithAggregatesInput[]
+    NOT?: FilmScalarWhereWithAggregatesInput | FilmScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Film"> | number
+    version?: IntWithAggregatesFilter<"Film"> | number
+    titel?: StringWithAggregatesFilter<"Film"> | string
+    originaltitel?: StringNullableWithAggregatesFilter<"Film"> | string | null
+    genre?: EnumGenreNullableListFilter<"Film">
+    regisseur?: StringNullableWithAggregatesFilter<"Film"> | string | null
+    erscheinungsjahr?: IntNullableWithAggregatesFilter<"Film"> | number | null
+    dauer?: IntNullableWithAggregatesFilter<"Film"> | number | null
+    bewertung?: DecimalNullableWithAggregatesFilter<"Film"> | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: StringNullableWithAggregatesFilter<"Film"> | string | null
+    sprache?: StringNullableWithAggregatesFilter<"Film"> | string | null
+    land?: StringNullableWithAggregatesFilter<"Film"> | string | null
+    poster?: StringNullableWithAggregatesFilter<"Film"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Film"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Film"> | Date | string
+  }
 
-  export type transaktionOrderByWithAggregationInput = {
+  export type ReviewWhereInput = {
+    AND?: ReviewWhereInput | ReviewWhereInput[]
+    OR?: ReviewWhereInput[]
+    NOT?: ReviewWhereInput | ReviewWhereInput[]
+    id?: IntFilter<"Review"> | number
+    version?: IntFilter<"Review"> | number
+    filmId?: IntFilter<"Review"> | number
+    userId?: IntFilter<"Review"> | number
+    bewertung?: IntFilter<"Review"> | number
+    kommentar?: StringNullableFilter<"Review"> | string | null
+    createdAt?: DateTimeFilter<"Review"> | Date | string
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
+    film?: XOR<FilmScalarRelationFilter, FilmWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ReviewOrderByWithRelationInput = {
     id?: SortOrder
     version?: SortOrder
-    typ?: SortOrder
-    aktie_id?: SortOrder
-    datum?: SortOrder
-    uhrzeit?: SortOrderInput | SortOrder
-    anzahl?: SortOrder
-    preis?: SortOrder
-    gebuehren?: SortOrder
-    gesamtbetrag?: SortOrder
-    notiz?: SortOrderInput | SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
-    _count?: transaktionCountOrderByAggregateInput
-    _avg?: transaktionAvgOrderByAggregateInput
-    _max?: transaktionMaxOrderByAggregateInput
-    _min?: transaktionMinOrderByAggregateInput
-    _sum?: transaktionSumOrderByAggregateInput
+    filmId?: SortOrder
+    userId?: SortOrder
+    bewertung?: SortOrder
+    kommentar?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    film?: FilmOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
-  export type transaktionScalarWhereWithAggregatesInput = {
-    AND?: transaktionScalarWhereWithAggregatesInput | transaktionScalarWhereWithAggregatesInput[]
-    OR?: transaktionScalarWhereWithAggregatesInput[]
-    NOT?: transaktionScalarWhereWithAggregatesInput | transaktionScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"transaktion"> | number
-    version?: IntWithAggregatesFilter<"transaktion"> | number
-    typ?: EnumtransaktionstypWithAggregatesFilter<"transaktion"> | $Enums.transaktionstyp
-    aktie_id?: IntWithAggregatesFilter<"transaktion"> | number
-    datum?: DateTimeWithAggregatesFilter<"transaktion"> | Date | string
-    uhrzeit?: DateTimeNullableWithAggregatesFilter<"transaktion"> | Date | string | null
-    anzahl?: IntWithAggregatesFilter<"transaktion"> | number
-    preis?: DecimalWithAggregatesFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalWithAggregatesFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalWithAggregatesFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    notiz?: StringNullableWithAggregatesFilter<"transaktion"> | string | null
-    erzeugt?: DateTimeWithAggregatesFilter<"transaktion"> | Date | string
-    aktualisiert?: DateTimeWithAggregatesFilter<"transaktion"> | Date | string
+  export type ReviewWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    filmId_userId?: ReviewFilmIdUserIdCompoundUniqueInput
+    AND?: ReviewWhereInput | ReviewWhereInput[]
+    OR?: ReviewWhereInput[]
+    NOT?: ReviewWhereInput | ReviewWhereInput[]
+    version?: IntFilter<"Review"> | number
+    filmId?: IntFilter<"Review"> | number
+    userId?: IntFilter<"Review"> | number
+    bewertung?: IntFilter<"Review"> | number
+    kommentar?: StringNullableFilter<"Review"> | string | null
+    createdAt?: DateTimeFilter<"Review"> | Date | string
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
+    film?: XOR<FilmScalarRelationFilter, FilmWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "filmId_userId">
+
+  export type ReviewOrderByWithAggregationInput = {
+    id?: SortOrder
+    version?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    bewertung?: SortOrder
+    kommentar?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ReviewCountOrderByAggregateInput
+    _avg?: ReviewAvgOrderByAggregateInput
+    _max?: ReviewMaxOrderByAggregateInput
+    _min?: ReviewMinOrderByAggregateInput
+    _sum?: ReviewSumOrderByAggregateInput
   }
 
-  export type aktieCreateInput = {
+  export type ReviewScalarWhereWithAggregatesInput = {
+    AND?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
+    OR?: ReviewScalarWhereWithAggregatesInput[]
+    NOT?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Review"> | number
+    version?: IntWithAggregatesFilter<"Review"> | number
+    filmId?: IntWithAggregatesFilter<"Review"> | number
+    userId?: IntWithAggregatesFilter<"Review"> | number
+    bewertung?: IntWithAggregatesFilter<"Review"> | number
+    kommentar?: StringNullableWithAggregatesFilter<"Review"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
+  }
+
+  export type FavoriteWhereInput = {
+    AND?: FavoriteWhereInput | FavoriteWhereInput[]
+    OR?: FavoriteWhereInput[]
+    NOT?: FavoriteWhereInput | FavoriteWhereInput[]
+    id?: IntFilter<"Favorite"> | number
+    filmId?: IntFilter<"Favorite"> | number
+    userId?: IntFilter<"Favorite"> | number
+    createdAt?: DateTimeFilter<"Favorite"> | Date | string
+    film?: XOR<FilmScalarRelationFilter, FilmWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type FavoriteOrderByWithRelationInput = {
+    id?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    film?: FilmOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type FavoriteWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    filmId_userId?: FavoriteFilmIdUserIdCompoundUniqueInput
+    AND?: FavoriteWhereInput | FavoriteWhereInput[]
+    OR?: FavoriteWhereInput[]
+    NOT?: FavoriteWhereInput | FavoriteWhereInput[]
+    filmId?: IntFilter<"Favorite"> | number
+    userId?: IntFilter<"Favorite"> | number
+    createdAt?: DateTimeFilter<"Favorite"> | Date | string
+    film?: XOR<FilmScalarRelationFilter, FilmWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "filmId_userId">
+
+  export type FavoriteOrderByWithAggregationInput = {
+    id?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    _count?: FavoriteCountOrderByAggregateInput
+    _avg?: FavoriteAvgOrderByAggregateInput
+    _max?: FavoriteMaxOrderByAggregateInput
+    _min?: FavoriteMinOrderByAggregateInput
+    _sum?: FavoriteSumOrderByAggregateInput
+  }
+
+  export type FavoriteScalarWhereWithAggregatesInput = {
+    AND?: FavoriteScalarWhereWithAggregatesInput | FavoriteScalarWhereWithAggregatesInput[]
+    OR?: FavoriteScalarWhereWithAggregatesInput[]
+    NOT?: FavoriteScalarWhereWithAggregatesInput | FavoriteScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Favorite"> | number
+    filmId?: IntWithAggregatesFilter<"Favorite"> | number
+    userId?: IntWithAggregatesFilter<"Favorite"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Favorite"> | Date | string
+  }
+
+  export type UserCreateInput = {
+    email: string
+    password: string
+    username?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: number
+    email: string
+    password: string
+    username?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUpdateInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    id?: number
+    email: string
+    password: string
+    username?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FilmCreateInput = {
     version?: number
-    isin: string
-    symbol: string
-    name: string
-    branche?: string | null
-    handelsplatz?: $Enums.handelsplatz | null
-    kaufpreis: Decimal | DecimalJsLike | number | string
-    anzahl: number
-    kaufdatum?: Date | string | null
-    dividende?: Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: Decimal | DecimalJsLike | number | string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
-    kurs?: kursCreateNestedManyWithoutAktieInput
-    transaktion?: transaktionCreateNestedManyWithoutAktieInput
+    titel: string
+    originaltitel?: string | null
+    genre?: FilmCreategenreInput | $Enums.Genre[]
+    regisseur?: string | null
+    erscheinungsjahr?: number | null
+    dauer?: number | null
+    bewertung?: Decimal | DecimalJsLike | number | string | null
+    beschreibung?: string | null
+    sprache?: string | null
+    land?: string | null
+    poster?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ReviewCreateNestedManyWithoutFilmInput
+    favorites?: FavoriteCreateNestedManyWithoutFilmInput
   }
 
-  export type aktieUncheckedCreateInput = {
+  export type FilmUncheckedCreateInput = {
     id?: number
     version?: number
-    isin: string
-    symbol: string
-    name: string
-    branche?: string | null
-    handelsplatz?: $Enums.handelsplatz | null
-    kaufpreis: Decimal | DecimalJsLike | number | string
-    anzahl: number
-    kaufdatum?: Date | string | null
-    dividende?: Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: Decimal | DecimalJsLike | number | string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
-    kurs?: kursUncheckedCreateNestedManyWithoutAktieInput
-    transaktion?: transaktionUncheckedCreateNestedManyWithoutAktieInput
+    titel: string
+    originaltitel?: string | null
+    genre?: FilmCreategenreInput | $Enums.Genre[]
+    regisseur?: string | null
+    erscheinungsjahr?: number | null
+    dauer?: number | null
+    bewertung?: Decimal | DecimalJsLike | number | string | null
+    beschreibung?: string | null
+    sprache?: string | null
+    land?: string | null
+    poster?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ReviewUncheckedCreateNestedManyWithoutFilmInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutFilmInput
   }
 
-  export type aktieUpdateInput = {
+  export type FilmUpdateInput = {
     version?: IntFieldUpdateOperationsInput | number
-    isin?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    branche?: NullableStringFieldUpdateOperationsInput | string | null
-    handelsplatz?: NullableEnumhandelsplatzFieldUpdateOperationsInput | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFieldUpdateOperationsInput | number
-    kaufdatum?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dividende?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
-    kurs?: kursUpdateManyWithoutAktieNestedInput
-    transaktion?: transaktionUpdateManyWithoutAktieNestedInput
+    titel?: StringFieldUpdateOperationsInput | string
+    originaltitel?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: FilmUpdategenreInput | $Enums.Genre[]
+    regisseur?: NullableStringFieldUpdateOperationsInput | string | null
+    erscheinungsjahr?: NullableIntFieldUpdateOperationsInput | number | null
+    dauer?: NullableIntFieldUpdateOperationsInput | number | null
+    bewertung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: NullableStringFieldUpdateOperationsInput | string | null
+    sprache?: NullableStringFieldUpdateOperationsInput | string | null
+    land?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ReviewUpdateManyWithoutFilmNestedInput
+    favorites?: FavoriteUpdateManyWithoutFilmNestedInput
   }
 
-  export type aktieUncheckedUpdateInput = {
+  export type FilmUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     version?: IntFieldUpdateOperationsInput | number
-    isin?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    branche?: NullableStringFieldUpdateOperationsInput | string | null
-    handelsplatz?: NullableEnumhandelsplatzFieldUpdateOperationsInput | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFieldUpdateOperationsInput | number
-    kaufdatum?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dividende?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
-    kurs?: kursUncheckedUpdateManyWithoutAktieNestedInput
-    transaktion?: transaktionUncheckedUpdateManyWithoutAktieNestedInput
+    titel?: StringFieldUpdateOperationsInput | string
+    originaltitel?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: FilmUpdategenreInput | $Enums.Genre[]
+    regisseur?: NullableStringFieldUpdateOperationsInput | string | null
+    erscheinungsjahr?: NullableIntFieldUpdateOperationsInput | number | null
+    dauer?: NullableIntFieldUpdateOperationsInput | number | null
+    bewertung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: NullableStringFieldUpdateOperationsInput | string | null
+    sprache?: NullableStringFieldUpdateOperationsInput | string | null
+    land?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ReviewUncheckedUpdateManyWithoutFilmNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutFilmNestedInput
   }
 
-  export type aktieCreateManyInput = {
+  export type FilmCreateManyInput = {
     id?: number
     version?: number
-    isin: string
-    symbol: string
-    name: string
-    branche?: string | null
-    handelsplatz?: $Enums.handelsplatz | null
-    kaufpreis: Decimal | DecimalJsLike | number | string
-    anzahl: number
-    kaufdatum?: Date | string | null
-    dividende?: Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: Decimal | DecimalJsLike | number | string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
+    titel: string
+    originaltitel?: string | null
+    genre?: FilmCreategenreInput | $Enums.Genre[]
+    regisseur?: string | null
+    erscheinungsjahr?: number | null
+    dauer?: number | null
+    bewertung?: Decimal | DecimalJsLike | number | string | null
+    beschreibung?: string | null
+    sprache?: string | null
+    land?: string | null
+    poster?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type aktieUpdateManyMutationInput = {
+  export type FilmUpdateManyMutationInput = {
     version?: IntFieldUpdateOperationsInput | number
-    isin?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    branche?: NullableStringFieldUpdateOperationsInput | string | null
-    handelsplatz?: NullableEnumhandelsplatzFieldUpdateOperationsInput | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFieldUpdateOperationsInput | number
-    kaufdatum?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dividende?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
+    titel?: StringFieldUpdateOperationsInput | string
+    originaltitel?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: FilmUpdategenreInput | $Enums.Genre[]
+    regisseur?: NullableStringFieldUpdateOperationsInput | string | null
+    erscheinungsjahr?: NullableIntFieldUpdateOperationsInput | number | null
+    dauer?: NullableIntFieldUpdateOperationsInput | number | null
+    bewertung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: NullableStringFieldUpdateOperationsInput | string | null
+    sprache?: NullableStringFieldUpdateOperationsInput | string | null
+    land?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type aktieUncheckedUpdateManyInput = {
+  export type FilmUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     version?: IntFieldUpdateOperationsInput | number
-    isin?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    branche?: NullableStringFieldUpdateOperationsInput | string | null
-    handelsplatz?: NullableEnumhandelsplatzFieldUpdateOperationsInput | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFieldUpdateOperationsInput | number
-    kaufdatum?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dividende?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
+    titel?: StringFieldUpdateOperationsInput | string
+    originaltitel?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: FilmUpdategenreInput | $Enums.Genre[]
+    regisseur?: NullableStringFieldUpdateOperationsInput | string | null
+    erscheinungsjahr?: NullableIntFieldUpdateOperationsInput | number | null
+    dauer?: NullableIntFieldUpdateOperationsInput | number | null
+    bewertung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: NullableStringFieldUpdateOperationsInput | string | null
+    sprache?: NullableStringFieldUpdateOperationsInput | string | null
+    land?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type kursCreateInput = {
-    datum: Date | string
-    eroeffnung?: Decimal | DecimalJsLike | number | string | null
-    schluss?: Decimal | DecimalJsLike | number | string | null
-    hoch?: Decimal | DecimalJsLike | number | string | null
-    tief?: Decimal | DecimalJsLike | number | string | null
-    volumen?: bigint | number | null
-    aktie: aktieCreateNestedOneWithoutKursInput
-  }
-
-  export type kursUncheckedCreateInput = {
-    id?: number
-    datum: Date | string
-    eroeffnung?: Decimal | DecimalJsLike | number | string | null
-    schluss?: Decimal | DecimalJsLike | number | string | null
-    hoch?: Decimal | DecimalJsLike | number | string | null
-    tief?: Decimal | DecimalJsLike | number | string | null
-    volumen?: bigint | number | null
-    aktie_id: number
-  }
-
-  export type kursUpdateInput = {
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    eroeffnung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schluss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    hoch?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    tief?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    volumen?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    aktie?: aktieUpdateOneRequiredWithoutKursNestedInput
-  }
-
-  export type kursUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    eroeffnung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schluss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    hoch?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    tief?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    volumen?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    aktie_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type kursCreateManyInput = {
-    id?: number
-    datum: Date | string
-    eroeffnung?: Decimal | DecimalJsLike | number | string | null
-    schluss?: Decimal | DecimalJsLike | number | string | null
-    hoch?: Decimal | DecimalJsLike | number | string | null
-    tief?: Decimal | DecimalJsLike | number | string | null
-    volumen?: bigint | number | null
-    aktie_id: number
-  }
-
-  export type kursUpdateManyMutationInput = {
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    eroeffnung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schluss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    hoch?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    tief?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    volumen?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  }
-
-  export type kursUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    eroeffnung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schluss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    hoch?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    tief?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    volumen?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    aktie_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type transaktionCreateInput = {
+  export type ReviewCreateInput = {
     version?: number
-    typ: $Enums.transaktionstyp
-    datum: Date | string
-    uhrzeit?: Date | string | null
-    anzahl: number
-    preis: Decimal | DecimalJsLike | number | string
-    gebuehren?: Decimal | DecimalJsLike | number | string
-    gesamtbetrag: Decimal | DecimalJsLike | number | string
-    notiz?: string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
-    aktie: aktieCreateNestedOneWithoutTransaktionInput
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    film: FilmCreateNestedOneWithoutReviewsInput
+    user: UserCreateNestedOneWithoutReviewsInput
   }
 
-  export type transaktionUncheckedCreateInput = {
+  export type ReviewUncheckedCreateInput = {
     id?: number
     version?: number
-    typ: $Enums.transaktionstyp
-    aktie_id: number
-    datum: Date | string
-    uhrzeit?: Date | string | null
-    anzahl: number
-    preis: Decimal | DecimalJsLike | number | string
-    gebuehren?: Decimal | DecimalJsLike | number | string
-    gesamtbetrag: Decimal | DecimalJsLike | number | string
-    notiz?: string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
+    filmId: number
+    userId: number
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type transaktionUpdateInput = {
+  export type ReviewUpdateInput = {
     version?: IntFieldUpdateOperationsInput | number
-    typ?: EnumtransaktionstypFieldUpdateOperationsInput | $Enums.transaktionstyp
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    uhrzeit?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    anzahl?: IntFieldUpdateOperationsInput | number
-    preis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    notiz?: NullableStringFieldUpdateOperationsInput | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktie?: aktieUpdateOneRequiredWithoutTransaktionNestedInput
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    film?: FilmUpdateOneRequiredWithoutReviewsNestedInput
+    user?: UserUpdateOneRequiredWithoutReviewsNestedInput
   }
 
-  export type transaktionUncheckedUpdateInput = {
+  export type ReviewUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     version?: IntFieldUpdateOperationsInput | number
-    typ?: EnumtransaktionstypFieldUpdateOperationsInput | $Enums.transaktionstyp
-    aktie_id?: IntFieldUpdateOperationsInput | number
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    uhrzeit?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    anzahl?: IntFieldUpdateOperationsInput | number
-    preis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    notiz?: NullableStringFieldUpdateOperationsInput | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
+    filmId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type transaktionCreateManyInput = {
+  export type ReviewCreateManyInput = {
     id?: number
     version?: number
-    typ: $Enums.transaktionstyp
-    aktie_id: number
-    datum: Date | string
-    uhrzeit?: Date | string | null
-    anzahl: number
-    preis: Decimal | DecimalJsLike | number | string
-    gebuehren?: Decimal | DecimalJsLike | number | string
-    gesamtbetrag: Decimal | DecimalJsLike | number | string
-    notiz?: string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
+    filmId: number
+    userId: number
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type transaktionUpdateManyMutationInput = {
+  export type ReviewUpdateManyMutationInput = {
     version?: IntFieldUpdateOperationsInput | number
-    typ?: EnumtransaktionstypFieldUpdateOperationsInput | $Enums.transaktionstyp
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    uhrzeit?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    anzahl?: IntFieldUpdateOperationsInput | number
-    preis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    notiz?: NullableStringFieldUpdateOperationsInput | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type transaktionUncheckedUpdateManyInput = {
+  export type ReviewUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     version?: IntFieldUpdateOperationsInput | number
-    typ?: EnumtransaktionstypFieldUpdateOperationsInput | $Enums.transaktionstyp
-    aktie_id?: IntFieldUpdateOperationsInput | number
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    uhrzeit?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    anzahl?: IntFieldUpdateOperationsInput | number
-    preis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    notiz?: NullableStringFieldUpdateOperationsInput | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
+    filmId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteCreateInput = {
+    createdAt?: Date | string
+    film: FilmCreateNestedOneWithoutFavoritesInput
+    user: UserCreateNestedOneWithoutFavoritesInput
+  }
+
+  export type FavoriteUncheckedCreateInput = {
+    id?: number
+    filmId: number
+    userId: number
+    createdAt?: Date | string
+  }
+
+  export type FavoriteUpdateInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    film?: FilmUpdateOneRequiredWithoutFavoritesNestedInput
+    user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    filmId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteCreateManyInput = {
+    id?: number
+    filmId: number
+    userId: number
+    createdAt?: Date | string
+  }
+
+  export type FavoriteUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    filmId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5589,44 +6808,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type EnumhandelsplatzNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.handelsplatz | EnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    in?: $Enums.handelsplatz[] | ListEnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.handelsplatz[] | ListEnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumhandelsplatzNullableFilter<$PrismaModel> | $Enums.handelsplatz | null
-  }
-
-  export type DecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type DecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -5640,16 +6826,16 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type KursListRelationFilter = {
-    every?: kursWhereInput
-    some?: kursWhereInput
-    none?: kursWhereInput
+  export type ReviewListRelationFilter = {
+    every?: ReviewWhereInput
+    some?: ReviewWhereInput
+    none?: ReviewWhereInput
   }
 
-  export type TransaktionListRelationFilter = {
-    every?: transaktionWhereInput
-    some?: transaktionWhereInput
-    none?: transaktionWhereInput
+  export type FavoriteListRelationFilter = {
+    every?: FavoriteWhereInput
+    some?: FavoriteWhereInput
+    none?: FavoriteWhereInput
   }
 
   export type SortOrderInput = {
@@ -5657,81 +6843,50 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type kursOrderByRelationAggregateInput = {
+  export type ReviewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type transaktionOrderByRelationAggregateInput = {
+  export type FavoriteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type aktieCountOrderByAggregateInput = {
+  export type UserCountOrderByAggregateInput = {
     id?: SortOrder
-    version?: SortOrder
-    isin?: SortOrder
-    symbol?: SortOrder
-    name?: SortOrder
-    branche?: SortOrder
-    handelsplatz?: SortOrder
-    kaufpreis?: SortOrder
-    anzahl?: SortOrder
-    kaufdatum?: SortOrder
-    dividende?: SortOrder
-    letzter_kurs?: SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type aktieAvgOrderByAggregateInput = {
+  export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
-    version?: SortOrder
-    kaufpreis?: SortOrder
-    anzahl?: SortOrder
-    dividende?: SortOrder
-    letzter_kurs?: SortOrder
   }
 
-  export type aktieMaxOrderByAggregateInput = {
+  export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
-    version?: SortOrder
-    isin?: SortOrder
-    symbol?: SortOrder
-    name?: SortOrder
-    branche?: SortOrder
-    handelsplatz?: SortOrder
-    kaufpreis?: SortOrder
-    anzahl?: SortOrder
-    kaufdatum?: SortOrder
-    dividende?: SortOrder
-    letzter_kurs?: SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type aktieMinOrderByAggregateInput = {
+  export type UserMinOrderByAggregateInput = {
     id?: SortOrder
-    version?: SortOrder
-    isin?: SortOrder
-    symbol?: SortOrder
-    name?: SortOrder
-    branche?: SortOrder
-    handelsplatz?: SortOrder
-    kaufpreis?: SortOrder
-    anzahl?: SortOrder
-    kaufdatum?: SortOrder
-    dividende?: SortOrder
-    letzter_kurs?: SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type aktieSumOrderByAggregateInput = {
+  export type UserSumOrderByAggregateInput = {
     id?: SortOrder
-    version?: SortOrder
-    kaufpreis?: SortOrder
-    anzahl?: SortOrder
-    dividende?: SortOrder
-    letzter_kurs?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5786,44 +6941,142 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type EnumhandelsplatzNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.handelsplatz | EnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    in?: $Enums.handelsplatz[] | ListEnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.handelsplatz[] | ListEnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumhandelsplatzNullableWithAggregatesFilter<$PrismaModel> | $Enums.handelsplatz | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumhandelsplatzNullableFilter<$PrismaModel>
-    _max?: NestedEnumhandelsplatzNullableFilter<$PrismaModel>
-  }
-
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type EnumGenreNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.Genre[] | ListEnumGenreFieldRefInput<$PrismaModel> | null
+    has?: $Enums.Genre | EnumGenreFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.Genre[] | ListEnumGenreFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.Genre[] | ListEnumGenreFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type FilmCountOrderByAggregateInput = {
+    id?: SortOrder
+    version?: SortOrder
+    titel?: SortOrder
+    originaltitel?: SortOrder
+    genre?: SortOrder
+    regisseur?: SortOrder
+    erscheinungsjahr?: SortOrder
+    dauer?: SortOrder
+    bewertung?: SortOrder
+    beschreibung?: SortOrder
+    sprache?: SortOrder
+    land?: SortOrder
+    poster?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FilmAvgOrderByAggregateInput = {
+    id?: SortOrder
+    version?: SortOrder
+    erscheinungsjahr?: SortOrder
+    dauer?: SortOrder
+    bewertung?: SortOrder
+  }
+
+  export type FilmMaxOrderByAggregateInput = {
+    id?: SortOrder
+    version?: SortOrder
+    titel?: SortOrder
+    originaltitel?: SortOrder
+    regisseur?: SortOrder
+    erscheinungsjahr?: SortOrder
+    dauer?: SortOrder
+    bewertung?: SortOrder
+    beschreibung?: SortOrder
+    sprache?: SortOrder
+    land?: SortOrder
+    poster?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FilmMinOrderByAggregateInput = {
+    id?: SortOrder
+    version?: SortOrder
+    titel?: SortOrder
+    originaltitel?: SortOrder
+    regisseur?: SortOrder
+    erscheinungsjahr?: SortOrder
+    dauer?: SortOrder
+    bewertung?: SortOrder
+    beschreibung?: SortOrder
+    sprache?: SortOrder
+    land?: SortOrder
+    poster?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FilmSumOrderByAggregateInput = {
+    id?: SortOrder
+    version?: SortOrder
+    erscheinungsjahr?: SortOrder
+    dauer?: SortOrder
+    bewertung?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5842,224 +7095,134 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+  export type FilmScalarRelationFilter = {
+    is?: FilmWhereInput
+    isNot?: FilmWhereInput
   }
 
-  export type BigIntNullableFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
-  export type AktieScalarRelationFilter = {
-    is?: aktieWhereInput
-    isNot?: aktieWhereInput
+  export type ReviewFilmIdUserIdCompoundUniqueInput = {
+    filmId: number
+    userId: number
   }
 
-  export type kursCountOrderByAggregateInput = {
-    id?: SortOrder
-    datum?: SortOrder
-    eroeffnung?: SortOrder
-    schluss?: SortOrder
-    hoch?: SortOrder
-    tief?: SortOrder
-    volumen?: SortOrder
-    aktie_id?: SortOrder
-  }
-
-  export type kursAvgOrderByAggregateInput = {
-    id?: SortOrder
-    eroeffnung?: SortOrder
-    schluss?: SortOrder
-    hoch?: SortOrder
-    tief?: SortOrder
-    volumen?: SortOrder
-    aktie_id?: SortOrder
-  }
-
-  export type kursMaxOrderByAggregateInput = {
-    id?: SortOrder
-    datum?: SortOrder
-    eroeffnung?: SortOrder
-    schluss?: SortOrder
-    hoch?: SortOrder
-    tief?: SortOrder
-    volumen?: SortOrder
-    aktie_id?: SortOrder
-  }
-
-  export type kursMinOrderByAggregateInput = {
-    id?: SortOrder
-    datum?: SortOrder
-    eroeffnung?: SortOrder
-    schluss?: SortOrder
-    hoch?: SortOrder
-    tief?: SortOrder
-    volumen?: SortOrder
-    aktie_id?: SortOrder
-  }
-
-  export type kursSumOrderByAggregateInput = {
-    id?: SortOrder
-    eroeffnung?: SortOrder
-    schluss?: SortOrder
-    hoch?: SortOrder
-    tief?: SortOrder
-    volumen?: SortOrder
-    aktie_id?: SortOrder
-  }
-
-  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedBigIntNullableFilter<$PrismaModel>
-    _min?: NestedBigIntNullableFilter<$PrismaModel>
-    _max?: NestedBigIntNullableFilter<$PrismaModel>
-  }
-
-  export type EnumtransaktionstypFilter<$PrismaModel = never> = {
-    equals?: $Enums.transaktionstyp | EnumtransaktionstypFieldRefInput<$PrismaModel>
-    in?: $Enums.transaktionstyp[] | ListEnumtransaktionstypFieldRefInput<$PrismaModel>
-    notIn?: $Enums.transaktionstyp[] | ListEnumtransaktionstypFieldRefInput<$PrismaModel>
-    not?: NestedEnumtransaktionstypFilter<$PrismaModel> | $Enums.transaktionstyp
-  }
-
-  export type transaktionCountOrderByAggregateInput = {
+  export type ReviewCountOrderByAggregateInput = {
     id?: SortOrder
     version?: SortOrder
-    typ?: SortOrder
-    aktie_id?: SortOrder
-    datum?: SortOrder
-    uhrzeit?: SortOrder
-    anzahl?: SortOrder
-    preis?: SortOrder
-    gebuehren?: SortOrder
-    gesamtbetrag?: SortOrder
-    notiz?: SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    bewertung?: SortOrder
+    kommentar?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type transaktionAvgOrderByAggregateInput = {
+  export type ReviewAvgOrderByAggregateInput = {
     id?: SortOrder
     version?: SortOrder
-    aktie_id?: SortOrder
-    anzahl?: SortOrder
-    preis?: SortOrder
-    gebuehren?: SortOrder
-    gesamtbetrag?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    bewertung?: SortOrder
   }
 
-  export type transaktionMaxOrderByAggregateInput = {
+  export type ReviewMaxOrderByAggregateInput = {
     id?: SortOrder
     version?: SortOrder
-    typ?: SortOrder
-    aktie_id?: SortOrder
-    datum?: SortOrder
-    uhrzeit?: SortOrder
-    anzahl?: SortOrder
-    preis?: SortOrder
-    gebuehren?: SortOrder
-    gesamtbetrag?: SortOrder
-    notiz?: SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    bewertung?: SortOrder
+    kommentar?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type transaktionMinOrderByAggregateInput = {
+  export type ReviewMinOrderByAggregateInput = {
     id?: SortOrder
     version?: SortOrder
-    typ?: SortOrder
-    aktie_id?: SortOrder
-    datum?: SortOrder
-    uhrzeit?: SortOrder
-    anzahl?: SortOrder
-    preis?: SortOrder
-    gebuehren?: SortOrder
-    gesamtbetrag?: SortOrder
-    notiz?: SortOrder
-    erzeugt?: SortOrder
-    aktualisiert?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    bewertung?: SortOrder
+    kommentar?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type transaktionSumOrderByAggregateInput = {
+  export type ReviewSumOrderByAggregateInput = {
     id?: SortOrder
     version?: SortOrder
-    aktie_id?: SortOrder
-    anzahl?: SortOrder
-    preis?: SortOrder
-    gebuehren?: SortOrder
-    gesamtbetrag?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    bewertung?: SortOrder
   }
 
-  export type EnumtransaktionstypWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.transaktionstyp | EnumtransaktionstypFieldRefInput<$PrismaModel>
-    in?: $Enums.transaktionstyp[] | ListEnumtransaktionstypFieldRefInput<$PrismaModel>
-    notIn?: $Enums.transaktionstyp[] | ListEnumtransaktionstypFieldRefInput<$PrismaModel>
-    not?: NestedEnumtransaktionstypWithAggregatesFilter<$PrismaModel> | $Enums.transaktionstyp
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumtransaktionstypFilter<$PrismaModel>
-    _max?: NestedEnumtransaktionstypFilter<$PrismaModel>
+  export type FavoriteFilmIdUserIdCompoundUniqueInput = {
+    filmId: number
+    userId: number
   }
 
-  export type kursCreateNestedManyWithoutAktieInput = {
-    create?: XOR<kursCreateWithoutAktieInput, kursUncheckedCreateWithoutAktieInput> | kursCreateWithoutAktieInput[] | kursUncheckedCreateWithoutAktieInput[]
-    connectOrCreate?: kursCreateOrConnectWithoutAktieInput | kursCreateOrConnectWithoutAktieInput[]
-    createMany?: kursCreateManyAktieInputEnvelope
-    connect?: kursWhereUniqueInput | kursWhereUniqueInput[]
+  export type FavoriteCountOrderByAggregateInput = {
+    id?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
   }
 
-  export type transaktionCreateNestedManyWithoutAktieInput = {
-    create?: XOR<transaktionCreateWithoutAktieInput, transaktionUncheckedCreateWithoutAktieInput> | transaktionCreateWithoutAktieInput[] | transaktionUncheckedCreateWithoutAktieInput[]
-    connectOrCreate?: transaktionCreateOrConnectWithoutAktieInput | transaktionCreateOrConnectWithoutAktieInput[]
-    createMany?: transaktionCreateManyAktieInputEnvelope
-    connect?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
+  export type FavoriteAvgOrderByAggregateInput = {
+    id?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
   }
 
-  export type kursUncheckedCreateNestedManyWithoutAktieInput = {
-    create?: XOR<kursCreateWithoutAktieInput, kursUncheckedCreateWithoutAktieInput> | kursCreateWithoutAktieInput[] | kursUncheckedCreateWithoutAktieInput[]
-    connectOrCreate?: kursCreateOrConnectWithoutAktieInput | kursCreateOrConnectWithoutAktieInput[]
-    createMany?: kursCreateManyAktieInputEnvelope
-    connect?: kursWhereUniqueInput | kursWhereUniqueInput[]
+  export type FavoriteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
   }
 
-  export type transaktionUncheckedCreateNestedManyWithoutAktieInput = {
-    create?: XOR<transaktionCreateWithoutAktieInput, transaktionUncheckedCreateWithoutAktieInput> | transaktionCreateWithoutAktieInput[] | transaktionUncheckedCreateWithoutAktieInput[]
-    connectOrCreate?: transaktionCreateOrConnectWithoutAktieInput | transaktionCreateOrConnectWithoutAktieInput[]
-    createMany?: transaktionCreateManyAktieInputEnvelope
-    connect?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
+  export type FavoriteMinOrderByAggregateInput = {
+    id?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type FavoriteSumOrderByAggregateInput = {
+    id?: SortOrder
+    filmId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ReviewCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type FavoriteCreateNestedManyWithoutUserInput = {
+    create?: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput> | FavoriteCreateWithoutUserInput[] | FavoriteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutUserInput | FavoriteCreateOrConnectWithoutUserInput[]
+    createMany?: FavoriteCreateManyUserInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type FavoriteUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput> | FavoriteCreateWithoutUserInput[] | FavoriteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutUserInput | FavoriteCreateOrConnectWithoutUserInput[]
+    createMany?: FavoriteCreateManyUserInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6070,20 +7233,121 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type NullableEnumhandelsplatzFieldUpdateOperationsInput = {
-    set?: $Enums.handelsplatz | null
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
   }
 
-  export type DecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
+  export type ReviewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type FavoriteUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput> | FavoriteCreateWithoutUserInput[] | FavoriteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutUserInput | FavoriteCreateOrConnectWithoutUserInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutUserInput | FavoriteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FavoriteCreateManyUserInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutUserInput | FavoriteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutUserInput | FavoriteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type FavoriteUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput> | FavoriteCreateWithoutUserInput[] | FavoriteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutUserInput | FavoriteCreateOrConnectWithoutUserInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutUserInput | FavoriteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FavoriteCreateManyUserInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutUserInput | FavoriteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutUserInput | FavoriteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
+  export type FilmCreategenreInput = {
+    set: $Enums.Genre[]
+  }
+
+  export type ReviewCreateNestedManyWithoutFilmInput = {
+    create?: XOR<ReviewCreateWithoutFilmInput, ReviewUncheckedCreateWithoutFilmInput> | ReviewCreateWithoutFilmInput[] | ReviewUncheckedCreateWithoutFilmInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutFilmInput | ReviewCreateOrConnectWithoutFilmInput[]
+    createMany?: ReviewCreateManyFilmInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type FavoriteCreateNestedManyWithoutFilmInput = {
+    create?: XOR<FavoriteCreateWithoutFilmInput, FavoriteUncheckedCreateWithoutFilmInput> | FavoriteCreateWithoutFilmInput[] | FavoriteUncheckedCreateWithoutFilmInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutFilmInput | FavoriteCreateOrConnectWithoutFilmInput[]
+    createMany?: FavoriteCreateManyFilmInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedManyWithoutFilmInput = {
+    create?: XOR<ReviewCreateWithoutFilmInput, ReviewUncheckedCreateWithoutFilmInput> | ReviewCreateWithoutFilmInput[] | ReviewUncheckedCreateWithoutFilmInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutFilmInput | ReviewCreateOrConnectWithoutFilmInput[]
+    createMany?: ReviewCreateManyFilmInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type FavoriteUncheckedCreateNestedManyWithoutFilmInput = {
+    create?: XOR<FavoriteCreateWithoutFilmInput, FavoriteUncheckedCreateWithoutFilmInput> | FavoriteCreateWithoutFilmInput[] | FavoriteUncheckedCreateWithoutFilmInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutFilmInput | FavoriteCreateOrConnectWithoutFilmInput[]
+    createMany?: FavoriteCreateManyFilmInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
+  export type FilmUpdategenreInput = {
+    set?: $Enums.Genre[]
+    push?: $Enums.Genre | $Enums.Genre[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type NullableDecimalFieldUpdateOperationsInput = {
@@ -6094,104 +7358,116 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type ReviewUpdateManyWithoutFilmNestedInput = {
+    create?: XOR<ReviewCreateWithoutFilmInput, ReviewUncheckedCreateWithoutFilmInput> | ReviewCreateWithoutFilmInput[] | ReviewUncheckedCreateWithoutFilmInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutFilmInput | ReviewCreateOrConnectWithoutFilmInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutFilmInput | ReviewUpsertWithWhereUniqueWithoutFilmInput[]
+    createMany?: ReviewCreateManyFilmInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutFilmInput | ReviewUpdateWithWhereUniqueWithoutFilmInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutFilmInput | ReviewUpdateManyWithWhereWithoutFilmInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
-  export type kursUpdateManyWithoutAktieNestedInput = {
-    create?: XOR<kursCreateWithoutAktieInput, kursUncheckedCreateWithoutAktieInput> | kursCreateWithoutAktieInput[] | kursUncheckedCreateWithoutAktieInput[]
-    connectOrCreate?: kursCreateOrConnectWithoutAktieInput | kursCreateOrConnectWithoutAktieInput[]
-    upsert?: kursUpsertWithWhereUniqueWithoutAktieInput | kursUpsertWithWhereUniqueWithoutAktieInput[]
-    createMany?: kursCreateManyAktieInputEnvelope
-    set?: kursWhereUniqueInput | kursWhereUniqueInput[]
-    disconnect?: kursWhereUniqueInput | kursWhereUniqueInput[]
-    delete?: kursWhereUniqueInput | kursWhereUniqueInput[]
-    connect?: kursWhereUniqueInput | kursWhereUniqueInput[]
-    update?: kursUpdateWithWhereUniqueWithoutAktieInput | kursUpdateWithWhereUniqueWithoutAktieInput[]
-    updateMany?: kursUpdateManyWithWhereWithoutAktieInput | kursUpdateManyWithWhereWithoutAktieInput[]
-    deleteMany?: kursScalarWhereInput | kursScalarWhereInput[]
+  export type FavoriteUpdateManyWithoutFilmNestedInput = {
+    create?: XOR<FavoriteCreateWithoutFilmInput, FavoriteUncheckedCreateWithoutFilmInput> | FavoriteCreateWithoutFilmInput[] | FavoriteUncheckedCreateWithoutFilmInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutFilmInput | FavoriteCreateOrConnectWithoutFilmInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutFilmInput | FavoriteUpsertWithWhereUniqueWithoutFilmInput[]
+    createMany?: FavoriteCreateManyFilmInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutFilmInput | FavoriteUpdateWithWhereUniqueWithoutFilmInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutFilmInput | FavoriteUpdateManyWithWhereWithoutFilmInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
   }
 
-  export type transaktionUpdateManyWithoutAktieNestedInput = {
-    create?: XOR<transaktionCreateWithoutAktieInput, transaktionUncheckedCreateWithoutAktieInput> | transaktionCreateWithoutAktieInput[] | transaktionUncheckedCreateWithoutAktieInput[]
-    connectOrCreate?: transaktionCreateOrConnectWithoutAktieInput | transaktionCreateOrConnectWithoutAktieInput[]
-    upsert?: transaktionUpsertWithWhereUniqueWithoutAktieInput | transaktionUpsertWithWhereUniqueWithoutAktieInput[]
-    createMany?: transaktionCreateManyAktieInputEnvelope
-    set?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
-    disconnect?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
-    delete?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
-    connect?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
-    update?: transaktionUpdateWithWhereUniqueWithoutAktieInput | transaktionUpdateWithWhereUniqueWithoutAktieInput[]
-    updateMany?: transaktionUpdateManyWithWhereWithoutAktieInput | transaktionUpdateManyWithWhereWithoutAktieInput[]
-    deleteMany?: transaktionScalarWhereInput | transaktionScalarWhereInput[]
+  export type ReviewUncheckedUpdateManyWithoutFilmNestedInput = {
+    create?: XOR<ReviewCreateWithoutFilmInput, ReviewUncheckedCreateWithoutFilmInput> | ReviewCreateWithoutFilmInput[] | ReviewUncheckedCreateWithoutFilmInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutFilmInput | ReviewCreateOrConnectWithoutFilmInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutFilmInput | ReviewUpsertWithWhereUniqueWithoutFilmInput[]
+    createMany?: ReviewCreateManyFilmInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutFilmInput | ReviewUpdateWithWhereUniqueWithoutFilmInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutFilmInput | ReviewUpdateManyWithWhereWithoutFilmInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
-  export type kursUncheckedUpdateManyWithoutAktieNestedInput = {
-    create?: XOR<kursCreateWithoutAktieInput, kursUncheckedCreateWithoutAktieInput> | kursCreateWithoutAktieInput[] | kursUncheckedCreateWithoutAktieInput[]
-    connectOrCreate?: kursCreateOrConnectWithoutAktieInput | kursCreateOrConnectWithoutAktieInput[]
-    upsert?: kursUpsertWithWhereUniqueWithoutAktieInput | kursUpsertWithWhereUniqueWithoutAktieInput[]
-    createMany?: kursCreateManyAktieInputEnvelope
-    set?: kursWhereUniqueInput | kursWhereUniqueInput[]
-    disconnect?: kursWhereUniqueInput | kursWhereUniqueInput[]
-    delete?: kursWhereUniqueInput | kursWhereUniqueInput[]
-    connect?: kursWhereUniqueInput | kursWhereUniqueInput[]
-    update?: kursUpdateWithWhereUniqueWithoutAktieInput | kursUpdateWithWhereUniqueWithoutAktieInput[]
-    updateMany?: kursUpdateManyWithWhereWithoutAktieInput | kursUpdateManyWithWhereWithoutAktieInput[]
-    deleteMany?: kursScalarWhereInput | kursScalarWhereInput[]
+  export type FavoriteUncheckedUpdateManyWithoutFilmNestedInput = {
+    create?: XOR<FavoriteCreateWithoutFilmInput, FavoriteUncheckedCreateWithoutFilmInput> | FavoriteCreateWithoutFilmInput[] | FavoriteUncheckedCreateWithoutFilmInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutFilmInput | FavoriteCreateOrConnectWithoutFilmInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutFilmInput | FavoriteUpsertWithWhereUniqueWithoutFilmInput[]
+    createMany?: FavoriteCreateManyFilmInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutFilmInput | FavoriteUpdateWithWhereUniqueWithoutFilmInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutFilmInput | FavoriteUpdateManyWithWhereWithoutFilmInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
   }
 
-  export type transaktionUncheckedUpdateManyWithoutAktieNestedInput = {
-    create?: XOR<transaktionCreateWithoutAktieInput, transaktionUncheckedCreateWithoutAktieInput> | transaktionCreateWithoutAktieInput[] | transaktionUncheckedCreateWithoutAktieInput[]
-    connectOrCreate?: transaktionCreateOrConnectWithoutAktieInput | transaktionCreateOrConnectWithoutAktieInput[]
-    upsert?: transaktionUpsertWithWhereUniqueWithoutAktieInput | transaktionUpsertWithWhereUniqueWithoutAktieInput[]
-    createMany?: transaktionCreateManyAktieInputEnvelope
-    set?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
-    disconnect?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
-    delete?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
-    connect?: transaktionWhereUniqueInput | transaktionWhereUniqueInput[]
-    update?: transaktionUpdateWithWhereUniqueWithoutAktieInput | transaktionUpdateWithWhereUniqueWithoutAktieInput[]
-    updateMany?: transaktionUpdateManyWithWhereWithoutAktieInput | transaktionUpdateManyWithWhereWithoutAktieInput[]
-    deleteMany?: transaktionScalarWhereInput | transaktionScalarWhereInput[]
+  export type FilmCreateNestedOneWithoutReviewsInput = {
+    create?: XOR<FilmCreateWithoutReviewsInput, FilmUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: FilmCreateOrConnectWithoutReviewsInput
+    connect?: FilmWhereUniqueInput
   }
 
-  export type aktieCreateNestedOneWithoutKursInput = {
-    create?: XOR<aktieCreateWithoutKursInput, aktieUncheckedCreateWithoutKursInput>
-    connectOrCreate?: aktieCreateOrConnectWithoutKursInput
-    connect?: aktieWhereUniqueInput
+  export type UserCreateNestedOneWithoutReviewsInput = {
+    create?: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewsInput
+    connect?: UserWhereUniqueInput
   }
 
-  export type NullableBigIntFieldUpdateOperationsInput = {
-    set?: bigint | number | null
-    increment?: bigint | number
-    decrement?: bigint | number
-    multiply?: bigint | number
-    divide?: bigint | number
+  export type FilmUpdateOneRequiredWithoutReviewsNestedInput = {
+    create?: XOR<FilmCreateWithoutReviewsInput, FilmUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: FilmCreateOrConnectWithoutReviewsInput
+    upsert?: FilmUpsertWithoutReviewsInput
+    connect?: FilmWhereUniqueInput
+    update?: XOR<XOR<FilmUpdateToOneWithWhereWithoutReviewsInput, FilmUpdateWithoutReviewsInput>, FilmUncheckedUpdateWithoutReviewsInput>
   }
 
-  export type aktieUpdateOneRequiredWithoutKursNestedInput = {
-    create?: XOR<aktieCreateWithoutKursInput, aktieUncheckedCreateWithoutKursInput>
-    connectOrCreate?: aktieCreateOrConnectWithoutKursInput
-    upsert?: aktieUpsertWithoutKursInput
-    connect?: aktieWhereUniqueInput
-    update?: XOR<XOR<aktieUpdateToOneWithWhereWithoutKursInput, aktieUpdateWithoutKursInput>, aktieUncheckedUpdateWithoutKursInput>
+  export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
+    create?: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewsInput
+    upsert?: UserUpsertWithoutReviewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewsInput, UserUpdateWithoutReviewsInput>, UserUncheckedUpdateWithoutReviewsInput>
   }
 
-  export type aktieCreateNestedOneWithoutTransaktionInput = {
-    create?: XOR<aktieCreateWithoutTransaktionInput, aktieUncheckedCreateWithoutTransaktionInput>
-    connectOrCreate?: aktieCreateOrConnectWithoutTransaktionInput
-    connect?: aktieWhereUniqueInput
+  export type FilmCreateNestedOneWithoutFavoritesInput = {
+    create?: XOR<FilmCreateWithoutFavoritesInput, FilmUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: FilmCreateOrConnectWithoutFavoritesInput
+    connect?: FilmWhereUniqueInput
   }
 
-  export type EnumtransaktionstypFieldUpdateOperationsInput = {
-    set?: $Enums.transaktionstyp
+  export type UserCreateNestedOneWithoutFavoritesInput = {
+    create?: XOR<UserCreateWithoutFavoritesInput, UserUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFavoritesInput
+    connect?: UserWhereUniqueInput
   }
 
-  export type aktieUpdateOneRequiredWithoutTransaktionNestedInput = {
-    create?: XOR<aktieCreateWithoutTransaktionInput, aktieUncheckedCreateWithoutTransaktionInput>
-    connectOrCreate?: aktieCreateOrConnectWithoutTransaktionInput
-    upsert?: aktieUpsertWithoutTransaktionInput
-    connect?: aktieWhereUniqueInput
-    update?: XOR<XOR<aktieUpdateToOneWithWhereWithoutTransaktionInput, aktieUpdateWithoutTransaktionInput>, aktieUncheckedUpdateWithoutTransaktionInput>
+  export type FilmUpdateOneRequiredWithoutFavoritesNestedInput = {
+    create?: XOR<FilmCreateWithoutFavoritesInput, FilmUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: FilmCreateOrConnectWithoutFavoritesInput
+    upsert?: FilmUpsertWithoutFavoritesInput
+    connect?: FilmWhereUniqueInput
+    update?: XOR<XOR<FilmUpdateToOneWithWhereWithoutFavoritesInput, FilmUpdateWithoutFavoritesInput>, FilmUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutFavoritesNestedInput = {
+    create?: XOR<UserCreateWithoutFavoritesInput, UserUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFavoritesInput
+    upsert?: UserUpsertWithoutFavoritesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFavoritesInput, UserUpdateWithoutFavoritesInput>, UserUncheckedUpdateWithoutFavoritesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -6233,44 +7509,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedEnumhandelsplatzNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.handelsplatz | EnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    in?: $Enums.handelsplatz[] | ListEnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.handelsplatz[] | ListEnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumhandelsplatzNullableFilter<$PrismaModel> | $Enums.handelsplatz | null
-  }
-
-  export type NestedDecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -6356,44 +7599,66 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumhandelsplatzNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.handelsplatz | EnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    in?: $Enums.handelsplatz[] | ListEnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.handelsplatz[] | ListEnumhandelsplatzFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumhandelsplatzNullableWithAggregatesFilter<$PrismaModel> | $Enums.handelsplatz | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumhandelsplatzNullableFilter<$PrismaModel>
-    _max?: NestedEnumhandelsplatzNullableFilter<$PrismaModel>
-  }
-
-  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6412,476 +7677,612 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+  export type ReviewCreateWithoutUserInput = {
+    version?: number
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    film: FilmCreateNestedOneWithoutReviewsInput
   }
 
-  export type NestedBigIntNullableFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
-  }
-
-  export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedBigIntNullableFilter<$PrismaModel>
-    _min?: NestedBigIntNullableFilter<$PrismaModel>
-    _max?: NestedBigIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedEnumtransaktionstypFilter<$PrismaModel = never> = {
-    equals?: $Enums.transaktionstyp | EnumtransaktionstypFieldRefInput<$PrismaModel>
-    in?: $Enums.transaktionstyp[] | ListEnumtransaktionstypFieldRefInput<$PrismaModel>
-    notIn?: $Enums.transaktionstyp[] | ListEnumtransaktionstypFieldRefInput<$PrismaModel>
-    not?: NestedEnumtransaktionstypFilter<$PrismaModel> | $Enums.transaktionstyp
-  }
-
-  export type NestedEnumtransaktionstypWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.transaktionstyp | EnumtransaktionstypFieldRefInput<$PrismaModel>
-    in?: $Enums.transaktionstyp[] | ListEnumtransaktionstypFieldRefInput<$PrismaModel>
-    notIn?: $Enums.transaktionstyp[] | ListEnumtransaktionstypFieldRefInput<$PrismaModel>
-    not?: NestedEnumtransaktionstypWithAggregatesFilter<$PrismaModel> | $Enums.transaktionstyp
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumtransaktionstypFilter<$PrismaModel>
-    _max?: NestedEnumtransaktionstypFilter<$PrismaModel>
-  }
-
-  export type kursCreateWithoutAktieInput = {
-    datum: Date | string
-    eroeffnung?: Decimal | DecimalJsLike | number | string | null
-    schluss?: Decimal | DecimalJsLike | number | string | null
-    hoch?: Decimal | DecimalJsLike | number | string | null
-    tief?: Decimal | DecimalJsLike | number | string | null
-    volumen?: bigint | number | null
-  }
-
-  export type kursUncheckedCreateWithoutAktieInput = {
+  export type ReviewUncheckedCreateWithoutUserInput = {
     id?: number
-    datum: Date | string
-    eroeffnung?: Decimal | DecimalJsLike | number | string | null
-    schluss?: Decimal | DecimalJsLike | number | string | null
-    hoch?: Decimal | DecimalJsLike | number | string | null
-    tief?: Decimal | DecimalJsLike | number | string | null
-    volumen?: bigint | number | null
+    version?: number
+    filmId: number
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type kursCreateOrConnectWithoutAktieInput = {
-    where: kursWhereUniqueInput
-    create: XOR<kursCreateWithoutAktieInput, kursUncheckedCreateWithoutAktieInput>
+  export type ReviewCreateOrConnectWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
   }
 
-  export type kursCreateManyAktieInputEnvelope = {
-    data: kursCreateManyAktieInput | kursCreateManyAktieInput[]
+  export type ReviewCreateManyUserInputEnvelope = {
+    data: ReviewCreateManyUserInput | ReviewCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
-  export type transaktionCreateWithoutAktieInput = {
-    version?: number
-    typ: $Enums.transaktionstyp
-    datum: Date | string
-    uhrzeit?: Date | string | null
-    anzahl: number
-    preis: Decimal | DecimalJsLike | number | string
-    gebuehren?: Decimal | DecimalJsLike | number | string
-    gesamtbetrag: Decimal | DecimalJsLike | number | string
-    notiz?: string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
+  export type FavoriteCreateWithoutUserInput = {
+    createdAt?: Date | string
+    film: FilmCreateNestedOneWithoutFavoritesInput
   }
 
-  export type transaktionUncheckedCreateWithoutAktieInput = {
+  export type FavoriteUncheckedCreateWithoutUserInput = {
     id?: number
-    version?: number
-    typ: $Enums.transaktionstyp
-    datum: Date | string
-    uhrzeit?: Date | string | null
-    anzahl: number
-    preis: Decimal | DecimalJsLike | number | string
-    gebuehren?: Decimal | DecimalJsLike | number | string
-    gesamtbetrag: Decimal | DecimalJsLike | number | string
-    notiz?: string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
+    filmId: number
+    createdAt?: Date | string
   }
 
-  export type transaktionCreateOrConnectWithoutAktieInput = {
-    where: transaktionWhereUniqueInput
-    create: XOR<transaktionCreateWithoutAktieInput, transaktionUncheckedCreateWithoutAktieInput>
+  export type FavoriteCreateOrConnectWithoutUserInput = {
+    where: FavoriteWhereUniqueInput
+    create: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput>
   }
 
-  export type transaktionCreateManyAktieInputEnvelope = {
-    data: transaktionCreateManyAktieInput | transaktionCreateManyAktieInput[]
+  export type FavoriteCreateManyUserInputEnvelope = {
+    data: FavoriteCreateManyUserInput | FavoriteCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
-  export type kursUpsertWithWhereUniqueWithoutAktieInput = {
-    where: kursWhereUniqueInput
-    update: XOR<kursUpdateWithoutAktieInput, kursUncheckedUpdateWithoutAktieInput>
-    create: XOR<kursCreateWithoutAktieInput, kursUncheckedCreateWithoutAktieInput>
+  export type ReviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
+    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
   }
 
-  export type kursUpdateWithWhereUniqueWithoutAktieInput = {
-    where: kursWhereUniqueInput
-    data: XOR<kursUpdateWithoutAktieInput, kursUncheckedUpdateWithoutAktieInput>
+  export type ReviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
   }
 
-  export type kursUpdateManyWithWhereWithoutAktieInput = {
-    where: kursScalarWhereInput
-    data: XOR<kursUpdateManyMutationInput, kursUncheckedUpdateManyWithoutAktieInput>
+  export type ReviewUpdateManyWithWhereWithoutUserInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type kursScalarWhereInput = {
-    AND?: kursScalarWhereInput | kursScalarWhereInput[]
-    OR?: kursScalarWhereInput[]
-    NOT?: kursScalarWhereInput | kursScalarWhereInput[]
-    id?: IntFilter<"kurs"> | number
-    datum?: DateTimeFilter<"kurs"> | Date | string
-    eroeffnung?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    schluss?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    hoch?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    tief?: DecimalNullableFilter<"kurs"> | Decimal | DecimalJsLike | number | string | null
-    volumen?: BigIntNullableFilter<"kurs"> | bigint | number | null
-    aktie_id?: IntFilter<"kurs"> | number
+  export type ReviewScalarWhereInput = {
+    AND?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    OR?: ReviewScalarWhereInput[]
+    NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    id?: IntFilter<"Review"> | number
+    version?: IntFilter<"Review"> | number
+    filmId?: IntFilter<"Review"> | number
+    userId?: IntFilter<"Review"> | number
+    bewertung?: IntFilter<"Review"> | number
+    kommentar?: StringNullableFilter<"Review"> | string | null
+    createdAt?: DateTimeFilter<"Review"> | Date | string
+    updatedAt?: DateTimeFilter<"Review"> | Date | string
   }
 
-  export type transaktionUpsertWithWhereUniqueWithoutAktieInput = {
-    where: transaktionWhereUniqueInput
-    update: XOR<transaktionUpdateWithoutAktieInput, transaktionUncheckedUpdateWithoutAktieInput>
-    create: XOR<transaktionCreateWithoutAktieInput, transaktionUncheckedCreateWithoutAktieInput>
+  export type FavoriteUpsertWithWhereUniqueWithoutUserInput = {
+    where: FavoriteWhereUniqueInput
+    update: XOR<FavoriteUpdateWithoutUserInput, FavoriteUncheckedUpdateWithoutUserInput>
+    create: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput>
   }
 
-  export type transaktionUpdateWithWhereUniqueWithoutAktieInput = {
-    where: transaktionWhereUniqueInput
-    data: XOR<transaktionUpdateWithoutAktieInput, transaktionUncheckedUpdateWithoutAktieInput>
+  export type FavoriteUpdateWithWhereUniqueWithoutUserInput = {
+    where: FavoriteWhereUniqueInput
+    data: XOR<FavoriteUpdateWithoutUserInput, FavoriteUncheckedUpdateWithoutUserInput>
   }
 
-  export type transaktionUpdateManyWithWhereWithoutAktieInput = {
-    where: transaktionScalarWhereInput
-    data: XOR<transaktionUpdateManyMutationInput, transaktionUncheckedUpdateManyWithoutAktieInput>
+  export type FavoriteUpdateManyWithWhereWithoutUserInput = {
+    where: FavoriteScalarWhereInput
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type transaktionScalarWhereInput = {
-    AND?: transaktionScalarWhereInput | transaktionScalarWhereInput[]
-    OR?: transaktionScalarWhereInput[]
-    NOT?: transaktionScalarWhereInput | transaktionScalarWhereInput[]
-    id?: IntFilter<"transaktion"> | number
-    version?: IntFilter<"transaktion"> | number
-    typ?: EnumtransaktionstypFilter<"transaktion"> | $Enums.transaktionstyp
-    aktie_id?: IntFilter<"transaktion"> | number
-    datum?: DateTimeFilter<"transaktion"> | Date | string
-    uhrzeit?: DateTimeNullableFilter<"transaktion"> | Date | string | null
-    anzahl?: IntFilter<"transaktion"> | number
-    preis?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFilter<"transaktion"> | Decimal | DecimalJsLike | number | string
-    notiz?: StringNullableFilter<"transaktion"> | string | null
-    erzeugt?: DateTimeFilter<"transaktion"> | Date | string
-    aktualisiert?: DateTimeFilter<"transaktion"> | Date | string
+  export type FavoriteScalarWhereInput = {
+    AND?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+    OR?: FavoriteScalarWhereInput[]
+    NOT?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+    id?: IntFilter<"Favorite"> | number
+    filmId?: IntFilter<"Favorite"> | number
+    userId?: IntFilter<"Favorite"> | number
+    createdAt?: DateTimeFilter<"Favorite"> | Date | string
   }
 
-  export type aktieCreateWithoutKursInput = {
+  export type ReviewCreateWithoutFilmInput = {
     version?: number
-    isin: string
-    symbol: string
-    name: string
-    branche?: string | null
-    handelsplatz?: $Enums.handelsplatz | null
-    kaufpreis: Decimal | DecimalJsLike | number | string
-    anzahl: number
-    kaufdatum?: Date | string | null
-    dividende?: Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: Decimal | DecimalJsLike | number | string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
-    transaktion?: transaktionCreateNestedManyWithoutAktieInput
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutReviewsInput
   }
 
-  export type aktieUncheckedCreateWithoutKursInput = {
+  export type ReviewUncheckedCreateWithoutFilmInput = {
     id?: number
     version?: number
-    isin: string
-    symbol: string
-    name: string
-    branche?: string | null
-    handelsplatz?: $Enums.handelsplatz | null
-    kaufpreis: Decimal | DecimalJsLike | number | string
-    anzahl: number
-    kaufdatum?: Date | string | null
-    dividende?: Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: Decimal | DecimalJsLike | number | string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
-    transaktion?: transaktionUncheckedCreateNestedManyWithoutAktieInput
+    userId: number
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type aktieCreateOrConnectWithoutKursInput = {
-    where: aktieWhereUniqueInput
-    create: XOR<aktieCreateWithoutKursInput, aktieUncheckedCreateWithoutKursInput>
+  export type ReviewCreateOrConnectWithoutFilmInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutFilmInput, ReviewUncheckedCreateWithoutFilmInput>
   }
 
-  export type aktieUpsertWithoutKursInput = {
-    update: XOR<aktieUpdateWithoutKursInput, aktieUncheckedUpdateWithoutKursInput>
-    create: XOR<aktieCreateWithoutKursInput, aktieUncheckedCreateWithoutKursInput>
-    where?: aktieWhereInput
+  export type ReviewCreateManyFilmInputEnvelope = {
+    data: ReviewCreateManyFilmInput | ReviewCreateManyFilmInput[]
+    skipDuplicates?: boolean
   }
 
-  export type aktieUpdateToOneWithWhereWithoutKursInput = {
-    where?: aktieWhereInput
-    data: XOR<aktieUpdateWithoutKursInput, aktieUncheckedUpdateWithoutKursInput>
+  export type FavoriteCreateWithoutFilmInput = {
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutFavoritesInput
   }
 
-  export type aktieUpdateWithoutKursInput = {
-    version?: IntFieldUpdateOperationsInput | number
-    isin?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    branche?: NullableStringFieldUpdateOperationsInput | string | null
-    handelsplatz?: NullableEnumhandelsplatzFieldUpdateOperationsInput | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFieldUpdateOperationsInput | number
-    kaufdatum?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dividende?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
-    transaktion?: transaktionUpdateManyWithoutAktieNestedInput
+  export type FavoriteUncheckedCreateWithoutFilmInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
   }
 
-  export type aktieUncheckedUpdateWithoutKursInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    version?: IntFieldUpdateOperationsInput | number
-    isin?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    branche?: NullableStringFieldUpdateOperationsInput | string | null
-    handelsplatz?: NullableEnumhandelsplatzFieldUpdateOperationsInput | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFieldUpdateOperationsInput | number
-    kaufdatum?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dividende?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
-    transaktion?: transaktionUncheckedUpdateManyWithoutAktieNestedInput
+  export type FavoriteCreateOrConnectWithoutFilmInput = {
+    where: FavoriteWhereUniqueInput
+    create: XOR<FavoriteCreateWithoutFilmInput, FavoriteUncheckedCreateWithoutFilmInput>
   }
 
-  export type aktieCreateWithoutTransaktionInput = {
+  export type FavoriteCreateManyFilmInputEnvelope = {
+    data: FavoriteCreateManyFilmInput | FavoriteCreateManyFilmInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReviewUpsertWithWhereUniqueWithoutFilmInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutFilmInput, ReviewUncheckedUpdateWithoutFilmInput>
+    create: XOR<ReviewCreateWithoutFilmInput, ReviewUncheckedCreateWithoutFilmInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutFilmInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutFilmInput, ReviewUncheckedUpdateWithoutFilmInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutFilmInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutFilmInput>
+  }
+
+  export type FavoriteUpsertWithWhereUniqueWithoutFilmInput = {
+    where: FavoriteWhereUniqueInput
+    update: XOR<FavoriteUpdateWithoutFilmInput, FavoriteUncheckedUpdateWithoutFilmInput>
+    create: XOR<FavoriteCreateWithoutFilmInput, FavoriteUncheckedCreateWithoutFilmInput>
+  }
+
+  export type FavoriteUpdateWithWhereUniqueWithoutFilmInput = {
+    where: FavoriteWhereUniqueInput
+    data: XOR<FavoriteUpdateWithoutFilmInput, FavoriteUncheckedUpdateWithoutFilmInput>
+  }
+
+  export type FavoriteUpdateManyWithWhereWithoutFilmInput = {
+    where: FavoriteScalarWhereInput
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyWithoutFilmInput>
+  }
+
+  export type FilmCreateWithoutReviewsInput = {
     version?: number
-    isin: string
-    symbol: string
-    name: string
-    branche?: string | null
-    handelsplatz?: $Enums.handelsplatz | null
-    kaufpreis: Decimal | DecimalJsLike | number | string
-    anzahl: number
-    kaufdatum?: Date | string | null
-    dividende?: Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: Decimal | DecimalJsLike | number | string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
-    kurs?: kursCreateNestedManyWithoutAktieInput
+    titel: string
+    originaltitel?: string | null
+    genre?: FilmCreategenreInput | $Enums.Genre[]
+    regisseur?: string | null
+    erscheinungsjahr?: number | null
+    dauer?: number | null
+    bewertung?: Decimal | DecimalJsLike | number | string | null
+    beschreibung?: string | null
+    sprache?: string | null
+    land?: string | null
+    poster?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    favorites?: FavoriteCreateNestedManyWithoutFilmInput
   }
 
-  export type aktieUncheckedCreateWithoutTransaktionInput = {
+  export type FilmUncheckedCreateWithoutReviewsInput = {
     id?: number
     version?: number
-    isin: string
-    symbol: string
-    name: string
-    branche?: string | null
-    handelsplatz?: $Enums.handelsplatz | null
-    kaufpreis: Decimal | DecimalJsLike | number | string
-    anzahl: number
-    kaufdatum?: Date | string | null
-    dividende?: Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: Decimal | DecimalJsLike | number | string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
-    kurs?: kursUncheckedCreateNestedManyWithoutAktieInput
+    titel: string
+    originaltitel?: string | null
+    genre?: FilmCreategenreInput | $Enums.Genre[]
+    regisseur?: string | null
+    erscheinungsjahr?: number | null
+    dauer?: number | null
+    bewertung?: Decimal | DecimalJsLike | number | string | null
+    beschreibung?: string | null
+    sprache?: string | null
+    land?: string | null
+    poster?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutFilmInput
   }
 
-  export type aktieCreateOrConnectWithoutTransaktionInput = {
-    where: aktieWhereUniqueInput
-    create: XOR<aktieCreateWithoutTransaktionInput, aktieUncheckedCreateWithoutTransaktionInput>
+  export type FilmCreateOrConnectWithoutReviewsInput = {
+    where: FilmWhereUniqueInput
+    create: XOR<FilmCreateWithoutReviewsInput, FilmUncheckedCreateWithoutReviewsInput>
   }
 
-  export type aktieUpsertWithoutTransaktionInput = {
-    update: XOR<aktieUpdateWithoutTransaktionInput, aktieUncheckedUpdateWithoutTransaktionInput>
-    create: XOR<aktieCreateWithoutTransaktionInput, aktieUncheckedCreateWithoutTransaktionInput>
-    where?: aktieWhereInput
+  export type UserCreateWithoutReviewsInput = {
+    email: string
+    password: string
+    username?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
   }
 
-  export type aktieUpdateToOneWithWhereWithoutTransaktionInput = {
-    where?: aktieWhereInput
-    data: XOR<aktieUpdateWithoutTransaktionInput, aktieUncheckedUpdateWithoutTransaktionInput>
+  export type UserUncheckedCreateWithoutReviewsInput = {
+    id?: number
+    email: string
+    password: string
+    username?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type aktieUpdateWithoutTransaktionInput = {
+  export type UserCreateOrConnectWithoutReviewsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
+  }
+
+  export type FilmUpsertWithoutReviewsInput = {
+    update: XOR<FilmUpdateWithoutReviewsInput, FilmUncheckedUpdateWithoutReviewsInput>
+    create: XOR<FilmCreateWithoutReviewsInput, FilmUncheckedCreateWithoutReviewsInput>
+    where?: FilmWhereInput
+  }
+
+  export type FilmUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: FilmWhereInput
+    data: XOR<FilmUpdateWithoutReviewsInput, FilmUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type FilmUpdateWithoutReviewsInput = {
     version?: IntFieldUpdateOperationsInput | number
-    isin?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    branche?: NullableStringFieldUpdateOperationsInput | string | null
-    handelsplatz?: NullableEnumhandelsplatzFieldUpdateOperationsInput | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFieldUpdateOperationsInput | number
-    kaufdatum?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dividende?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
-    kurs?: kursUpdateManyWithoutAktieNestedInput
+    titel?: StringFieldUpdateOperationsInput | string
+    originaltitel?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: FilmUpdategenreInput | $Enums.Genre[]
+    regisseur?: NullableStringFieldUpdateOperationsInput | string | null
+    erscheinungsjahr?: NullableIntFieldUpdateOperationsInput | number | null
+    dauer?: NullableIntFieldUpdateOperationsInput | number | null
+    bewertung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: NullableStringFieldUpdateOperationsInput | string | null
+    sprache?: NullableStringFieldUpdateOperationsInput | string | null
+    land?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    favorites?: FavoriteUpdateManyWithoutFilmNestedInput
   }
 
-  export type aktieUncheckedUpdateWithoutTransaktionInput = {
+  export type FilmUncheckedUpdateWithoutReviewsInput = {
     id?: IntFieldUpdateOperationsInput | number
     version?: IntFieldUpdateOperationsInput | number
-    isin?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    branche?: NullableStringFieldUpdateOperationsInput | string | null
-    handelsplatz?: NullableEnumhandelsplatzFieldUpdateOperationsInput | $Enums.handelsplatz | null
-    kaufpreis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    anzahl?: IntFieldUpdateOperationsInput | number
-    kaufdatum?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dividende?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    letzter_kurs?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
-    kurs?: kursUncheckedUpdateManyWithoutAktieNestedInput
+    titel?: StringFieldUpdateOperationsInput | string
+    originaltitel?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: FilmUpdategenreInput | $Enums.Genre[]
+    regisseur?: NullableStringFieldUpdateOperationsInput | string | null
+    erscheinungsjahr?: NullableIntFieldUpdateOperationsInput | number | null
+    dauer?: NullableIntFieldUpdateOperationsInput | number | null
+    bewertung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: NullableStringFieldUpdateOperationsInput | string | null
+    sprache?: NullableStringFieldUpdateOperationsInput | string | null
+    land?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    favorites?: FavoriteUncheckedUpdateManyWithoutFilmNestedInput
   }
 
-  export type kursCreateManyAktieInput = {
-    id?: number
-    datum: Date | string
-    eroeffnung?: Decimal | DecimalJsLike | number | string | null
-    schluss?: Decimal | DecimalJsLike | number | string | null
-    hoch?: Decimal | DecimalJsLike | number | string | null
-    tief?: Decimal | DecimalJsLike | number | string | null
-    volumen?: bigint | number | null
+  export type UserUpsertWithoutReviewsInput = {
+    update: XOR<UserUpdateWithoutReviewsInput, UserUncheckedUpdateWithoutReviewsInput>
+    create: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
+    where?: UserWhereInput
   }
 
-  export type transaktionCreateManyAktieInput = {
+  export type UserUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReviewsInput, UserUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type UserUpdateWithoutReviewsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type FilmCreateWithoutFavoritesInput = {
+    version?: number
+    titel: string
+    originaltitel?: string | null
+    genre?: FilmCreategenreInput | $Enums.Genre[]
+    regisseur?: string | null
+    erscheinungsjahr?: number | null
+    dauer?: number | null
+    bewertung?: Decimal | DecimalJsLike | number | string | null
+    beschreibung?: string | null
+    sprache?: string | null
+    land?: string | null
+    poster?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ReviewCreateNestedManyWithoutFilmInput
+  }
+
+  export type FilmUncheckedCreateWithoutFavoritesInput = {
     id?: number
     version?: number
-    typ: $Enums.transaktionstyp
-    datum: Date | string
-    uhrzeit?: Date | string | null
-    anzahl: number
-    preis: Decimal | DecimalJsLike | number | string
-    gebuehren?: Decimal | DecimalJsLike | number | string
-    gesamtbetrag: Decimal | DecimalJsLike | number | string
-    notiz?: string | null
-    erzeugt?: Date | string
-    aktualisiert?: Date | string
+    titel: string
+    originaltitel?: string | null
+    genre?: FilmCreategenreInput | $Enums.Genre[]
+    regisseur?: string | null
+    erscheinungsjahr?: number | null
+    dauer?: number | null
+    bewertung?: Decimal | DecimalJsLike | number | string | null
+    beschreibung?: string | null
+    sprache?: string | null
+    land?: string | null
+    poster?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ReviewUncheckedCreateNestedManyWithoutFilmInput
   }
 
-  export type kursUpdateWithoutAktieInput = {
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    eroeffnung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schluss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    hoch?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    tief?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    volumen?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  export type FilmCreateOrConnectWithoutFavoritesInput = {
+    where: FilmWhereUniqueInput
+    create: XOR<FilmCreateWithoutFavoritesInput, FilmUncheckedCreateWithoutFavoritesInput>
   }
 
-  export type kursUncheckedUpdateWithoutAktieInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    eroeffnung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schluss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    hoch?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    tief?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    volumen?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  export type UserCreateWithoutFavoritesInput = {
+    email: string
+    password: string
+    username?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ReviewCreateNestedManyWithoutUserInput
   }
 
-  export type kursUncheckedUpdateManyWithoutAktieInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    eroeffnung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    schluss?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    hoch?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    tief?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    volumen?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  export type UserUncheckedCreateWithoutFavoritesInput = {
+    id?: number
+    email: string
+    password: string
+    username?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type transaktionUpdateWithoutAktieInput = {
+  export type UserCreateOrConnectWithoutFavoritesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFavoritesInput, UserUncheckedCreateWithoutFavoritesInput>
+  }
+
+  export type FilmUpsertWithoutFavoritesInput = {
+    update: XOR<FilmUpdateWithoutFavoritesInput, FilmUncheckedUpdateWithoutFavoritesInput>
+    create: XOR<FilmCreateWithoutFavoritesInput, FilmUncheckedCreateWithoutFavoritesInput>
+    where?: FilmWhereInput
+  }
+
+  export type FilmUpdateToOneWithWhereWithoutFavoritesInput = {
+    where?: FilmWhereInput
+    data: XOR<FilmUpdateWithoutFavoritesInput, FilmUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type FilmUpdateWithoutFavoritesInput = {
     version?: IntFieldUpdateOperationsInput | number
-    typ?: EnumtransaktionstypFieldUpdateOperationsInput | $Enums.transaktionstyp
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    uhrzeit?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    anzahl?: IntFieldUpdateOperationsInput | number
-    preis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    notiz?: NullableStringFieldUpdateOperationsInput | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
+    titel?: StringFieldUpdateOperationsInput | string
+    originaltitel?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: FilmUpdategenreInput | $Enums.Genre[]
+    regisseur?: NullableStringFieldUpdateOperationsInput | string | null
+    erscheinungsjahr?: NullableIntFieldUpdateOperationsInput | number | null
+    dauer?: NullableIntFieldUpdateOperationsInput | number | null
+    bewertung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: NullableStringFieldUpdateOperationsInput | string | null
+    sprache?: NullableStringFieldUpdateOperationsInput | string | null
+    land?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ReviewUpdateManyWithoutFilmNestedInput
   }
 
-  export type transaktionUncheckedUpdateWithoutAktieInput = {
+  export type FilmUncheckedUpdateWithoutFavoritesInput = {
     id?: IntFieldUpdateOperationsInput | number
     version?: IntFieldUpdateOperationsInput | number
-    typ?: EnumtransaktionstypFieldUpdateOperationsInput | $Enums.transaktionstyp
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    uhrzeit?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    anzahl?: IntFieldUpdateOperationsInput | number
-    preis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    notiz?: NullableStringFieldUpdateOperationsInput | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
+    titel?: StringFieldUpdateOperationsInput | string
+    originaltitel?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: FilmUpdategenreInput | $Enums.Genre[]
+    regisseur?: NullableStringFieldUpdateOperationsInput | string | null
+    erscheinungsjahr?: NullableIntFieldUpdateOperationsInput | number | null
+    dauer?: NullableIntFieldUpdateOperationsInput | number | null
+    bewertung?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    beschreibung?: NullableStringFieldUpdateOperationsInput | string | null
+    sprache?: NullableStringFieldUpdateOperationsInput | string | null
+    land?: NullableStringFieldUpdateOperationsInput | string | null
+    poster?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ReviewUncheckedUpdateManyWithoutFilmNestedInput
   }
 
-  export type transaktionUncheckedUpdateManyWithoutAktieInput = {
+  export type UserUpsertWithoutFavoritesInput = {
+    update: XOR<UserUpdateWithoutFavoritesInput, UserUncheckedUpdateWithoutFavoritesInput>
+    create: XOR<UserCreateWithoutFavoritesInput, UserUncheckedCreateWithoutFavoritesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFavoritesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFavoritesInput, UserUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type UserUpdateWithoutFavoritesInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFavoritesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ReviewCreateManyUserInput = {
+    id?: number
+    version?: number
+    filmId: number
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavoriteCreateManyUserInput = {
+    id?: number
+    filmId: number
+    createdAt?: Date | string
+  }
+
+  export type ReviewUpdateWithoutUserInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    film?: FilmUpdateOneRequiredWithoutReviewsNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     version?: IntFieldUpdateOperationsInput | number
-    typ?: EnumtransaktionstypFieldUpdateOperationsInput | $Enums.transaktionstyp
-    datum?: DateTimeFieldUpdateOperationsInput | Date | string
-    uhrzeit?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    anzahl?: IntFieldUpdateOperationsInput | number
-    preis?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gebuehren?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    gesamtbetrag?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    notiz?: NullableStringFieldUpdateOperationsInput | string | null
-    erzeugt?: DateTimeFieldUpdateOperationsInput | Date | string
-    aktualisiert?: DateTimeFieldUpdateOperationsInput | Date | string
+    filmId?: IntFieldUpdateOperationsInput | number
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    filmId?: IntFieldUpdateOperationsInput | number
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUpdateWithoutUserInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    film?: FilmUpdateOneRequiredWithoutFavoritesNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    filmId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    filmId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewCreateManyFilmInput = {
+    id?: number
+    version?: number
+    userId: number
+    bewertung: number
+    kommentar?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavoriteCreateManyFilmInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
+  }
+
+  export type ReviewUpdateWithoutFilmInput = {
+    version?: IntFieldUpdateOperationsInput | number
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutReviewsNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutFilmInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutFilmInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    version?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bewertung?: IntFieldUpdateOperationsInput | number
+    kommentar?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUpdateWithoutFilmInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateWithoutFilmInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyWithoutFilmInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
