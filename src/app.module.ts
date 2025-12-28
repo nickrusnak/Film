@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
 import { PrismaModule } from './prisma/prisma.module';
 import { HealthModule } from './health/health.module';
+import { AuthModule } from './auth/auth.module';
+import { FilmModule } from './film/film.module';
 
 @Module({
     imports: [
@@ -29,6 +31,10 @@ import { HealthModule } from './health/health.module';
         }),
         // Datenbank
         PrismaModule,
+        // Authentifizierung (Keycloak)
+        AuthModule,
+        // Feature Module
+        FilmModule,
         // Healthchecks
         HealthModule,
     ],

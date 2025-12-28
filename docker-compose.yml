@@ -1,15 +1,75 @@
 services:
+  # ============================================
+  # PostgreSQL Datenbank
+  # ============================================
   db:
-    image: postgres:18.0-trixie
+    image: postgres:17
     ports:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: p
       POSTGRES_DB: postgres
-    networks: [depot-network]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [ film-network ]
     hostname: postgres
-    container_name: postgres_depot
+    container_name: postgres_film
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  # ============================================
+  # pgAdmin - Datenbank-Verwaltung
+  # ============================================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks: [ film-network ]
+    container_name: pgadmin_film
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ============================================
+  # Keycloak - Authentifizierung (OIDC/OAuth2)
+  # ============================================
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    command: start-dev
+    ports:
+      - "8080:8080"
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: p
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks: [ film-network ]
+    container_name: keycloak_film
+    depends_on:
+      db:
+        condition: service_healthy
+
+# ============================================
+# Volumes für persistente Daten
+# ============================================
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+    # ============================================
+    # Netzwerk
+    # ============================================
 networks:
-  depot-network:
-    name: depot-network
+  film-network:
+    name: film-network

@@ -12,8 +12,8 @@
 - ✅ Git-Repository erstellt
 - ✅ PostgreSQL via Docker Compose
 - ✅ NestJS-Projekt mit pnpm initialisiert
-- ⬜ Keycloak in Docker Compose integrieren
-- ⬜ pgAdmin in Docker Compose integrieren
+- ✅ Keycloak in Docker Compose integriert (Port 8080)
+- ✅ pgAdmin in Docker Compose integriert (Port 8888)
 
 ---
 
@@ -22,7 +22,7 @@
 - ✅ Prisma installiert
 - ✅ Prisma Schema mit Film-Domain erstellt (User, Film, Review, Favorite)
 - ✅ Migration durchgeführt (`init-film`)
-- ⬜ DB-Verbindung testen
+- ✅ DB-Verbindung getestet (Healthcheck + Migration)
 
 ---
 
@@ -69,8 +69,10 @@
 
 ## 8. Authentifizierung (Auth)
 
-- ⬜ OIDC/OAuth2 via Keycloak
-- ⬜ Guards und Strategien implementieren
+- ✅ OIDC/OAuth2 via Keycloak (JWT Strategy mit JWKS)
+- ✅ `KeycloakAuthGuard` für geschützte Endpunkte
+- ✅ `RolesGuard` + `@Roles()` Decorator für Rollenprüfung
+- ✅ Film-Controller mit Beispiel-Endpunkten
 
 ---
 
