@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:18.0-trixie
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: p
+      POSTGRES_DB: postgres
+    networks: [depot-network]
+    hostname: postgres
+    container_name: postgres_depot
+
+networks:
+  depot-network:
+    name: depot-network
