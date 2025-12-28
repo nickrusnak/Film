@@ -36,8 +36,9 @@
 
 ## 4. API-Dokumentation
 
-- ⬜ `@nestjs/swagger` installieren
-- ⬜ Swagger unter `/api` verfügbar machen
+- ✅ `@nestjs/swagger` installiert
+- ✅ Swagger unter `/api` verfügbar
+- ✅ Bearer Auth für Keycloak vorbereitet
 
 ---
 
