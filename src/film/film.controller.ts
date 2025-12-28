@@ -1,45 +1,101 @@
-import { Controller, Get, UseGuards, Request } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+    Controller,
+    Get,
+    Post,
+    Put,
+    Delete,
+    Param,
+    Body,
+    UseGuards,
+    ParseIntPipe,
+    Query,
+} from '@nestjs/common';
+import {
+    ApiBearerAuth,
+    ApiOperation,
+    ApiTags,
+    ApiParam,
+    ApiQuery,
+    ApiResponse,
+} from '@nestjs/swagger';
 import { KeycloakAuthGuard, Roles, RolesGuard } from '../auth';
+import { FilmService } from './film.service';
+import { CreateFilmDto, UpdateFilmDto } from './dto';
 
 @ApiTags('Film')
 @Controller('film')
 export class FilmController {
-    // Öffentlicher Endpunkt - keine Auth nötig
+    constructor(private readonly filmService: FilmService) { }
+
+    // ========================================
+    // ÖFFENTLICHE ENDPUNKTE
+    // ========================================
+
     @Get()
-    @ApiOperation({ summary: 'Alle Filme abrufen (öffentlich)' })
+    @ApiOperation({ summary: 'Alle Filme abrufen' })
+    @ApiResponse({ status: 200, description: 'Liste aller Filme' })
     findAll() {
-        return {
-            message: 'Liste aller Filme (öffentlich)',
-            films: [
-                { id: 1, titel: 'Inception', regisseur: 'Christopher Nolan' },
-                { id: 2, titel: 'The Matrix', regisseur: 'Wachowskis' },
-            ],
-        };
+        return this.filmService.findAll();
     }
 
-    // Geschützter Endpunkt - Auth erforderlich
-    @Get('private')
+    @Get('search')
+    @ApiOperation({ summary: 'Filme suchen' })
+    @ApiQuery({ name: 'q', description: 'Suchbegriff' })
+    search(@Query('q') query: string) {
+        return this.filmService.search(query || '');
+    }
+
+    @Get(':id')
+    @ApiOperation({ summary: 'Einzelnen Film abrufen' })
+    @ApiParam({ name: 'id', description: 'Film-ID' })
+    @ApiResponse({ status: 200, description: 'Der Film' })
+    @ApiResponse({ status: 404, description: 'Film nicht gefunden' })
+    findOne(@Param('id', ParseIntPipe) id: number) {
+        return this.filmService.findOne(id);
+    }
+
+    // ========================================
+    // GESCHÜTZTE ENDPUNKTE (Auth erforderlich)
+    // ========================================
+
+    @Post()
     @UseGuards(KeycloakAuthGuard)
     @ApiBearerAuth()
-    @ApiOperation({ summary: 'Private Filmdaten (Auth erforderlich)' })
-    findPrivate(@Request() req: any) {
-        return {
-            message: 'Du bist authentifiziert!',
-            user: req.user,
-        };
+    @ApiOperation({ summary: 'Neuen Film erstellen' })
+    @ApiResponse({ status: 201, description: 'Film erstellt' })
+    @ApiResponse({ status: 401, description: 'Nicht authentifiziert' })
+    create(@Body() dto: CreateFilmDto) {
+        return this.filmService.create(dto);
     }
 
-    // Admin-only Endpunkt
-    @Get('admin')
+    @Put(':id')
+    @UseGuards(KeycloakAuthGuard)
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Film aktualisieren' })
+    @ApiParam({ name: 'id', description: 'Film-ID' })
+    @ApiResponse({ status: 200, description: 'Film aktualisiert' })
+    @ApiResponse({ status: 404, description: 'Film nicht gefunden' })
+    update(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() dto: UpdateFilmDto,
+    ) {
+        return this.filmService.update(id, dto);
+    }
+
+    // ========================================
+    // ADMIN-ONLY ENDPUNKTE
+    // ========================================
+
+    @Delete(':id')
     @UseGuards(KeycloakAuthGuard, RolesGuard)
     @Roles('admin')
     @ApiBearerAuth()
-    @ApiOperation({ summary: 'Admin-Bereich (nur für Admins)' })
-    adminOnly(@Request() req: any) {
-        return {
-            message: 'Willkommen im Admin-Bereich!',
-            user: req.user,
-        };
+    @ApiOperation({ summary: 'Film löschen (nur Admin)' })
+    @ApiParam({ name: 'id', description: 'Film-ID' })
+    @ApiResponse({ status: 200, description: 'Film gelöscht' })
+    @ApiResponse({ status: 403, description: 'Keine Berechtigung' })
+    @ApiResponse({ status: 404, description: 'Film nicht gefunden' })
+    delete(@Param('id', ParseIntPipe) id: number) {
+        return this.filmService.delete(id);
     }
 }
