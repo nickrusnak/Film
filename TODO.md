@@ -76,10 +76,12 @@
 
 ---
 
-## 9. GraphQL (optional/später)
+## 9. GraphQL (Apollo)
 
-- ⬜ Apollo Server integrieren
-- ⬜ GraphQL-Schema erstellen
+- ✅ Apollo Server integriert
+- ✅ GraphQL-Schema auto-generiert (`schema.gql`)
+- ✅ FilmResolver mit Queries und Mutations
+- ✅ GraphQL Playground unter `/graphql`
 
 ---
 
