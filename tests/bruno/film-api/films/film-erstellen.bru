@@ -1,0 +1,58 @@
+meta {
+  name: Film erstellen
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/film
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "titel": "Bruno Test Film",
+    "regisseur": "Bruno Tester",
+    "erscheinungsjahr": 2024,
+    "genre": ["ACTION", "SCIFI"],
+    "bewertung": 8.5,
+    "beschreibung": "Ein Film erstellt mit Bruno"
+  }
+}
+
+tests {
+  test("Status sollte 201 sein (Created)", function() {
+    expect(res.status).to.equal(201);
+  });
+
+  test("Film sollte eine ID bekommen haben", function() {
+    expect(res.body.id).to.be.a("number");
+  });
+
+  test("Titel sollte korrekt sein", function() {
+    expect(res.body.titel).to.equal("Bruno Test Film");
+  });
+
+  test("Regisseur sollte korrekt sein", function() {
+    expect(res.body.regisseur).to.equal("Bruno Tester");
+  });
+
+  test("Erscheinungsjahr sollte korrekt sein", function() {
+    expect(res.body.erscheinungsjahr).to.equal(2024);
+  });
+}
+
+docs {
+  # Film erstellen
+  
+  Erstellt einen neuen Film. Benötigt Auth-Token!
+}

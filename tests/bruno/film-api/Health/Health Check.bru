@@ -1,0 +1,31 @@
+meta {
+  name: Health Check
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/health
+  body: none
+  auth: none
+}
+
+tests {
+  test("Status sollte 200 sein", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("Status sollte 'ok' sein", function() {
+    expect(res.body.status).to.equal("ok");
+  });
+
+  test("Datenbank sollte erreichbar sein", function() {
+    expect(res.body.info.database.status).to.equal("up");
+  });
+}
+
+docs {
+  # Health Check
+  
+  Prüft ob die API und Datenbank erreichbar sind.
+}

@@ -1,0 +1,47 @@
+meta {
+  name: GraphQL Query Filme
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query {
+    filme {
+      id
+      titel
+      regisseur
+      erscheinungsjahr
+      bewertung
+    }
+  }
+}
+
+tests {
+  test("Status sollte 200 sein", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("Data sollte vorhanden sein", function() {
+    expect(res.body.data).to.not.be.undefined;
+  });
+
+  test("Filme Array sollte vorhanden sein", function() {
+    expect(res.body.data.filme).to.be.an("array");
+  });
+
+  test("Keine GraphQL Errors", function() {
+    expect(res.body.errors).to.be.undefined;
+  });
+}
+
+docs {
+  # GraphQL Query: Alle Filme
+  
+  Ruft alle Filme über GraphQL ab.
+}

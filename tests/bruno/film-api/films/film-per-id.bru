@@ -1,0 +1,41 @@
+meta {
+  name: Film per ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/film/1
+  body: none
+  auth: none
+}
+
+tests {
+  test("Status sollte 200 oder 404 sein", function() {
+    expect([200, 404]).to.include(res.status);
+  });
+
+  test("Bei 200: Film sollte ID haben", function() {
+    if (res.status === 200) {
+      expect(res.body.id).to.equal(1);
+    }
+  });
+
+  test("Bei 200: Film sollte Titel haben", function() {
+    if (res.status === 200) {
+      expect(res.body.titel).to.be.a("string");
+    }
+  });
+
+  test("Bei 404: Fehlermeldung vorhanden", function() {
+    if (res.status === 404) {
+      expect(res.body.message).to.include("nicht gefunden");
+    }
+  });
+}
+
+docs {
+  # Film per ID abrufen
+  
+  Gibt einen einzelnen Film anhand seiner ID zurück.
+}

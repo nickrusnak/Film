@@ -1,0 +1,54 @@
+meta {
+  name: Get Access Token
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{keycloakUrl}}/realms/{{realm}}/protocol/openid-connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+headers {
+  Content-Type: application/x-www-form-urlencoded
+}
+
+body:form-urlencoded {
+  grant_type: password
+  client_id: {{clientId}}
+  username: {{username}}
+  password: {{password}}
+}
+
+tests {
+  test("Status sollte 200 sein", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("Access Token sollte vorhanden sein", function() {
+    expect(res.body.access_token).to.be.a("string");
+  });
+
+  test("Token Type sollte Bearer sein", function() {
+    expect(res.body.token_type).to.equal("Bearer");
+  });
+
+  test("Token sollte JWT Format haben", function() {
+    expect(res.body.access_token).to.match(/^eyJ/);
+  });
+}
+
+script:post-response {
+  if (res.body.access_token) {
+    bru.setEnvVar("accessToken", res.body.access_token);
+    console.log("✅ Token gespeichert!");
+  }
+}
+
+docs {
+  # Access Token holen
+  
+  Holt ein Access Token von Keycloak.
+  Der Token wird automatisch in `accessToken` gespeichert!
+}
