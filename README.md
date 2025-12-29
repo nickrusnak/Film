@@ -10,8 +10,9 @@ NestJS REST & GraphQL API für eine Film-Datenbank.
 | API | REST (Express) + GraphQL (Apollo) |
 | Datenbank | PostgreSQL + Prisma ORM |
 | Auth | Keycloak (OIDC/OAuth2) |
+| Security | Helmet, CORS, Rate-Limiting |
 | Docs | Swagger + AsciiDoctor |
-| Testing | Vitest |
+| Testing | Vitest + Supertest |
 | Logging | Pino |
 
 ---
@@ -250,7 +251,40 @@ KEYCLOAK_REALM=film
 KEYCLOAK_CLIENT_ID=film-api
 ```
 
+> 💡 **Tipp:** Kopiere `.env.example` nach `.env` und passe die Werte an.
+
 ---
+
+## 🔒 Security-Features
+
+Diese API implementiert mehrere Sicherheitsmaßnahmen:
+
+### Helmet (HTTP-Header)
+```typescript
+// Schützt gegen: XSS, Clickjacking, MIME-Sniffing
+app.use(helmet());
+```
+
+### CORS (Cross-Origin)
+```typescript
+// Erlaubt Requests von anderen Domains (z.B. Frontend)
+app.enableCors({
+    origin: process.env.CORS_ORIGIN || '*',
+    credentials: true,
+});
+```
+
+### Rate-Limiting
+```typescript
+// Schutz gegen DDoS und API-Missbrauch
+ThrottlerModule.forRoot([
+    { name: 'short', ttl: 1000, limit: 10 },   // 10/Sekunde
+    { name: 'medium', ttl: 60000, limit: 100 }, // 100/Minute
+    { name: 'long', ttl: 3600000, limit: 1000 }, // 1000/Stunde
+])
+```
+
+Bei Überschreitung: `429 Too Many Requests`
 
 ## 🐛 Troubleshooting
 

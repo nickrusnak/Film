@@ -100,4 +100,22 @@
 
 ---
 
-> **Alle Schritte abgeschlossen!** 🎉
+## 12. Security & Production-Ready
+
+- ✅ `helmet` für HTTP-Security-Header (XSS, Clickjacking, etc.)
+- ✅ CORS konfiguriert (Cross-Origin Requests)
+- ✅ `@nestjs/throttler` Rate-Limiting (DDoS-Schutz)
+- ✅ `.env.example` Vorlage für Umgebungsvariablen
+- ✅ Deutsche Kommentare in allen Kern-Dateien
+
+---
+
+## 13. Integrationstests
+
+- ✅ `supertest` für HTTP-Tests installiert
+- ✅ Echte Integrationstests für `/health`, `/film`, `/graphql`
+- ✅ Testbare Beispiele mit Kommentaren
+
+---
+
+> **Alle Schritte abgeschlossen!** 🎉 Das Projekt ist prüfungsfertig.

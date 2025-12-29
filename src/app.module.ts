@@ -12,8 +12,10 @@
  */
 
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 import { join } from 'path';
 
@@ -25,6 +27,35 @@ import { FilmModule } from './film/film.module';
 
 @Module({
     imports: [
+        // ============================================================
+        // RATE-LIMITING: Schutz gegen DDoS und API-Missbrauch
+        // ============================================================
+        // Warum Rate-Limiting?
+        // 1. DDoS-Schutz: Begrenzt Requests pro IP-Adresse
+        // 2. API-Fairness: Verhindert, dass ein Client alle Ressourcen beansprucht
+        // 3. Kosten: Weniger unnötige Requests = niedrigere Server-Kosten
+        // 
+        // Konfiguration: 100 Requests pro 60 Sekunden pro IP
+        // Bei Überschreitung: HTTP 429 "Too Many Requests"
+        // Referenz: https://docs.nestjs.com/security/rate-limiting
+        ThrottlerModule.forRoot([
+            {
+                name: 'short',
+                ttl: 1000,  // 1 Sekunde
+                limit: 10,  // Max 10 Requests pro Sekunde (Burst-Schutz)
+            },
+            {
+                name: 'medium',
+                ttl: 60000, // 60 Sekunden (1 Minute)
+                limit: 100, // Max 100 Requests pro Minute
+            },
+            {
+                name: 'long',
+                ttl: 3600000, // 1 Stunde
+                limit: 1000,  // Max 1000 Requests pro Stunde
+            },
+        ]),
+
         // ============================================================
         // LOGGING: Pino für strukturiertes, JSON-basiertes Logging
         // ============================================================
@@ -109,6 +140,16 @@ import { FilmModule } from './film/film.module';
         HealthModule,
     ],
     controllers: [],
-    providers: [],
+    providers: [
+        // ============================================================
+        // GLOBAL GUARDS: Rate-Limiter auf alle Endpunkte anwenden
+        // ============================================================
+        // Durch APP_GUARD wird der ThrottlerGuard automatisch auf ALLE
+        // Controller und Resolver angewendet - kein manuelles @UseGuards() nötig.
+        {
+            provide: APP_GUARD,
+            useClass: ThrottlerGuard,
+        },
+    ],
 })
 export class AppModule { }
