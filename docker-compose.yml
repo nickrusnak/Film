@@ -1,75 +1,129 @@
+# ============================================================
+# DOCKER COMPOSE - Film-API Infrastruktur
+# ============================================================
+#
+# Dieses Setup startet alle benötigten Services lokal:
+# - PostgreSQL: Relationale Datenbank für Filmdaten
+# - Keycloak: Identity Provider für OAuth2/OIDC Authentifizierung
+# - pgAdmin: Web-GUI zur Datenbank-Administration
+#
+# WICHTIG: Passwörter werden via Environment-Variablen gesetzt.
+# Für Produktion: .env Datei mit sicheren Werten verwenden!
+# ============================================================
+
 services:
-  # ============================================
-  # PostgreSQL Datenbank
-  # ============================================
+  # ============================================================
+  # PostgreSQL - Relationale Datenbank
+  # ============================================================
+  # Warum PostgreSQL?
+  # - Open Source, ACID-konform, JSON-Support
+  # - Prisma ORM bietet exzellente PostgreSQL-Integration
+  # - Branchenstandard für Enterprise-Applikationen
   db:
     image: postgres:17
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: p
-      POSTGRES_DB: postgres
+      # Passwörter via Env-Variablen mit Fallback für lokale Entwicklung
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-p}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
     volumes:
+      # Named Volume für Datenpersistenz zwischen Container-Neustarts
       - postgres_data:/var/lib/postgresql/data
-    networks: [ film-network ]
+    networks:
+      - film-network
     hostname: postgres
     container_name: postgres_film
+    # Healthcheck für Docker/Kubernetes Orchestrierung
+    # depends_on.condition: service_healthy wartet auf diesen Check
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
-  # ============================================
-  # pgAdmin - Datenbank-Verwaltung
-  # ============================================
+  # ============================================================
+  # pgAdmin - Datenbank-Verwaltung (Web-UI)
+  # ============================================================
+  # Nur für Development - in Produktion nicht deployen!
+  # Ermöglicht SQL-Queries, Tabellen-Inspektion, Backups
   pgadmin:
     image: dpage/pgadmin4:latest
     ports:
       - "8888:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
       PGADMIN_CONFIG_SERVER_MODE: "False"
     volumes:
       - pgadmin_data:/var/lib/pgadmin
-    networks: [ film-network ]
+    networks:
+      - film-network
     container_name: pgadmin_film
+    # Startet erst, wenn PostgreSQL healthy ist
     depends_on:
       db:
         condition: service_healthy
+    restart: unless-stopped
+    profiles:
+      - dev # Nur mit --profile dev starten
 
-  # ============================================
-  # Keycloak - Authentifizierung (OIDC/OAuth2)
-  # ============================================
+  # ============================================================
+  # Keycloak - Identity & Access Management
+  # ============================================================
+  # Warum Keycloak?
+  # - Open Source Identity Provider (Red Hat)
+  # - Unterstützt OAuth2, OIDC, SAML
+  # - Benutzerverwaltung, Rollen, Gruppen out-of-the-box
+  # - In der Vorlesung "Sichere Web-Anwendungen" behandelt
   keycloak:
     image: quay.io/keycloak/keycloak:26.0
-    command: start-dev
+    command: start-dev # Development Mode - für Prod: start --optimized
     ports:
       - "8080:8080"
     environment:
+      # Datenbank-Konfiguration (Keycloak nutzt unsere PostgreSQL)
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/postgres
-      KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: p
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    networks: [ film-network ]
+      KC_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-postgres}
+      KC_DB_USERNAME: ${POSTGRES_USER:-postgres}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-p}
+      # Admin-Credentials für erste Anmeldung
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+    networks:
+      - film-network
     container_name: keycloak_film
     depends_on:
       db:
         condition: service_healthy
+    restart: unless-stopped
+    # Keycloak Healthcheck für Orchestrierung
+    healthcheck:
+      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200'" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
 
-# ============================================
-# Volumes für persistente Daten
-# ============================================
+# ============================================================
+# VOLUMES - Persistente Datenspeicherung
+# ============================================================
+# Daten überleben Container-Löschung (docker compose down)
+# Für vollständigen Reset: docker compose down -v
 volumes:
   postgres_data:
+    name: film_postgres_data
   pgadmin_data:
+    name: film_pgadmin_data
 
-    # ============================================
-    # Netzwerk
-    # ============================================
+# ============================================================
+# NETZWERK - Container-Kommunikation
+# ============================================================
+# Alle Services im gleichen Netzwerk können sich per Hostname erreichen
+# z.B. keycloak -> postgres:5432
 networks:
   film-network:
     name: film-network
+    driver: bridge
