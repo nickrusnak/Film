@@ -25,7 +25,7 @@ import { CreateFilmDto, UpdateFilmDto } from './dto';
 @ApiTags('Film')
 @Controller('film')
 export class FilmController {
-    constructor(private readonly filmService: FilmService) { }
+    constructor(private readonly filmService: FilmService) {}
 
     // ========================================
     // ÖFFENTLICHE ENDPUNKTE
@@ -75,10 +75,7 @@ export class FilmController {
     @ApiParam({ name: 'id', description: 'Film-ID' })
     @ApiResponse({ status: 200, description: 'Film aktualisiert' })
     @ApiResponse({ status: 404, description: 'Film nicht gefunden' })
-    update(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() dto: UpdateFilmDto,
-    ) {
+    update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateFilmDto) {
         return this.filmService.update(id, dto);
     }
 

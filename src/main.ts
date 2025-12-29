@@ -2,14 +2,14 @@
  * ============================================================
  * FILM-API - Einstiegspunkt der NestJS-Applikation
  * ============================================================
- * 
+ *
  * Diese Datei konfiguriert die grundlegenden Middleware-Komponenten:
  * - Sicherheits-Header (Helmet) gegen XSS, Clickjacking etc.
  * - CORS für Cross-Origin-Requests (wichtig für SPA-Frontends)
  * - Globale Validierung eingehender Daten
  * - Strukturierte Logs für Monitoring (z.B. ELK-Stack, Grafana)
  * - OpenAPI/Swagger-Dokumentation
- * 
+ *
  * Referenz: NestJS Dokumentation - https://docs.nestjs.com/
  */
 
@@ -91,15 +91,15 @@ async function bootstrap() {
         .setTitle('Film-API')
         .setDescription(
             'REST- und GraphQL-API für die Film-Datenbank.\n\n' +
-            '**Authentifizierung:** Bearer-Token via Keycloak (OIDC)\n\n' +
-            '**Uni-Projekt:** Appserver mit NestJS'
+                '**Authentifizierung:** Bearer-Token via Keycloak (OIDC)\n\n' +
+                '**Uni-Projekt:** Appserver mit NestJS',
         )
         .setVersion('1.0.0')
         .setContact('Student', '', 'student@hs-example.de')
         .setLicense('MIT', 'https://opensource.org/licenses/MIT')
         .addBearerAuth(
             { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-            'Keycloak-JWT' // Name des Security-Schemas
+            'Keycloak-JWT', // Name des Security-Schemas
         )
         .addTag('Film', 'CRUD-Operationen für Filme')
         .addTag('Health', 'Healthcheck-Endpunkte für Docker/Kubernetes')

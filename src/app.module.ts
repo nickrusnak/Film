@@ -2,11 +2,11 @@
  * ============================================================
  * APP MODULE - Zentrales Modul der NestJS-Applikation
  * ============================================================
- * 
+ *
  * Das AppModule ist das Root-Modul und importiert alle Feature-Module.
  * NestJS folgt dem Modular-Monolith-Ansatz: Jede Fachdomäne (Film, Auth, etc.)
  * hat ihr eigenes Modul, um Separation of Concerns zu gewährleisten.
- * 
+ *
  * Architektur-Pattern: Dependency Injection (DI)
  * Alle Services werden via DI-Container verwaltet, nicht manuell instanziiert.
  */
@@ -34,15 +34,15 @@ import { FilmModule } from './film/film.module';
         // 1. DDoS-Schutz: Begrenzt Requests pro IP-Adresse
         // 2. API-Fairness: Verhindert, dass ein Client alle Ressourcen beansprucht
         // 3. Kosten: Weniger unnötige Requests = niedrigere Server-Kosten
-        // 
+        //
         // Konfiguration: 100 Requests pro 60 Sekunden pro IP
         // Bei Überschreitung: HTTP 429 "Too Many Requests"
         // Referenz: https://docs.nestjs.com/security/rate-limiting
         ThrottlerModule.forRoot([
             {
                 name: 'short',
-                ttl: 1000,  // 1 Sekunde
-                limit: 10,  // Max 10 Requests pro Sekunde (Burst-Schutz)
+                ttl: 1000, // 1 Sekunde
+                limit: 10, // Max 10 Requests pro Sekunde (Burst-Schutz)
             },
             {
                 name: 'medium',
@@ -52,7 +52,7 @@ import { FilmModule } from './film/film.module';
             {
                 name: 'long',
                 ttl: 3600000, // 1 Stunde
-                limit: 1000,  // Max 1000 Requests pro Stunde
+                limit: 1000, // Max 1000 Requests pro Stunde
             },
         ]),
 
@@ -71,14 +71,14 @@ import { FilmModule } from './film/film.module';
                 transport:
                     process.env.NODE_ENV !== 'production'
                         ? {
-                            target: 'pino-pretty',
-                            options: {
-                                colorize: true,
-                                singleLine: true,
-                                translateTime: 'SYS:dd.mm.yyyy HH:MM:ss',
-                                ignore: 'pid,hostname', // Weniger Rauschen in Dev
-                            },
-                        }
+                              target: 'pino-pretty',
+                              options: {
+                                  colorize: true,
+                                  singleLine: true,
+                                  translateTime: 'SYS:dd.mm.yyyy HH:MM:ss',
+                                  ignore: 'pid,hostname', // Weniger Rauschen in Dev
+                              },
+                          }
                         : undefined, // In Prod: Raw JSON-Logs
 
                 // Log-Level je nach Umgebung: Debug in Dev, Info in Prod
@@ -86,8 +86,7 @@ import { FilmModule } from './film/film.module';
 
                 // Request-ID für Distributed Tracing (z.B. mit Jaeger/Zipkin)
                 // Falls der Client keine ID sendet, generieren wir eine UUID
-                genReqId: (req) =>
-                    req.headers['x-request-id']?.toString() || crypto.randomUUID(),
+                genReqId: (req) => req.headers['x-request-id']?.toString() || crypto.randomUUID(),
             },
         }),
 
@@ -152,4 +151,4 @@ import { FilmModule } from './film/film.module';
         },
     ],
 })
-export class AppModule { }
+export class AppModule {}

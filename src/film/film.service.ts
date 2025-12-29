@@ -5,7 +5,7 @@ import { Prisma } from '../generated/prisma';
 
 @Injectable()
 export class FilmService {
-    constructor(private prisma: PrismaService) { }
+    constructor(private prisma: PrismaService) {}
 
     // Alle Filme abrufen
     async findAll() {

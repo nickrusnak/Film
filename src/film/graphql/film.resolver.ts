@@ -7,7 +7,7 @@ import { KeycloakAuthGuard, Roles, RolesGuard } from '../../auth';
 
 @Resolver(() => FilmType)
 export class FilmResolver {
-    constructor(private readonly filmService: FilmService) { }
+    constructor(private readonly filmService: FilmService) {}
 
     // ========================================
     // QUERIES (Lesen)
@@ -24,9 +24,7 @@ export class FilmResolver {
     }
 
     @Query(() => [FilmType], { description: 'Filme suchen' })
-    async filmeSearch(
-        @Args('query') query: string,
-    ): Promise<FilmType[]> {
+    async filmeSearch(@Args('query') query: string): Promise<FilmType[]> {
         return this.filmService.search(query) as unknown as FilmType[];
     }
 
@@ -36,9 +34,7 @@ export class FilmResolver {
 
     @Mutation(() => FilmType, { description: 'Neuen Film erstellen' })
     @UseGuards(KeycloakAuthGuard)
-    async createFilm(
-        @Args('input') input: CreateFilmInput,
-    ): Promise<FilmType> {
+    async createFilm(@Args('input') input: CreateFilmInput): Promise<FilmType> {
         return this.filmService.create(input as any) as unknown as FilmType;
     }
 
@@ -54,9 +50,7 @@ export class FilmResolver {
     @Mutation(() => FilmType, { description: 'Film löschen (nur Admin)' })
     @UseGuards(KeycloakAuthGuard, RolesGuard)
     @Roles('admin')
-    async deleteFilm(
-        @Args('id', { type: () => Int }) id: number,
-    ): Promise<FilmType> {
+    async deleteFilm(@Args('id', { type: () => Int }) id: number): Promise<FilmType> {
         return this.filmService.delete(id) as unknown as FilmType;
     }
 }

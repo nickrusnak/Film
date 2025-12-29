@@ -2,13 +2,13 @@
  * ============================================================
  * INTEGRATIONSTESTS - Film-API
  * ============================================================
- * 
+ *
  * Diese Tests prüfen die API-Endpunkte gegen eine echte NestJS-Instanz.
  * Im Gegensatz zu Unit-Tests wird hier das gesamte Request/Response-Verhalten getestet.
- * 
+ *
  * Testframework: Vitest (schneller als Jest, native ESM-Unterstützung)
  * HTTP-Client: supertest (Standard für NestJS E2E-Tests)
- * 
+ *
  * Ausführung: pnpm test oder pnpm test:watch
  */
 
@@ -62,9 +62,7 @@ describe('Film-API Integrationstests', () => {
         it('sollte Status 200 und Datenbank-Status zurückgeben', async () => {
             // Wir testen hier, ob die Datenbankverbindung funktioniert.
             // Der Health-Endpunkt macht einen Ping gegen PostgreSQL.
-            const response = await request(app.getHttpServer())
-                .get('/health')
-                .expect(200);
+            const response = await request(app.getHttpServer()).get('/health').expect(200);
 
             // Prüfen der Response-Struktur
             expect(response.body).toHaveProperty('status');
@@ -83,9 +81,7 @@ describe('Film-API Integrationstests', () => {
     describe('GET /film', () => {
         it('sollte ein Array von Filmen zurückgeben', async () => {
             // Öffentlicher Endpunkt - keine Authentifizierung nötig
-            const response = await request(app.getHttpServer())
-                .get('/film')
-                .expect(200);
+            const response = await request(app.getHttpServer()).get('/film').expect(200);
 
             // Response muss ein Array sein (auch wenn leer)
             expect(Array.isArray(response.body)).toBe(true);
@@ -93,9 +89,7 @@ describe('Film-API Integrationstests', () => {
 
         it('sollte 404 bei nicht existierender Film-ID zurückgeben', async () => {
             // Wir testen hier das Error-Handling bei ungültigen IDs
-            const response = await request(app.getHttpServer())
-                .get('/film/999999')
-                .expect(404);
+            const response = await request(app.getHttpServer()).get('/film/999999').expect(404);
 
             expect(response.body).toHaveProperty('message');
             expect(response.body.message).toContain('nicht gefunden');

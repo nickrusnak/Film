@@ -9,4 +9,4 @@ import { RolesGuard } from './roles.guard';
     providers: [KeycloakStrategy, KeycloakAuthGuard, RolesGuard],
     exports: [PassportModule, KeycloakAuthGuard, RolesGuard],
 })
-export class AuthModule { }
+export class AuthModule {}

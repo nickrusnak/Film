@@ -8,4 +8,4 @@ import { FilmResolver } from './graphql/film.resolver';
     providers: [FilmService, FilmResolver],
     exports: [FilmService],
 })
-export class FilmModule { }
+export class FilmModule {}
