@@ -87,16 +87,17 @@
 
 ## 10. Dokumentation (erweitert)
 
-- ⬜ AsciiDoctor einrichten
-- ⬜ PlantUML-Diagramme erstellen
+- ✅ AsciiDoctor eingerichtet (`docs/index.adoc`)
+- ✅ PlantUML-Diagramme erstellt (Architektur, ER-Diagramm, Auth-Flow)
 
 ---
 
 ## 11. Code-Qualität
 
-- ⬜ ESLint konfigurieren
-- ⬜ Prettier konfigurieren
+- ✅ ESLint konfiguriert (Flat Config)
+- ✅ Prettier konfiguriert
+- ✅ Lint und Format Scripts in package.json
 
 ---
 
-> **Nächster Schritt:** Schritt 4 - Swagger API-Dokumentation
+> **Alle Schritte abgeschlossen!** 🎉

@@ -1,0 +1,76 @@
+@startuml film-api-er
+
+!theme plain
+skinparam backgroundColor white
+
+title Film-API - Entity Relationship Diagram
+
+entity "User" as user {
+    * id : INT <<PK, AUTO_INCREMENT>>
+    --
+    * email : VARCHAR(255) <<UNIQUE>>
+    * password : VARCHAR(255)
+    username : VARCHAR(100)
+    role : ENUM('USER', 'ADMIN')
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+}
+
+entity "Film" as film {
+    * id : INT <<PK, AUTO_INCREMENT>>
+    --
+    version : INT
+    * titel : VARCHAR(200)
+    originaltitel : VARCHAR(200)
+    genre : ENUM[]
+    regisseur : VARCHAR(100)
+    erscheinungsjahr : INT
+    dauer : INT
+    bewertung : DECIMAL(3,1)
+    beschreibung : TEXT
+    sprache : VARCHAR(50)
+    land : VARCHAR(50)
+    poster : VARCHAR(500)
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+}
+
+entity "Review" as review {
+    * id : INT <<PK, AUTO_INCREMENT>>
+    --
+    version : INT
+    * film_id : INT <<FK>>
+    * user_id : INT <<FK>>
+    * bewertung : INT (1-10)
+    kommentar : TEXT
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+    ..
+    <<UNIQUE(film_id, user_id)>>
+}
+
+entity "Favorite" as favorite {
+    * id : INT <<PK, AUTO_INCREMENT>>
+    --
+    * film_id : INT <<FK>>
+    * user_id : INT <<FK>>
+    created_at : TIMESTAMP
+    ..
+    <<UNIQUE(film_id, user_id)>>
+}
+
+' Relationships
+user ||--o{ review : "schreibt"
+user ||--o{ favorite : "hat"
+film ||--o{ review : "hat"
+film ||--o{ favorite : "ist in"
+
+note right of film
+    Genre-Enum Werte:
+    ACTION, COMEDY, DRAMA,
+    HORROR, SCIFI, THRILLER,
+    ROMANCE, DOCUMENTARY,
+    ANIMATION, FANTASY
+end note
+
+@enduml

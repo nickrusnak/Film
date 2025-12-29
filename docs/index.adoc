@@ -1,0 +1,323 @@
+= Film-API Dokumentation
+:doctype: book
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: rouge
+:plantuml-server-url: http://www.plantuml.com/plantuml
+:imagesdir: images
+
+== Einführung
+
+Die Film-API ist eine NestJS-basierte REST- und GraphQL-API für die Verwaltung einer Film-Datenbank.
+
+=== Technologie-Stack
+
+[cols="1,2"]
+|===
+|Komponente |Technologie
+
+|Framework |NestJS (Express + Apollo)
+|Datenbank |PostgreSQL mit Prisma ORM
+|Authentifizierung |Keycloak (OIDC/OAuth2)
+|Dokumentation |Swagger (REST) + GraphQL Playground
+|Testing |Vitest
+|Logging |Pino
+|===
+
+== Architektur
+
+=== Systemübersicht
+
+[plantuml, system-overview, svg]
+----
+@startuml
+!theme plain
+
+package "Client" {
+    [Browser/App] as client
+}
+
+package "Film-API" {
+    [NestJS Server] as nest
+    [REST Controller] as rest
+    [GraphQL Resolver] as gql
+    [Film Service] as service
+    [Prisma ORM] as prisma
+}
+
+package "Infrastructure" {
+    database "PostgreSQL" as db
+    [Keycloak] as kc
+    [pgAdmin] as pgadmin
+}
+
+client --> rest : HTTP/REST
+client --> gql : GraphQL
+rest --> service
+gql --> service
+service --> prisma
+prisma --> db
+client --> kc : OAuth2/OIDC
+pgadmin --> db : Admin
+@enduml
+----
+
+=== Modulstruktur
+
+[plantuml, module-structure, svg]
+----
+@startuml
+!theme plain
+
+package "AppModule" {
+    package "Core" {
+        [LoggerModule] as log
+        [PrismaModule] as prisma
+        [AuthModule] as auth
+    }
+    
+    package "Features" {
+        [FilmModule] as film
+        [HealthModule] as health
+    }
+    
+    package "API" {
+        [GraphQLModule] as gql
+    }
+}
+
+film --> prisma : uses
+film --> auth : guards
+health --> prisma : checks
+gql --> film : resolvers
+@enduml
+----
+
+== Datenmodell
+
+=== ER-Diagramm
+
+[plantuml, er-diagram, svg]
+----
+@startuml
+!theme plain
+
+entity "User" as user {
+    * id : Int <<PK>>
+    --
+    * email : String <<unique>>
+    * password : String
+    username : String
+    role : Role
+    created_at : DateTime
+    updated_at : DateTime
+}
+
+entity "Film" as film {
+    * id : Int <<PK>>
+    --
+    * titel : String
+    originaltitel : String
+    genre : Genre[]
+    regisseur : String
+    erscheinungsjahr : Int
+    dauer : Int
+    bewertung : Decimal
+    beschreibung : Text
+    sprache : String
+    land : String
+    poster : String
+    created_at : DateTime
+    updated_at : DateTime
+}
+
+entity "Review" as review {
+    * id : Int <<PK>>
+    --
+    * film_id : Int <<FK>>
+    * user_id : Int <<FK>>
+    * bewertung : Int
+    kommentar : Text
+    created_at : DateTime
+    updated_at : DateTime
+}
+
+entity "Favorite" as fav {
+    * id : Int <<PK>>
+    --
+    * film_id : Int <<FK>>
+    * user_id : Int <<FK>>
+    created_at : DateTime
+}
+
+user ||--o{ review : writes
+user ||--o{ fav : has
+film ||--o{ review : has
+film ||--o{ fav : is
+@enduml
+----
+
+== API-Endpunkte
+
+=== REST API
+
+[cols="1,2,1,2"]
+|===
+|Methode |Endpunkt |Auth |Beschreibung
+
+|GET |/film |❌ |Alle Filme abrufen
+|GET |/film/:id |❌ |Film per ID
+|GET |/film/search?q= |❌ |Filme suchen
+|POST |/film |🔐 |Film erstellen
+|PUT |/film/:id |🔐 |Film aktualisieren
+|DELETE |/film/:id |🔐 Admin |Film löschen
+|GET |/health |❌ |Health-Check
+|===
+
+=== GraphQL API
+
+.Queries
+[source,graphql]
+----
+query AlleFilme {
+    filme {
+        id
+        titel
+        regisseur
+        erscheinungsjahr
+        bewertung
+        genre
+    }
+}
+
+query EinzelnerFilm($id: Int!) {
+    film(id: $id) {
+        id
+        titel
+        beschreibung
+    }
+}
+
+query FilmeSuchen($query: String!) {
+    filmeSearch(query: $query) {
+        id
+        titel
+    }
+}
+----
+
+.Mutations
+[source,graphql]
+----
+mutation FilmErstellen($input: CreateFilmInput!) {
+    createFilm(input: $input) {
+        id
+        titel
+    }
+}
+
+mutation FilmAktualisieren($id: Int!, $input: UpdateFilmInput!) {
+    updateFilm(id: $id, input: $input) {
+        id
+        titel
+    }
+}
+
+mutation FilmLoeschen($id: Int!) {
+    deleteFilm(id: $id) {
+        id
+    }
+}
+----
+
+== Authentifizierung
+
+=== OAuth2/OIDC Flow
+
+[plantuml, auth-flow, svg]
+----
+@startuml
+!theme plain
+
+actor User
+participant "Film-API" as api
+participant "Keycloak" as kc
+
+User -> kc : Login Request
+kc -> User : Login Page
+User -> kc : Credentials
+kc -> User : Access Token (JWT)
+User -> api : Request + Bearer Token
+api -> kc : Validate Token (JWKS)
+kc -> api : Token Valid
+api -> User : Response
+@enduml
+----
+
+=== Token-Validierung
+
+Die API verwendet eine JWT-Strategie mit JWKS (JSON Web Key Set) zur Token-Validierung:
+
+* **Issuer**: Keycloak Realm URL
+* **Audience**: `film-api`
+* **Algorithm**: RS256
+* **Key Rotation**: Automatisch via JWKS
+
+== Installation & Setup
+
+=== Voraussetzungen
+
+* Node.js >= 18
+* pnpm
+* Docker & Docker Compose
+
+=== Schnellstart
+
+[source,bash]
+----
+# Repository klonen
+git clone <repo-url>
+cd film
+
+# Dependencies installieren
+pnpm install
+
+# Docker Container starten
+docker compose up -d
+
+# Prisma Migration
+pnpm prisma:migrate
+
+# Development Server starten
+pnpm start:dev
+----
+
+=== Umgebungsvariablen
+
+[source,bash]
+----
+# .env
+DATABASE_URL="postgresql://postgres:p@localhost:5432/postgres?schema=film"
+NODE_ENV=development
+KEYCLOAK_URL=http://localhost:8080
+KEYCLOAK_REALM=film
+KEYCLOAK_CLIENT_ID=film-api
+----
+
+== Tests
+
+=== Tests ausführen
+
+[source,bash]
+----
+# Alle Tests
+pnpm test
+
+# Mit Coverage
+pnpm test:cov
+
+# Watch-Mode
+pnpm test:watch
+----

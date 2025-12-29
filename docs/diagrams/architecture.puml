@@ -1,0 +1,136 @@
+@startuml film-api-architecture
+
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+skinparam rectangle {
+    BackgroundColor #F8F9FA
+    BorderColor #DEE2E6
+    RoundCorner 8
+}
+
+skinparam component {
+    BackgroundColor #FFFFFF
+    BorderColor #6C757D
+    RoundCorner 5
+}
+
+skinparam database {
+    BackgroundColor #E3F2FD
+    BorderColor #1976D2
+}
+
+skinparam package {
+    BackgroundColor transparent
+    BorderColor #ADB5BD
+    BorderThickness 2
+    FontStyle bold
+}
+
+title <size:18>Film-API - Systemarchitektur</size>\n<size:12><color:#6C757D>NestJS REST & GraphQL Backend</color></size>
+
+' ==========================================
+' CLIENTS
+' ==========================================
+rectangle "**CLIENTS**" as clients #E8F5E9 {
+    component "🌐 Web Browser" as browser
+    component "📱 Mobile App" as mobile  
+    component "⚡ API Client\n(curl/Postman)" as apiclient
+}
+
+' ==========================================
+' API GATEWAY
+' ==========================================
+rectangle "**API LAYER**" as api #FFF3E0 {
+    component "📄 REST API\n/film/*\n/health" as rest #FFE0B2
+    component "◈ GraphQL\n/graphql" as gql #FFE0B2
+    component "📚 Swagger UI\n/api" as swagger #FFE0B2
+}
+
+' ==========================================
+' APPLICATION CORE
+' ==========================================
+rectangle "**APPLICATION CORE**" as core #E3F2FD {
+    rectangle "Security" as security #BBDEFB {
+        component "🔐 Auth Guard" as authguard
+        component "👥 Roles Guard" as rolesguard
+    }
+    
+    rectangle "Business Logic" as business #BBDEFB {
+        component "🎬 Film Service" as filmsvc
+        component "✅ Validation Pipe" as validation
+    }
+    
+    rectangle "Cross-Cutting" as cross #BBDEFB {
+        component "📝 Pino Logger" as logger
+    }
+}
+
+' ==========================================
+' DATA LAYER
+' ==========================================
+rectangle "**DATA ACCESS**" as data #F3E5F5 {
+    component "🔷 Prisma ORM" as prisma #E1BEE7
+}
+
+' ==========================================
+' INFRASTRUCTURE
+' ==========================================
+rectangle "**INFRASTRUCTURE**" as infra #ECEFF1 {
+    database "🐘 PostgreSQL\n:5432" as db
+    component "🔑 Keycloak\n:8080" as keycloak #FFCDD2
+    component "🛠️ pgAdmin\n:8888" as pgadmin #CFD8DC
+}
+
+' ==========================================
+' CONNECTIONS
+' ==========================================
+
+' Client to API
+browser -[#2E7D32]-> rest : <color:#2E7D32>HTTP
+browser -[#2E7D32]-> gql : <color:#2E7D32>GraphQL
+mobile -[#2E7D32]-> rest
+apiclient -[#2E7D32]-> rest
+
+' API to Core
+rest -[#1565C0]-> authguard
+gql -[#1565C0]-> authguard
+rest -[#1565C0]-> validation
+gql -[#1565C0]-> validation
+authguard --> rolesguard
+validation --> filmsvc
+rolesguard --> filmsvc
+
+' Core to Data
+filmsvc -[#7B1FA2]-> prisma
+
+' Data to Infrastructure
+prisma -[#7B1FA2]-> db
+
+' Auth Flow
+authguard -[#C62828,dashed]-> keycloak : <color:#C62828>JWKS\nValidation
+
+' Admin Access
+pgadmin -[#546E7A,dashed]-> db : Admin
+
+' Logging
+filmsvc .[#757575].> logger
+rest .[#757575].> logger
+gql .[#757575].> logger
+
+' ==========================================
+' LEGEND
+' ==========================================
+legend right
+    |= Farbe |= Bedeutung |
+    | <#E8F5E9> | Clients |
+    | <#FFF3E0> | API Layer |
+    | <#E3F2FD> | Application |
+    | <#F3E5F5> | Data Access |
+    | <#ECEFF1> | Infrastructure |
+endlegend
+
+@enduml
