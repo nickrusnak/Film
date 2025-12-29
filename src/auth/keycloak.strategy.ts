@@ -31,16 +31,17 @@ export class KeycloakStrategy extends PassportStrategy(Strategy, 'keycloak') {
             // JWT aus Authorization Header extrahieren
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             // Keycloak JWKS Endpunkt für öffentliche Schlüssel
+            // Der Server holt sich automatisch den aktuellen Public Key
             secretOrKeyProvider: passportJwtSecret({
                 cache: true,
                 rateLimit: true,
                 jwksRequestsPerMinute: 5,
                 jwksUri: `${keycloakUrl}/realms/${realm}/protocol/openid-connect/certs`,
             }),
-            // Token Issuer validieren
+            // Token Issuer validieren (muss vom richtigen Keycloak Realm kommen)
             issuer: `${keycloakUrl}/realms/${realm}`,
-            // Audience nicht strikt prüfen (Keycloak setzt das nicht immer)
-            audience: process.env.KEYCLOAK_CLIENT_ID || 'film-api',
+            // HINWEIS: Audience nicht prüfen - Keycloak setzt "account" statt Client-ID
+            // In Produktion sollte man den Client in Keycloak entsprechend konfigurieren
             algorithms: ['RS256'],
         });
     }
