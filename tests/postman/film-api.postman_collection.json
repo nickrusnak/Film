@@ -1,0 +1,338 @@
+{
+    "info": {
+        "_postman_id": "film-api-collection",
+        "name": "Film-API",
+        "description": "# Film-API Postman Collection\n\nDiese Collection enthält alle API-Endpunkte der Film-API für manuelles Testen.\n\n## Verwendung\n\n1. Postman öffnen\n2. File → Import → Diese Datei auswählen\n3. Environment Variable `baseUrl` setzen (Default: http://localhost:3000)\n4. Requests ausführen\n\n## Authentifizierung\n\nFür geschützte Endpunkte:\n1. Token von Keycloak holen (Token Endpoint)\n2. Token in der Collection-Variable `accessToken` speichern\n3. Requests mit {{accessToken}} werden automatisch authentifiziert",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        },
+        {
+            "key": "accessToken",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Health",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/health",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "health"
+                            ]
+                        },
+                        "description": "Prüft ob die API und Datenbank erreichbar sind.\n\nErwartetes Ergebnis: Status 200 mit `{ status: 'ok' }`"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Film (Public)",
+            "item": [
+                {
+                    "name": "Alle Filme abrufen",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/film",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "film"
+                            ]
+                        },
+                        "description": "Gibt alle Filme aus der Datenbank zurück.\n\n**Authentifizierung:** Nicht erforderlich"
+                    }
+                },
+                {
+                    "name": "Film per ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/film/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "film",
+                                "1"
+                            ]
+                        },
+                        "description": "Gibt einen einzelnen Film anhand seiner ID zurück.\n\n**Authentifizierung:** Nicht erforderlich"
+                    }
+                },
+                {
+                    "name": "Filme suchen",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/film/search?q=Matrix",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "film",
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "Matrix"
+                                }
+                            ]
+                        },
+                        "description": "Sucht Filme nach Titel, Regisseur oder Beschreibung.\n\n**Query-Parameter:** `q` - Suchbegriff"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Film (Protected)",
+            "item": [
+                {
+                    "name": "Film erstellen",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"titel\": \"Test Film\",\n    \"regisseur\": \"Test Regisseur\",\n    \"erscheinungsjahr\": 2024,\n    \"genre\": [\"ACTION\", \"SCIFI\"],\n    \"bewertung\": 8.5,\n    \"beschreibung\": \"Ein toller Testfilm\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/film",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "film"
+                            ]
+                        },
+                        "description": "Erstellt einen neuen Film.\n\n**Authentifizierung:** Bearer Token erforderlich"
+                    }
+                },
+                {
+                    "name": "Film aktualisieren",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"titel\": \"Aktualisierter Titel\",\n    \"bewertung\": 9.0\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/film/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "film",
+                                "1"
+                            ]
+                        },
+                        "description": "Aktualisiert einen existierenden Film.\n\n**Authentifizierung:** Bearer Token erforderlich"
+                    }
+                },
+                {
+                    "name": "Film löschen (Admin)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/film/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "film",
+                                "1"
+                            ]
+                        },
+                        "description": "Löscht einen Film.\n\n**Authentifizierung:** Bearer Token mit Admin-Rolle erforderlich"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "GraphQL",
+            "item": [
+                {
+                    "name": "Query: Alle Filme",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"query\": \"{ filme { id titel regisseur erscheinungsjahr bewertung } }\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/graphql",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "graphql"
+                            ]
+                        },
+                        "description": "GraphQL Query für alle Filme."
+                    }
+                },
+                {
+                    "name": "Query: Einzelner Film",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"query\": \"query GetFilm($id: Int!) { film(id: $id) { id titel beschreibung } }\",\n    \"variables\": { \"id\": 1 }\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/graphql",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "graphql"
+                            ]
+                        },
+                        "description": "GraphQL Query für einen einzelnen Film mit Variable."
+                    }
+                },
+                {
+                    "name": "Mutation: Film erstellen",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{accessToken}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"query\": \"mutation CreateFilm($input: CreateFilmInput!) { createFilm(input: $input) { id titel } }\",\n    \"variables\": {\n        \"input\": {\n            \"titel\": \"Neuer GraphQL Film\",\n            \"regisseur\": \"GraphQL Regisseur\"\n        }\n    }\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/graphql",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "graphql"
+                            ]
+                        },
+                        "description": "GraphQL Mutation zum Erstellen eines Films.\n\n**Authentifizierung:** Bearer Token erforderlich"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Auth (Keycloak)",
+            "item": [
+                {
+                    "name": "Get Access Token",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "grant_type",
+                                    "value": "password"
+                                },
+                                {
+                                    "key": "client_id",
+                                    "value": "film-api"
+                                },
+                                {
+                                    "key": "username",
+                                    "value": "testuser"
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "testpassword"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/realms/film/protocol/openid-connect/token",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "realms",
+                                "film",
+                                "protocol",
+                                "openid-connect",
+                                "token"
+                            ]
+                        },
+                        "description": "Holt ein Access Token von Keycloak.\n\n**Hinweis:** Username/Password anpassen!"
+                    }
+                }
+            ]
+        }
+    ]
+}

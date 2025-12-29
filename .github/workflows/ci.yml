@@ -1,0 +1,196 @@
+# ============================================================
+# GITHUB ACTIONS - Continuous Integration (CI) Pipeline
+# ============================================================
+#
+# Was macht diese Datei?
+# Diese GitHub Actions Workflow-Datei automatisiert die Qualitätsprüfung
+# bei jedem Push und Pull Request. Sie führt aus:
+# 1. Linting (ESLint) - Code-Qualitätsprüfung
+# 2. Formatting (Prettier) - Formatierungsprüfung
+# 3. Tests (Vitest) - Automatisierte Tests
+# 4. Build - TypeScript-Kompilierung
+# 5. Security Audit - OWASP Dependency Check
+#
+# Warum CI/CD?
+# - Fehler werden früh erkannt (automatisch bei jedem Push)
+# - Einheitliche Code-Qualität im Team
+# - Verhindert das Mergen von fehlerhaftem Code
+# - Dokumentiert den Build-Status (grünes Badge = alles okay)
+#
+# Referenz: https://docs.github.com/en/actions
+# ============================================================
+
+name: CI Pipeline
+
+# Wann soll die Pipeline laufen?
+on:
+  push:
+    branches: [main, develop]  # Bei Push auf main oder develop
+  pull_request:
+    branches: [main]           # Bei PRs gegen main
+
+# Umgebungsvariablen für alle Jobs
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '9'
+
+jobs:
+  # ============================================================
+  # JOB 1: Lint & Format Check
+  # ============================================================
+  lint:
+    name: 🔍 Lint & Format
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Schritt 1: Code auschecken
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      # Schritt 2: pnpm installieren (schneller als npm)
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      # Schritt 3: Node.js einrichten mit Cache
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      # Schritt 4: Dependencies installieren
+      - name: 📚 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Schritt 5: ESLint ausführen
+      - name: 🔍 Run ESLint
+        run: pnpm lint
+
+      # Schritt 6: Prettier Check
+      - name: 💅 Check Formatting
+        run: pnpm format:check
+
+  # ============================================================
+  # JOB 2: Tests ausführen
+  # ============================================================
+  test:
+    name: 🧪 Tests
+    runs-on: ubuntu-latest
+    needs: lint  # Wartet auf erfolgreichen Lint-Job
+    
+    # PostgreSQL als Service-Container für Integrationstests
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: p
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        # Health-Check damit wir wissen wann DB bereit ist
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: 📚 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Prisma Client generieren (für DB-Zugriff)
+      - name: 🔷 Generate Prisma Client
+        run: pnpm prisma:generate
+        
+      # Prisma Migration ausführen
+      - name: 🗄️ Run Database Migrations
+        run: pnpm prisma:migrate
+        env:
+          DATABASE_URL: postgresql://postgres:p@localhost:5432/postgres?schema=film
+
+      # Tests mit Coverage ausführen
+      - name: 🧪 Run Tests
+        run: pnpm test:cov
+        env:
+          DATABASE_URL: postgresql://postgres:p@localhost:5432/postgres?schema=film
+          NODE_ENV: test
+
+  # ============================================================
+  # JOB 3: Build prüfen
+  # ============================================================
+  build:
+    name: 🏗️ Build
+    runs-on: ubuntu-latest
+    needs: test  # Wartet auf erfolgreiche Tests
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: 📚 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔷 Generate Prisma Client
+        run: pnpm prisma:generate
+
+      # TypeScript kompilieren
+      - name: 🏗️ Build Application
+        run: pnpm build
+
+  # ============================================================
+  # JOB 4: Security Audit (OWASP Dependency Check)
+  # ============================================================
+  security:
+    name: 🔒 Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: 📚 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # npm audit für bekannte Sicherheitslücken
+      # --audit-level=high: Nur high/critical Vulnerabilities melden
+      - name: 🔒 Security Audit
+        run: pnpm audit --audit-level=high
+        continue-on-error: true  # Pipeline nicht blockieren, nur warnen

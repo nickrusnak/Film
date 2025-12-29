@@ -118,4 +118,35 @@
 
 ---
 
-> **Alle Schritte abgeschlossen!** 🎉 Das Projekt ist prüfungsfertig.
+## 14. CI/CD (GitHub Actions)
+
+- ✅ CI-Pipeline mit Lint, Test, Build, Security-Audit
+- ✅ PostgreSQL Service-Container für Tests
+- ✅ Automatische Ausführung bei Push/PR
+
+---
+
+## 15. Lasttests (Grafana k6)
+
+- ✅ k6 Testscript mit Smoke, Load, Stress Tests
+- ✅ Performance-Schwellenwerte definiert
+- ✅ Alle Endpunkte getestet (REST + GraphQL)
+
+---
+
+## 16. API-Testing (Postman)
+
+- ✅ Postman Collection exportiert
+- ✅ Alle Endpunkte dokumentiert
+- ✅ Auth-Token-Flow vorbereitet
+
+---
+
+## 17. OWASP Security
+
+- ✅ `pnpm audit` für Dependency-Check
+- ✅ npm-Scripts für Security-Audit
+
+---
+
+> **Alle Anforderungen erfüllt!** 🎓 Das Projekt ist vollständig prüfungsfertig.
