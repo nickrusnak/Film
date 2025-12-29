@@ -1,4 +1,0 @@
-id;version;isin;symbol;name;branche;handelsplatz;kaufpreis;anzahl;kaufdatum;dividende;letzter_kurs
-1000;0;DE0001234567;SAP;SAP SE;SOFTWARE;XETRA;100.00;10;2024-01-01;2.00;110.00
-1001;0;US1234567890;AAPL;Apple Inc.;TECH;NASDAQ;150.00;5;2024-01-02;1.00;160.00
-1002;0;US0987654321;TSLA;Tesla Inc.;AUTO;NASDAQ;200.00;3;2024-01-03;0.00;210.00

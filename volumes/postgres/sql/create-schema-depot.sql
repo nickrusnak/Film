@@ -1,2 +1,0 @@
-CREATE SCHEMA IF NOT EXISTS AUTHORIZATION depot;
-ALTER ROLE depot SET search_path = 'depot';
